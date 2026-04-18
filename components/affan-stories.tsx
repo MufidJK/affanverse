@@ -86,25 +86,25 @@ function getMediaType(
 }
 
 /**
- * Extract a YouTube embed URL from various YouTube link formats.
+ * Extract a YouTube ID from various YouTube link formats.
  * Supports: youtube.com/watch?v=ID, youtube.com/shorts/ID, youtu.be/ID
  */
-function getYouTubeEmbedUrl(url: string): string | null {
+function getYouTubeVideoId(url: string): string | null {
   // youtube.com/shorts/ID
   const shortsMatch = url.match(
     /youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/
   );
-  if (shortsMatch) return `https://www.youtube.com/embed/${shortsMatch[1]}`;
+  if (shortsMatch) return shortsMatch[1];
 
   // youtube.com/watch?v=ID
   const watchMatch = url.match(
     /youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/
   );
-  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  if (watchMatch) return watchMatch[1];
 
   // youtu.be/ID
   const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
-  if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+  if (shortMatch) return shortMatch[1];
 
   return null;
 }
@@ -142,26 +142,24 @@ function MediaRenderer({
   url,
   type,
   alt,
-  heightClass,
 }: {
   url: string;
   type: string | null | undefined;
   alt: string;
-  heightClass: string;
 }) {
   const mediaType = getMediaType(url, type);
 
   if (mediaType === "youtube") {
-    const embedUrl = getYouTubeEmbedUrl(url);
-    if (embedUrl) {
+    const videoId = getYouTubeVideoId(url);
+    if (videoId) {
       return (
-        <div className={`relative w-full ${heightClass} overflow-hidden`}>
+        <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden bg-muted/20">
           <iframe
-            src={`${embedUrl}?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0&showinfo=0&playlist=${embedUrl.split("/").pop()}`}
+            src={"https://www.youtube.com/embed/" + videoId + "?autoplay=1&loop=1&controls=0&modestbranding=1&rel=0&playsinline=1&playlist=" + videoId}
             title={alt}
             allow="autoplay; encrypted-media"
-            allowFullScreen
-            className="absolute inset-0 w-full h-full border-0"
+            className="w-full h-full object-cover pointer-events-none absolute inset-0"
+            style={{ border: 0 }}
           />
         </div>
       );
@@ -170,7 +168,7 @@ function MediaRenderer({
 
   if (mediaType === "video") {
     return (
-      <div className={`relative w-full ${heightClass} overflow-hidden`}>
+      <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden bg-muted/20">
         <video
           src={url}
           autoPlay
@@ -185,12 +183,12 @@ function MediaRenderer({
 
   // Default: image (Next.js <Image> component)
   return (
-    <div className={`relative w-full ${heightClass} overflow-hidden`}>
+    <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden bg-muted/20">
       <Image
         src={url}
         alt={alt}
         fill
-        className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
+        className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-in-out"
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
       />
     </div>
@@ -201,101 +199,92 @@ export async function AffanStories() {
   const stories = await getStories();
 
   return (
-    <section className="w-full max-w-6xl mx-auto px-4 sm:px-8 py-20 lg:py-28">
+    <div className="w-full">
       {/* Section Heading */}
-      <div className="text-center mb-12 space-y-3">
-        <p className="text-sm font-medium uppercase tracking-widest text-[#3b82f6]">
+      <div className="text-center mb-12 space-y-3 px-6">
+        <p className="text-sm font-medium uppercase tracking-widest text-[#2398f7]">
           Stories
         </p>
         <h2 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
           Get started with our{" "}
-          <span className="text-[#3b82f6]">best Affan stories</span>
+          <span className="text-[#2398f7]">best Affan stories</span>
         </h2>
         <p className="text-muted-foreground text-lg max-w-xl mx-auto">
           Behind the code, behind the screen — moments that shape the journey.
         </p>
       </div>
 
-      {/* Masonry Grid */}
-      <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
-        {stories.map((story: any, index: number) => {
-          const tags = Array.isArray(story.tags)
-            ? story.tags
-            : typeof story.tags === "string"
-              ? story.tags.split(",")
-              : story.type
-                ? [story.type.charAt(0).toUpperCase() + story.type.slice(1)]
-                : ["Story"];
+      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
+        {/* Masonry Grid */}
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-8">
+          {stories.map((story: any, index: number) => {
+            const tags = Array.isArray(story.tags)
+              ? story.tags
+              : typeof story.tags === "string"
+                ? story.tags.split(",")
+                : story.type
+                  ? [story.type.charAt(0).toUpperCase() + story.type.slice(1)]
+                  : ["Story"];
 
-          // Alternate image aspect ratios for visual variety
-          const heightClass =
-            index % 3 === 0
-              ? "h-64"
-              : index % 3 === 1
-                ? "h-48"
-                : "h-56";
+            // Resolve the media URL — support both `media_url` and `image_url` field names
+            const mediaUrl = story.media_url || story.image_url || "";
 
-          // Resolve the media URL — support both `media_url` and `image_url` field names
-          const mediaUrl = story.media_url || story.image_url || "";
+            // Resolve description — DB has no description column, so use title as context
+            const description =
+              story.description ||
+              story.content ||
+              story.caption ||
+              story.body ||
+              story.title ||
+              "No description.";
 
-          // Resolve description — DB has no description column, so use title as context
-          const description =
-            story.description ||
-            story.content ||
-            story.caption ||
-            story.body ||
-            story.title ||
-            "No description.";
+            return (
+              <Card
+                key={story.id || index}
+                className="mb-8 break-inside-avoid shadow-sm border-none group bg-white dark:bg-zinc-900"
+              >
+                {/* Media */}
+                {mediaUrl ? (
+                  <MediaRenderer
+                    url={mediaUrl}
+                    type={story.type}
+                    alt={story.title || "Story media"}
+                  />
+                ) : (
+                  <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden bg-muted/20">
+                    <div className="absolute inset-0 bg-gradient-to-br from-sky-100 to-sky-200 dark:from-sky-900/20 dark:to-sky-800/20" />
+                  </div>
+                )}
 
-          return (
-            <Card
-              key={story.id || index}
-              className="break-inside-avoid mb-6 overflow-hidden border-none shadow-sm hover:shadow-lg transition-all duration-300 group bg-white dark:bg-zinc-900"
-            >
-              {/* Media */}
-              {mediaUrl ? (
-                <MediaRenderer
-                  url={mediaUrl}
-                  type={story.type}
-                  alt={story.title || "Story media"}
-                  heightClass={heightClass}
-                />
-              ) : (
-                <div
-                  className={`relative w-full ${heightClass} overflow-hidden`}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-sky-100 to-sky-200 dark:from-sky-900/20 dark:to-sky-800/20" />
+                {/* Badges */}
+                <div className="flex flex-wrap gap-1.5 px-5 pt-4">
+                  {tags.slice(0, 3).map((tag: string, i: number) => (
+                    <Badge
+                      key={i}
+                      variant="secondary"
+                      className="font-normal text-xs bg-[#2398f7]/10 hover:bg-[#2398f7]/20 text-[#1a7cd4] dark:text-[#58b3fc] transition-colors border-none"
+                    >
+                      {typeof tag === "string" ? tag.trim() : tag}
+                    </Badge>
+                  ))}
                 </div>
-              )}
 
-              {/* Badges */}
-              <div className="flex flex-wrap gap-1.5 px-5 pt-4">
-                {tags.slice(0, 3).map((tag: string, i: number) => (
-                  <Badge
-                    key={i}
-                    variant="secondary"
-                    className="font-normal text-xs bg-sky-500/10 hover:bg-sky-500/20 text-sky-600 dark:text-sky-400 transition-colors border-none"
-                  >
-                    {typeof tag === "string" ? tag.trim() : tag}
-                  </Badge>
-                ))}
-              </div>
-
-              {/* Title & Description */}
-              <CardHeader className="pb-1 pt-3">
-                <CardTitle className="text-lg font-bold tracking-tight leading-snug group-hover:text-[#3b82f6] transition-colors">
-                  {story.title || "Untitled Story"}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pb-5">
-                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
-                  {description}
-                </p>
-              </CardContent>
-            </Card>
-          );
-        })}
+                {/* Title & Description */}
+                <CardHeader className="pb-1 pt-3">
+                  <CardTitle className="text-lg font-bold tracking-tight leading-snug group-hover:text-[#2398f7] transition-colors">
+                    {story.title || "Untitled Story"}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pb-5">
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                    {description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -10,7 +10,7 @@ export function Navbar() {
       <div className="container mx-auto flex h-16 items-center flex-wrap px-4 sm:px-8">
         <div className="mr-8 flex">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold tracking-tight text-primary">Affan</span>
+            <span className="text-xl font-bold tracking-tight text-primary">Affanverse</span>
           </Link>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-2">

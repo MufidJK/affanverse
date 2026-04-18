@@ -33,8 +33,8 @@ export async function ProjectList() {
       <div className="max-w-2xl mx-auto pt-8">
         <Card className="border-dashed border-2 shadow-sm bg-muted/20 text-center py-16">
           <CardHeader className="flex flex-col items-center pb-2">
-            <div className="h-16 w-16 rounded-full bg-sky-500/10 flex items-center justify-center mb-4">
-              <FolderGit2 className="h-8 w-8 text-[#3b82f6]" />
+            <div className="h-16 w-16 rounded-full bg-[#2398f7]/10 flex items-center justify-center mb-4">
+              <FolderGit2 className="h-8 w-8 text-[#2398f7]" />
             </div>
             <CardTitle className="text-2xl font-bold tracking-tight">Projects Curating</CardTitle>
           </CardHeader>
@@ -42,7 +42,7 @@ export async function ProjectList() {
             <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
               Projects are currently being curated. Check back soon!
             </p>
-            <Button variant="outline" asChild className="px-8 shadow-sm text-[#3b82f6] border-sky-500/20 hover:bg-sky-500/5">
+            <Button variant="outline" asChild className="px-8 shadow-sm text-[#2398f7] border-[#2398f7]/20 hover:bg-[#2398f7]/5">
               <Link href="/">Return to Home</Link>
             </Button>
           </CardContent>
@@ -60,7 +60,7 @@ export async function ProjectList() {
           : (typeof project.tags === "string" ? project.tags.split(",") : ["React", "TypeScript", "Next.js"]);
 
         return (
-          <Card key={project.id} className="overflow-hidden flex flex-col group border-border hover:border-[#3b82f6]/50 hover:shadow-xl hover:shadow-[#3b82f6]/10 transition-all duration-300 bg-card">
+          <Card key={project.id} className="overflow-hidden flex flex-col group border-border hover:border-[#2398f7]/50 hover:shadow-xl hover:shadow-[#2398f7]/10 transition-all duration-300 bg-card">
             
             {/* Image Header Container */}
             <div className="relative h-56 w-full bg-muted/40 overflow-hidden border-b border-border transition-colors">
@@ -72,7 +72,7 @@ export async function ProjectList() {
                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" 
                  />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-tr from-sky-500/5 to-sky-500/10 text-[#3b82f6]/30 group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-tr from-[#2398f7]/5 to-[#2398f7]/10 text-[#2398f7]/30 group-hover:scale-105 transition-transform duration-700 ease-in-out">
                   <FolderGit2 className="h-12 w-12" />
                 </div>
               )}
@@ -82,12 +82,12 @@ export async function ProjectList() {
             <CardHeader className="pb-4">
               <div className="flex flex-wrap gap-2 mb-3">
                 {tags.slice(0, 3).map((tag: string, i: number) => (
-                  <Badge key={i} variant="secondary" className="font-normal bg-[#3b82f6]/10 hover:bg-[#3b82f6]/20 text-[#3b82f6] transition-colors border-none">
+                  <Badge key={i} variant="secondary" className="font-normal bg-[#2398f7]/10 hover:bg-[#2398f7]/20 text-[#2398f7] transition-colors border-none">
                     {tag.trim()}
                   </Badge>
                 ))}
               </div>
-              <CardTitle className="text-xl font-bold tracking-tight group-hover:text-[#3b82f6] transition-colors">
+              <CardTitle className="text-xl font-bold tracking-tight group-hover:text-[#2398f7] transition-colors">
                 {project.title || "Untitled Project"}
               </CardTitle>
               <CardDescription className="line-clamp-2 text-base mt-2">
@@ -97,7 +97,7 @@ export async function ProjectList() {
             
             {/* Interactivity Footer */}
             <CardFooter className="mt-auto pt-4 pb-6">
-              <Button asChild className="w-full font-medium transition-all shadow-sm bg-[#3b82f6] hover:bg-sky-600 text-white hover:shadow-md hover:shadow-[#3b82f6]/20">
+              <Button asChild className="w-full font-medium transition-all shadow-sm bg-[#2398f7] hover:bg-[#1a7cd4] text-white hover:shadow-md hover:shadow-[#2398f7]/20">
                 <Link href={project.url || "#"}>
                   View Details
                 </Link>

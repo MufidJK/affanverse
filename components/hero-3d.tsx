@@ -56,7 +56,7 @@ export function Hero3DEffect() {
         >
           {/* Background card with glass effect */}
           <div 
-            className="absolute inset-0 rounded-3xl bg-secondary/30 dark:bg-sky-500/5 border border-sky-500/20 backdrop-blur-lg shadow-2xl transition-all duration-300"
+            className="absolute inset-0 rounded-3xl bg-secondary/30 dark:bg-[#2398f7]/5 border border-[#2398f7]/20 backdrop-blur-lg shadow-2xl transition-all duration-300"
             style={{ transform: "translateZ(-20px)" }}
           />
           
@@ -82,7 +82,7 @@ export function Hero3DEffect() {
           
           {/* Glow effect on hover */}
           <div 
-            className="absolute inset-0 -z-10 rounded-3xl bg-[#3b82f6]/20 blur-3xl transition-opacity duration-500 pointer-events-none"
+            className="absolute inset-0 -z-10 rounded-3xl bg-[#2398f7]/20 blur-3xl transition-opacity duration-500 pointer-events-none"
             style={{ opacity: isHovered ? 0.8 : 0.0 }}
           />
         </motion.div>
