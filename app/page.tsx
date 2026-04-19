@@ -1,6 +1,11 @@
 import { Hero3DEffect } from "@/components/hero-3d";
 import { AffanStories } from "@/components/affan-stories";
 import { AffanTestimonials } from "@/components/affan-testimonials";
+import { CursedArtifact } from "@/components/cursed-artifact";
+import { AffanSkillTree } from "@/components/affan-skill-tree";
+import { AffanFAQ } from "@/components/affan-faq";
+import { AffanGalleryDump } from "@/components/affan-gallery-dump";
+import { MinigamePortal } from "@/components/minigame-portal";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -61,6 +66,23 @@ export default function Home() {
       <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10">
         <AffanTestimonials />
       </section>
+
+      {/* Cursed Artifact Section */}
+      <section className="mt-40 border-t border-border/40">
+        <CursedArtifact />
+      </section>
+
+      {/* Skill Tree Section */}
+      <AffanSkillTree />
+
+      {/* FAQ Section */}
+      <AffanFAQ />
+
+      {/* Gallery Dump Section */}
+      <AffanGalleryDump />
+
+      {/* Minigame Portal Section */}
+      <MinigamePortal />
     </>
   );
 }

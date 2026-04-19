@@ -54,7 +54,7 @@ const LOCAL_TESTIMONIALS = [
   },
   {
     name: "My Bini",
-    role: "My Bini Gwehj i",
+    role: "My Bini Gwehj",
     text: "Cuman saya yang tahu penderitaannya ngerawat orang ini tiap hari.",
     avatarUrl: "/images/pfps/bini-pfp.png",
   },
