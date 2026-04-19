@@ -1,5 +1,6 @@
 import { Hero3DEffect } from "@/components/hero-3d";
 import { AffanStories } from "@/components/affan-stories";
+import { AffanTestimonials } from "@/components/affan-testimonials";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -50,8 +51,15 @@ export default function Home() {
       </section>
 
       {/* Best Affan Stories Section */}
-      <section className="w-full py-24 mt-16 border-t border-border/50">
+      <section className="w-full py-24 relative mt-16">
+        {/* Solid Subtle Divider Edge-to-Edge */}
+        <div className="absolute top-0 left-0 right-0 w-full h-px bg-black/10 dark:bg-white/10" />
         <AffanStories />
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10">
+        <AffanTestimonials />
       </section>
     </>
   );
