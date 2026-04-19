@@ -65,6 +65,19 @@ const textColors = [
 export function AffanSkillTree() {
   return (
     <section className="w-full py-24 relative overflow-hidden bg-background">
+      <style>{`
+        .glitch-effect:hover, .glitch-effect:active {
+          animation: anime-glitch 0.2s cubic-bezier(.25, .46, .45, .94) both infinite;
+        }
+        @keyframes anime-glitch {
+          0% { transform: translate(0); filter: drop-shadow(0 0 0 transparent); }
+          20% { transform: translate(-2px, 2px) skewX(1deg); filter: drop-shadow(3px 0px 0px rgba(255,0,0,0.8)) drop-shadow(-3px 0px 0px rgba(0,255,255,0.8)); }
+          40% { transform: translate(-2px, -2px) skewX(-1deg); filter: drop-shadow(-3px 0px 0px rgba(255,0,0,0.8)) drop-shadow(3px 0px 0px rgba(0,255,255,0.8)); }
+          60% { transform: translate(2px, 2px) skewX(0deg); filter: drop-shadow(3px 0px 0px rgba(255,0,0,0.8)) drop-shadow(-3px 0px 0px rgba(0,255,255,0.8)); }
+          80% { transform: translate(2px, -2px) skewX(1deg); filter: drop-shadow(-3px 0px 0px rgba(255,0,0,0.8)) drop-shadow(3px 0px 0px rgba(0,255,255,0.8)); }
+          100% { transform: translate(0); filter: drop-shadow(0 0 0 transparent); }
+        }
+      `}</style>
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-20 space-y-4">
           <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
@@ -84,7 +97,7 @@ export function AffanSkillTree() {
               <div 
                 key={skill.name} 
                 className={skill.isSpecial 
-                  ? "md:col-span-2 mt-4 flex flex-col p-5 gap-4 rounded-2xl bg-card/50 backdrop-blur-sm border border-purple-500/20 dark:border-pink-500/30 shadow-[0_0_20px_rgba(168,85,247,0.15)] dark:shadow-[0_0_30px_rgba(236,72,153,0.25)] transition-all duration-300 hover:scale-[101%] hover:-translate-y-1"
+                  ? "md:col-span-2 mt-4 flex flex-col p-5 gap-4 rounded-2xl bg-card/50 backdrop-blur-sm border border-purple-500/20 dark:border-pink-500/30 shadow-[0_0_20px_rgba(168,85,247,0.15)] dark:shadow-[0_0_30px_rgba(236,72,153,0.25)] transition-all duration-300 hover:scale-[101%] hover:-translate-y-1 glitch-effect cursor-pointer"
                   : "flex flex-col p-5 gap-4 rounded-2xl bg-card/50 backdrop-blur-sm border border-black/5 dark:border-white/5 shadow-sm transition-all duration-300 hover:scale-[102%] hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10 dark:hover:shadow-white/5"
                 }
               >
