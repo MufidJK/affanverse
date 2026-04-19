@@ -70,8 +70,8 @@ export function AffanSkillTree() {
           <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
             The <span className="text-[#2398f7]">Affan's</span> Skill Tree
           </h2>
-          <p className="text-muted-foreground text-xl italic max-w-2xl mx-auto">
-            "Gw punya skill yang banyak banget nihh wowkwkwkkwkwk, skill issue 😹😹"
+          <p className="text-muted-foreground text-xl italic max-w-4xl mx-auto">
+            "Gw punya skill yang banyak banget nihh wok wowkwkwkkwkwk, skill issue 😹😹"
           </p>
         </div>
 

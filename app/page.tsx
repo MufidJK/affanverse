@@ -68,15 +68,19 @@ export default function Home() {
       </section>
 
       {/* Cursed Artifact Section */}
-      <section className="mt-40 border-t border-border/40">
+      <section className="mt-40 overflow-hidden relative border-t border-black/10 dark:border-white/10">
         <CursedArtifact />
       </section>
 
       {/* Skill Tree Section */}
-      <AffanSkillTree />
+      <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10">
+        <AffanSkillTree />
+      </section>
 
       {/* FAQ Section */}
-      <AffanFAQ />
+      <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10">
+        <AffanFAQ />
+      </section>
 
       {/* Gallery Dump Section */}
       <AffanGalleryDump />
