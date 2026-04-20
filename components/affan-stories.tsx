@@ -439,7 +439,7 @@ export function AffanStories() {
               return (
                 <Card
                   key={story.id || index}
-                  className="shadow-sm border-none bg-white dark:bg-zinc-900 overflow-hidden rounded-[24px] p-0"
+                  className="shadow-sm border border-black/5 dark:border-white/10 bg-gray-100/80 dark:bg-zinc-900/50 overflow-hidden rounded-[24px] p-0"
                 >
                   {mediaUrl ? (
                     <MediaRenderer

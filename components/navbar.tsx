@@ -19,7 +19,7 @@ export function Navbar() {
               <Link href="/about">About</Link>
             </Button>
             <Button variant="ghost" className="text-muted-foreground hover:text-primary" asChild>
-              <Link href="/projects">Projects</Link>
+              <Link href="/archives">Archives</Link>
             </Button>
             <Button variant="ghost" className="text-muted-foreground hover:text-primary" asChild>
               <Link href="/contact">Contact</Link>
