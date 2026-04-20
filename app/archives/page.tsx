@@ -3,6 +3,7 @@ import { FloatingBackButton } from "@/components/floating-back-button"
 import { FolderX, ImageOff } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import SmartMedia from "@/components/smart-media"
 
 export default async function ArchivesPage() {
   const { data: archives, error } = await supabase
@@ -46,37 +47,17 @@ export default async function ArchivesPage() {
             {archives.map((item) => (
               <div 
                 key={item.id} 
-                className="overflow-hidden rounded-2xl bg-card border border-black/5 dark:border-white/5 flex flex-col group transition-all duration-300 hover:shadow-md hover:border-black/10 dark:hover:border-white/10"
+                className="flex flex-col bg-gray-50 dark:bg-zinc-900 border border-black/5 dark:border-white/10 rounded-2xl overflow-hidden"
               >
-                <div className="relative aspect-square w-full bg-muted overflow-hidden">
-                  {item.media_type === "video" ? (
-                    <video 
-                      src={item.media_url} 
-                      autoPlay 
-                      loop 
-                      muted 
-                      playsInline 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                    />
-                  ) : (
-                    <img 
-                      src={item.media_url} 
-                      alt={item.title || "Archive Image"} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                      loading="lazy" 
-                    />
-                  )}
-                  {item.media_type && (
-                     <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md text-white text-[10px] uppercase font-bold px-2 py-1 rounded-full tracking-wider z-10 flex items-center gap-1">
-                        {item.media_type}
-                     </div>
-                  )}
-                </div>
+                <figure className="aspect-[3/4] relative w-full overflow-hidden bg-black/5 dark:bg-white/5">
+                  <SmartMedia src={item.media_url} type={item.type || item.media_type} alt={item.title || 'Archive Media'} />
+                </figure>
                 
-                <div className="p-4 flex flex-col flex-1">
-                  <h3 className="font-semibold text-sm md:text-base truncate">{item.title}</h3>
+                <div className="p-4 flex flex-col gap-2">
+                  <span className="w-fit px-2.5 py-0.5 mb-2 rounded-full bg-blue-50 dark:bg-blue-900/30 text-[#2398f7] text-[10px] font-semibold uppercase tracking-wider">{item.type || item.media_type || 'Image'}</span>
+                  <h3 className="font-semibold text-sm md:text-base">{item.title}</h3>
                   {item.description && (
-                    <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
+                    <p className="text-xs text-muted-foreground">
                       {item.description}
                     </p>
                   )}
