@@ -10,8 +10,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Affan | Product & Engineering",
-  description: "Modern minimalist portfolio",
+  title: "Affanverse",
+  description: "Modern minimalist web about Affan",
 };
 
 export default function RootLayout({

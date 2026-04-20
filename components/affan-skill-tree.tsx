@@ -36,7 +36,7 @@ const skills = [
   { name: "Speed (Awakened)", value: 70, text: "70% - Advanced" },
   { name: "Related", value: 95, text: "95% - Legend" },
   { name: "Battle IQ", value: 98, text: "98% - Legend" },
-  { name: "Invesment Skill", value: 80, text: "80% - Expert" },
+  { name: "Investment Skill", value: 80, text: "80% - Expert" },
   { name: "True Potensial", value: 100, text: "??? - UNKNOWN", isSpecial: true }
 ];
 

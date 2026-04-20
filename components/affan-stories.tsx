@@ -239,14 +239,14 @@ function ClientVideoCard({ mediaUrl, title }: { mediaUrl: string; title: string 
             </button>
           </div>
 
-          {/* Center Play/Pause */}
-          <div className="flex justify-center items-center flex-1">
+          {/* Center Play/Pause & Buffering Overlay */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none">
             <button
               onClick={handlePlayPause}
-              className="w-14 h-14 bg-[#2398f7]/90 hover:bg-[#2398f7] text-white rounded-full flex items-center justify-center backdrop-blur-md active:scale-95 transition-transform cursor-pointer shadow-lg outline-none"
+              className="w-16 h-16 bg-[#2398f7]/90 hover:bg-[#2398f7] text-white rounded-full flex items-center justify-center backdrop-blur-md active:scale-95 transition-transform cursor-pointer shadow-lg outline-none pointer-events-auto"
               aria-label={cardPlaying ? "Pause" : "Play"}
             >
-              {cardPlaying ? <Pause className="w-7 h-7" /> : <Play className="w-7 h-7 ml-0.5" />}
+              {cardPlaying ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8 ml-1" />}
             </button>
           </div>
 
@@ -285,6 +285,7 @@ function ClientVideoCard({ mediaUrl, title }: { mediaUrl: string; title: string 
 
 function NativeVideoCard({ url }: { url: string }) {
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isBuffering, setIsBuffering] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Imperative play/pause with AbortError swallowing
@@ -293,9 +294,7 @@ function NativeVideoCard({ url }: { url: string }) {
     if (isPlaying) {
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Silently ignore AbortError caused by DOM removal or rapid pause
-        });
+        playPromise.catch(() => {});
       }
     } else {
       videoRef.current.pause();
@@ -310,20 +309,30 @@ function NativeVideoCard({ url }: { url: string }) {
         loop
         muted
         playsInline
+        onWaiting={() => setIsBuffering(true)}
+        onPlaying={() => setIsBuffering(false)}
         className="w-full h-full object-cover pointer-events-none"
       />
-      {/* Minimal overlay for play/pause */}
-      <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20">
+      
+      {/* Centered Buffering Spinner Overlay */}
+      {isBuffering && (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none z-20">
+          <div className="w-12 h-12 border-4 border-[#2398f7] border-t-transparent rounded-full animate-spin" />
+        </div>
+      )}
+
+      {/* Centered Play/Pause Button Overlay */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
         <button
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             setIsPlaying((prev) => !prev);
           }}
-          className="w-14 h-14 bg-[#2398f7]/90 hover:bg-[#2398f7] text-white rounded-full flex items-center justify-center backdrop-blur-md active:scale-95 transition-transform cursor-pointer shadow-lg outline-none"
+          className="w-16 h-16 bg-[#2398f7]/90 hover:bg-[#2398f7] text-white rounded-full flex items-center justify-center backdrop-blur-md active:scale-95 transition-transform cursor-pointer shadow-lg outline-none pointer-events-auto"
           aria-label={isPlaying ? "Pause" : "Play"}
         >
-          {isPlaying ? <Pause className="w-7 h-7" /> : <Play className="w-7 h-7 ml-0.5" />}
+          {isPlaying ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8 ml-1" />}
         </button>
       </div>
     </div>

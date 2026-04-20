@@ -6,19 +6,30 @@ import { useGLTF, OrbitControls, Center, Html, Bounds } from "@react-three/drei"
 import { Button } from "@/components/ui/button";
 import { Box, Sparkles } from "lucide-react";
 
-function CursedModel({ url }: { url: string }) {
-  const { scene } = useGLTF(url);
-  return <primitive object={scene} />;
+function CursedModels({ modelIndex }: { modelIndex: number }) {
+  const model1 = useGLTF('/models/cursed-1.glb');
+  const model2 = useGLTF('/models/cursed-2.glb');
+  const model3 = useGLTF('/models/cursed-3.glb');
+
+  return (
+    <>
+      {modelIndex === 0 && <primitive object={model1.scene} />}
+      {modelIndex === 1 && <primitive object={model2.scene} />}
+      {modelIndex === 2 && <primitive object={model3.scene} />}
+    </>
+  );
 }
 
+useGLTF.preload('/models/cursed-1.glb');
+useGLTF.preload('/models/cursed-2.glb');
+useGLTF.preload('/models/cursed-3.glb');
+
 export function CursedArtifact() {
-  const [modelType, setModelType] = useState<"cursed-1" | "cursed-2">("cursed-1");
+  const [modelIndex, setModelIndex] = useState(0);
 
   const toggleDimension = () => {
-    setModelType((prev) => (prev === "cursed-1" ? "cursed-2" : "cursed-1"));
+    setModelIndex((prev) => (prev + 1) % 3);
   };
-
-  const currentModelUrl = `/models/${modelType}.glb`;
 
   return (
     <section className="w-full py-24 bg-zinc-950 text-white overflow-hidden relative">
@@ -34,7 +45,10 @@ export function CursedArtifact() {
             The Affan Artifact: <span className="text-[#2398f7]">A Cursed Entity</span>
           </h2>
           <p className="text-zinc-400 text-lg max-w-2xl mx-auto italic">
-            "We found this in a deep-nested folder labeled 'DO NOT OPEN'. It shouldn't exist, yet it takes up 0TB on disk."
+            "Scientists have studied this artifact for 67 years. They found nothing. They found everything. One researcher quit and opened a goat farm. When asked why, he simply said: 'Affan.' No further questions were taken.
+            What you are currently seeing is our best attempt at reconstructing his physical form using technology. We are sorry. The original 3D artist has not spoken since the render finished. He just stares at the file. The file stares back.
+            Our analysts confirm this model is 0% accurate and 100% cursed. And yet — somehow — it feels more real than reality itself.
+            Do not zoom in. We cannot stress this enough. Do not. Zoom. In."
           </p>
         </div>
 
@@ -55,7 +69,7 @@ export function CursedArtifact() {
               }>
                 <Bounds fit clip observe>
                   <Center>
-                    <CursedModel url={currentModelUrl} />
+                    <CursedModels modelIndex={modelIndex} />
                   </Center>
                 </Bounds>
               </Suspense>
@@ -66,7 +80,7 @@ export function CursedArtifact() {
             {/* UI Overlays */}
             <div className="absolute top-4 right-4 p-4 rounded-2xl bg-black/40 backdrop-blur-md border border-white/5 pointer-events-none">
               <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-tighter mb-1">Current Coordinates</p>
-              <p className="text-xs font-mono text-[#2398f7] tabular-nums">LOC: 0xAFF4N_VOID_{modelType.toUpperCase()}</p>
+              <p className="text-xs font-mono text-[#2398f7] tabular-nums">LOC: 0xAFF4N_VOID_{modelIndex + 1}</p>
             </div>
           </div>
 

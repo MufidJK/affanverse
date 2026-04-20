@@ -1,88 +1,85 @@
-"use client";
+import { createClient } from "@supabase/supabase-js";
 
-import React from "react";
-import Image from "next/image";
+export async function AffanGalleryDump() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+  const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-const DUMP_IMAGES = [
-  {
-    src: "/images/pfps/jeka-pfp.png",
-    caption: "Trying to look busy while doing absolutely nothing.",
-    rotation: "rotate-2",
-    offset: "translate-x-2",
-    aspect: "aspect-square",
-  },
-  {
-    src: "/images/pfps/gilang-pfp.png",
-    caption: "Observing my own failure in 4K resolution.",
-    rotation: "-rotate-3",
-    offset: "-translate-y-4",
-    aspect: "aspect-[3/4]",
-  },
-  {
-    src: "/images/pfps/noval-pfp.png",
-    caption: "The survivor of the Great Bug War of 2024.",
-    rotation: "rotate-1",
-    offset: "translate-y-2",
-    aspect: "aspect-video",
-  },
-  {
-    src: "/images/pfps/febry-pfp.png",
-    caption: "Sempoyongan mode: Engaged.",
-    rotation: "-rotate-2",
-    offset: "-translate-x-4",
-    aspect: "aspect-square",
-  },
-  {
-    src: "/images/pfps/faiz-pfp.png",
-    caption: "Judging your choice of font in silence.",
-    rotation: "rotate-6",
-    offset: "translate-x-4",
-    aspect: "aspect-[4/5]",
-  },
-  {
-    src: "/images/pfps/fadhil-pfp.png",
-    caption: "Contemplating the void, and the void stared back.",
-    rotation: "-rotate-1",
-    offset: "translate-y-6",
-    aspect: "aspect-video",
-  },
-];
+  const { data: photos, error } = await supabase
+    .from("gallery")
+    .select("*")
+    .contains("sections", ["gallery_dump"]);
+    
+  if (error) {
+    console.error("Error fetching gallery photos:", error);
+  }
 
-export function AffanGalleryDump() {
   return (
-    <section className="w-full py-24 bg-zinc-50 dark:bg-zinc-950/50 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-4">
-            Multiversal Echoes: <span className="text-[#2398f7]">A Daily Dump</span>
-          </h2>
-          <p className="text-muted-foreground text-lg">Random snippets of digital decay.</p>
-        </div>
+    <section className="w-full py-24 bg-gray-100 dark:bg-gray-900 px-4">
+      <style>{`
+        @keyframes gradient-x {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-rainbow {
+          background-size: 200% 200%;
+          animation: gradient-x 3s ease infinite;
+        }
+      `}</style>
+      <div className="text-center mb-12">
+        <h2 className="text-3xl md:text-5xl font-bold text-center mb-4 text-foreground">
+          Unsorted <span className="text-[#2398f7]">Dump's:</span>{" "}
+          <span className="bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 to-purple-500 bg-clip-text text-transparent animate-rainbow">
+            Evidence of His Existence
+          </span>
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-12 text-center">
+          Foto-foto random Affan yang entah kenapa ada. Dikumpulin gitu aja, dipajang tanpa izin, 
+          tanpa rasa bersalah.
+          Nggak ada yang minta, nggak ada yang nanya — tapi, ini dia buktinya.
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 pt-12">
-          {DUMP_IMAGES.map((img, i) => (
-            <div 
-              key={i} 
-              className={`group relative ${img.rotation} ${img.offset} transition-transform duration-500 hover:rotate-0 hover:translate-x-0 hover:translate-y-0 z-10 hover:z-20`}
+      {!photos || photos.length === 0 ? (
+        <div className="flex justify-center items-center py-20 text-muted-foreground">
+          Belum ada momen yang terekam.
+        </div>
+      ) : (
+        <div className="columns-2 md:columns-3 lg:columns-4 gap-4 md:gap-6 space-y-4 md:space-y-6 max-w-7xl mx-auto px-4">
+          {photos.map((photo) => (
+            <div
+              key={photo.id}
+              className="break-inside-avoid relative rounded-2xl overflow-hidden bg-card border border-black/5 dark:border-white/5 shadow-sm group cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-black/10 dark:hover:shadow-white/5 hover:-translate-y-1"
             >
-              <div className="p-3 bg-white dark:bg-zinc-900 border border-border/40 rounded-2xl shadow-xl shadow-black/5 flex flex-col gap-3">
-                <div className={`relative w-full ${img.aspect} rounded-xl overflow-hidden bg-muted`}>
-                   <img 
-                    src={img.src} 
-                    alt="Gallery item"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = `https://images.unsplash.com/photo-${1550000000000 + i}?auto=format&fit=crop&q=80&w=400&h=400`;
-                    }}
+              {photo.media_url ? (
+                <>
+                  <img
+                    src={photo.media_url}
+                    alt={photo.title || "Gallery Image"}
+                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[103%]"
+                    loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                </div>
-                <p className="text-sm font-medium text-muted-foreground italic px-2">"{img.caption}"</p>
-              </div>
+                  <div className="absolute inset-0 bg-black/70 flex flex-col justify-end p-4 md:p-6 opacity-0 group-hover:opacity-100 group-active:opacity-100 translate-y-4 group-hover:translate-y-0 group-active:translate-y-0 transition-all duration-300 pointer-events-none">
+                    {photo.title && (
+                      <h3 className="font-semibold text-base md:text-lg text-white line-clamp-1">
+                        {photo.title}
+                      </h3>
+                    )}
+                    {photo.description && (
+                      <p className="text-xs md:text-sm text-gray-200 mt-1 line-clamp-2 leading-relaxed">
+                        {photo.description}
+                      </p>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <div className="w-full h-48 bg-muted/20" />
+              )}
             </div>
           ))}
         </div>
-      </div>
+      )}
     </section>
   );
 }
