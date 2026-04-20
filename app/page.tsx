@@ -9,6 +9,7 @@ import { MinigamePortal } from "@/components/minigame-portal";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
@@ -77,16 +78,19 @@ export default function Home() {
         <AffanSkillTree />
       </section>
 
+      {/* Gallery Dump Section */}
+      <AffanGalleryDump />
+
       {/* FAQ Section */}
       <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10">
         <AffanFAQ />
       </section>
 
-      {/* Gallery Dump Section */}
-      <AffanGalleryDump />
-
       {/* Minigame Portal Section */}
       <MinigamePortal />
+
+      {/* Footer */}
+      <Footer />
     </>
   );
 }
