@@ -22,6 +22,9 @@ export function Navbar() {
               <Link href="/archives">Archives</Link>
             </Button>
             <Button variant="ghost" className="text-muted-foreground hover:text-primary" asChild>
+              <Link href="/music">Affan's Music</Link>
+            </Button>
+            <Button variant="ghost" className="text-muted-foreground hover:text-primary" asChild>
               <Link href="/contact">Contact</Link>
             </Button>
           </nav>

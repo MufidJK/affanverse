@@ -35,7 +35,7 @@ export function AffanFAQ() {
           <div className="p-2 rounded-xl bg-[#2398f7]/10 text-[#2398f7]">
             <HelpCircle className="w-6 h-6" />
           </div>
-          <h2 className="text-3xl font-bold tracking-tight text-foreground">Frequently Affan Questions (FAQ)</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-foreground">Frequently Affan <span className="text-[#2398f7]">Questions</span> (FAQ)</h2>
         </div>
 
         <Accordion type="single" collapsible className="w-full space-y-4">

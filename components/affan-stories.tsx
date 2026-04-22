@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import {
   Card,
@@ -9,14 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
-import { Volume2, VolumeX, Expand, Play, Pause } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import SmartMedia from "@/components/smart-media";
 
 // ─── Mock Data ───────────────────────────────────────────────────────
 const MOCK_STORIES = [
@@ -58,51 +51,7 @@ const MOCK_STORIES = [
   },
 ];
 
-// ─── Helpers ─────────────────────────────────────────────────────────
-
-function getMediaType(
-  url: string,
-  typeHint?: string | null
-): "video" | "youtube" | "image" {
-  if (typeHint === "video" || typeHint === "youtube") {
-    if (url.includes("youtube.com") || url.includes("youtu.be")) {
-      return "youtube";
-    }
-    return "video";
-  }
-  if (url.includes("youtube.com") || url.includes("youtu.be")) {
-    return "youtube";
-  }
-  if (url.match(/\.(mp4|webm|mov|ogg)$/i)) {
-    return "video";
-  }
-  return "image";
-}
-
-function getYouTubeVideoId(url: string): string | null {
-  const shortsMatch = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/);
-  if (shortsMatch) return shortsMatch[1];
-  const watchMatch = url.match(/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/);
-  if (watchMatch) return watchMatch[1];
-  const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
-  if (shortMatch) return shortMatch[1];
-  return null;
-}
-
-/** Send a command to a YouTube iframe via postMessage */
-function ytCommand(iframe: HTMLIFrameElement | null, func: string) {
-  try {
-    iframe?.contentWindow?.postMessage(
-      JSON.stringify({ event: "command", func, args: "" }),
-      "*"
-    );
-  } catch {
-    // Silently swallow — iframe may not be ready or cross-origin
-  }
-}
-
 // ─── Data Fetcher ────────────────────────────────────────────────────
-
 async function fetchStories() {
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -128,257 +77,7 @@ async function fetchStories() {
   }
 }
 
-// ═════════════════════════════════════════════════════════════════════
-// ISOLATED CLIENT VIDEO CARD
-// Two completely independent iframes — card & modal — each with their
-// own refs and states. Uses YouTube postMessage API for imperative
-// play/pause/mute control. Zero react-player. Zero AbortError.
-// ═════════════════════════════════════════════════════════════════════
-
-function ClientVideoCard({ mediaUrl, title }: { mediaUrl: string; title: string }) {
-  // ── Separate states for Card vs Modal ──
-  const [cardPlaying, setCardPlaying] = useState(true);
-  const [cardMuted, setCardMuted] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalPlaying, setModalPlaying] = useState(false);
-
-  // ── Separate refs — never share an iframe ──
-  const cardIframeRef = useRef<HTMLIFrameElement>(null);
-  const modalIframeRef = useRef<HTMLIFrameElement>(null);
-
-  const videoId = getYouTubeVideoId(mediaUrl);
-  if (!videoId) return null;
-
-  // enablejsapi=1 is REQUIRED for postMessage control
-  const cardSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&playlist=${videoId}&showinfo=0`;
-  const modalSrc = `https://www.youtube.com/embed/${videoId}?autoplay=0&mute=0&controls=1&modestbranding=1&rel=0&playsinline=1&enablejsapi=1`;
-
-  // ── Imperative Card Play/Pause ──
-  useEffect(() => {
-    ytCommand(cardIframeRef.current, cardPlaying ? "playVideo" : "pauseVideo");
-  }, [cardPlaying]);
-
-  // ── Imperative Card Mute/Unmute ──
-  useEffect(() => {
-    ytCommand(cardIframeRef.current, cardMuted ? "mute" : "unMute");
-  }, [cardMuted]);
-
-  // ── Imperative Modal Play/Pause ──
-  useEffect(() => {
-    if (modalPlaying) {
-      ytCommand(modalIframeRef.current, "playVideo");
-      ytCommand(modalIframeRef.current, "unMute");
-    } else {
-      ytCommand(modalIframeRef.current, "pauseVideo");
-    }
-  }, [modalPlaying]);
-
-  // ── Click Handlers (all with stopPropagation) ──
-  const handlePlayPause = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCardPlaying((prev) => !prev);
-  };
-
-  const handleMuteToggle = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCardMuted((prev) => !prev);
-  };
-
-  const handleExpand = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    // Step 1: Pause card video FIRST
-    setCardPlaying(false);
-    // Step 2: Open modal
-    setIsModalOpen(true);
-    // Step 3: Start modal player after 100ms micro-delay
-    setTimeout(() => setModalPlaying(true), 100);
-  };
-
-  const handleDialogChange = useCallback((open: boolean) => {
-    if (!open) {
-      // Pause modal video, then close and resume card
-      setModalPlaying(false);
-      setIsModalOpen(false);
-      setTimeout(() => setCardPlaying(true), 100);
-    }
-  }, []);
-
-  return (
-    <>
-      {/* ── CARD VIDEO ── */}
-      <div className="relative w-full aspect-[3/4] mt-0 pt-0 rounded-[24px] overflow-hidden bg-muted/20 group">
-        {/* Raw YouTube iframe — no react-player, no AbortError */}
-        <iframe
-          ref={cardIframeRef}
-          src={cardSrc}
-          title={title}
-          allow="autoplay; encrypted-media"
-          className="absolute inset-0 w-full h-full border-0 pointer-events-none scale-[1.3]"
-        />
-
-        {/* Custom Overlay Controls */}
-        <div className="absolute inset-0 z-10 flex flex-col justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-b from-black/30 via-transparent to-black/30">
-          {/* Top Row */}
-          <div className="flex justify-end gap-2">
-            <button
-              onClick={handleExpand}
-              className="p-2 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full text-white transition-colors cursor-pointer outline-none"
-              aria-label="Expand video"
-            >
-              <Expand className="w-5 h-5" />
-            </button>
-            <button
-              onClick={handleMuteToggle}
-              className="p-2 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full text-white transition-colors cursor-pointer outline-none"
-              aria-label={cardMuted ? "Unmute" : "Mute"}
-            >
-              {cardMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-            </button>
-          </div>
-
-          {/* Center Play/Pause & Buffering Overlay */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none">
-            <button
-              onClick={handlePlayPause}
-              className="w-16 h-16 bg-[#2398f7]/90 hover:bg-[#2398f7] text-white rounded-full flex items-center justify-center backdrop-blur-md active:scale-95 transition-transform cursor-pointer shadow-lg outline-none pointer-events-auto"
-              aria-label={cardPlaying ? "Pause" : "Play"}
-            >
-              {cardPlaying ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8 ml-1" />}
-            </button>
-          </div>
-
-          {/* Bottom spacer */}
-          <div />
-        </div>
-      </div>
-
-      {/* ── EXPAND MODAL — standard Radix Dialog, separate iframe ── */}
-      <Dialog open={isModalOpen} onOpenChange={handleDialogChange}>
-        <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black border-none flex justify-center items-center sm:max-w-4xl">
-          <DialogTitle className="sr-only">{title}</DialogTitle>
-          <DialogDescription className="sr-only">
-            Expanded view of {title}
-          </DialogDescription>
-          <div className="relative w-full h-[80vh] flex items-center justify-center bg-black">
-            {/* Completely separate iframe — own ref, own state */}
-            {isModalOpen && (
-              <iframe
-                ref={modalIframeRef}
-                src={modalSrc}
-                title={`${title} — expanded`}
-                allow="autoplay; encrypted-media; fullscreen"
-                allowFullScreen
-                className="w-full h-full border-0"
-              />
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
-    </>
-  );
-}
-
-// ─── Native Video with Imperative Ref ────────────────────────────────
-
-function NativeVideoCard({ url }: { url: string }) {
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isBuffering, setIsBuffering] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  // Imperative play/pause with AbortError swallowing
-  useEffect(() => {
-    if (!videoRef.current) return;
-    if (isPlaying) {
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {});
-      }
-    } else {
-      videoRef.current.pause();
-    }
-  }, [isPlaying]);
-
-  return (
-    <div className="relative w-full aspect-[3/4] mt-0 pt-0 rounded-[24px] overflow-hidden bg-muted/20 group">
-      <video
-        ref={videoRef}
-        src={url}
-        loop
-        muted
-        playsInline
-        onWaiting={() => setIsBuffering(true)}
-        onPlaying={() => setIsBuffering(false)}
-        className="w-full h-full object-cover pointer-events-none"
-      />
-      
-      {/* Centered Buffering Spinner Overlay */}
-      {isBuffering && (
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none z-20">
-          <div className="w-12 h-12 border-4 border-[#2398f7] border-t-transparent rounded-full animate-spin" />
-        </div>
-      )}
-
-      {/* Centered Play/Pause Button Overlay */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setIsPlaying((prev) => !prev);
-          }}
-          className="w-16 h-16 bg-[#2398f7]/90 hover:bg-[#2398f7] text-white rounded-full flex items-center justify-center backdrop-blur-md active:scale-95 transition-transform cursor-pointer shadow-lg outline-none pointer-events-auto"
-          aria-label={isPlaying ? "Pause" : "Play"}
-        >
-          {isPlaying ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8 ml-1" />}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// ─── Static Image ────────────────────────────────────────────────────
-
-function ImageRenderer({ url, alt }: { url: string; alt: string }) {
-  return (
-    <div className="relative w-full aspect-[3/4] mt-0 pt-0 rounded-[24px] overflow-hidden bg-muted/20">
-      <Image
-        src={url}
-        alt={alt}
-        fill
-        className="object-cover object-center"
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-      />
-    </div>
-  );
-}
-
-// ─── Media Router ────────────────────────────────────────────────────
-
-function MediaRenderer({
-  url,
-  type,
-  alt,
-}: {
-  url: string;
-  type: string | null | undefined;
-  alt: string;
-}) {
-  const mediaType = getMediaType(url, type);
-
-  if (mediaType === "youtube") {
-    return <ClientVideoCard mediaUrl={url} title={alt} />;
-  }
-  if (mediaType === "video") {
-    return <NativeVideoCard url={url} />;
-  }
-  return <ImageRenderer url={url} alt={alt} />;
-}
-
 // ─── Main Stories Component ──────────────────────────────────────────
-
 export function AffanStories() {
   const [stories, setStories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -402,7 +101,7 @@ export function AffanStories() {
           <span className="text-[#2398f7]">best Affan stories</span>
         </h2>
         <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-          Behind the code, behind the screen — moments that shape the journey.
+          "Every photo has a story. Every video has a reason. Some of those reasons are still unclear."
         </p>
       </div>
 
@@ -441,14 +140,17 @@ export function AffanStories() {
                   key={story.id || index}
                   className="shadow-sm border border-black/5 dark:border-white/10 bg-gray-100/80 dark:bg-zinc-900/50 overflow-hidden rounded-[24px] p-0"
                 >
+                  {/* Bagian Media */}
                   {mediaUrl ? (
-                    <MediaRenderer
-                      url={mediaUrl}
-                      type={story.type}
-                      alt={story.title || "Story media"}
-                    />
+                    <div className="relative w-full aspect-[3/4] mt-0 pt-0 rounded-t-[24px] overflow-hidden bg-black/5 dark:bg-zinc-800/50">
+                      <SmartMedia
+                        src={mediaUrl}
+                        type={story.type}
+                        alt={story.title || "Story media"}
+                      />
+                    </div>
                   ) : (
-                    <div className="relative w-full aspect-[3/4] mt-0 pt-0 rounded-[24px] overflow-hidden bg-muted/20">
+                    <div className="relative w-full aspect-[3/4] mt-0 pt-0 rounded-t-[24px] overflow-hidden bg-muted/20">
                       <div className="absolute inset-0 bg-gradient-to-br from-[#2398f7]/10 to-[#2398f7]/5" />
                     </div>
                   )}
@@ -470,8 +172,10 @@ export function AffanStories() {
                       {story.title || "Untitled Story"}
                     </CardTitle>
                   </CardHeader>
+                  
+                  {/* 👇 BAGIAN TEXT YANG UDAH DI-FIX 👇 */}
                   <CardContent className="px-6 pb-6 pt-0">
-                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
                       {description}
                     </p>
                   </CardContent>

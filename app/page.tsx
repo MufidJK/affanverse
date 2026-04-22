@@ -88,9 +88,6 @@ export default function Home() {
 
       {/* Minigame Portal Section */}
       <MinigamePortal />
-
-      {/* Footer */}
-      <Footer />
     </>
   );
 }
