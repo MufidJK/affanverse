@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Volume2, VolumeX, Expand, Play, Pause } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
-// Helper buat deteksi tipe link
 function getMediaType(url: string, typeHint?: string | null): "video" | "youtube" | "image" {
   if (typeHint === "video" || typeHint === "youtube") {
     if (url.includes("youtube.com") || url.includes("youtu.be")) return "youtube";
@@ -40,8 +39,8 @@ function ClientVideoCard({ mediaUrl, title }: { mediaUrl: string; title: string 
   const [modalPlaying, setModalPlaying] = useState(false);
   const [showUI, setShowUI] = useState(false);
   
-  // 👇 FIX 1: Tambah state isEnded biar React tau videonya kelar 👇
-  const [isEnded, setIsEnded] = useState(false);
+  // State baru buat deteksi kursor keluar
+  const [isMouseLeft, setIsMouseLeft] = useState(false);
   const [interactionTime, setInteractionTime] = useState(Date.now());
 
   const cardIframeRef = useRef<HTMLIFrameElement>(null);
@@ -82,12 +81,18 @@ function ClientVideoCard({ mediaUrl, title }: { mediaUrl: string; title: string 
         const data = JSON.parse(e.data);
         if (data.event === 'infoDelivery' && data.info) {
           const state = data.info.playerState;
-          if (state === 1) { setCardPlaying(true); setIsEnded(false); } // Playing
-          if (state === 2) { setCardPlaying(false); setShowUI(true); } // Paused
-          if (state === 0) { // Ended
-            setCardPlaying(false);
-            setShowUI(true);
-            setIsEnded(true); // Tandain kelar, tapi JANGAN di-reset ke 0 di sini biar gak bentrok!
+          if (state === 1) { 
+            setCardPlaying(true); 
+          }
+          if (state === 2) { 
+            setCardPlaying(false); 
+            setShowUI(true); 
+          }
+          if (state === 0) { 
+            // Loop Pertahanin
+            ytCommand(cardIframeRef.current, "seekTo", [0, true]);
+            ytCommand(cardIframeRef.current, "playVideo");
+            setCardPlaying(true);
           }
         }
       } catch (err) {}
@@ -97,23 +102,34 @@ function ClientVideoCard({ mediaUrl, title }: { mediaUrl: string; title: string 
   }, []);
 
   useEffect(() => {
-    if (hasStarted && cardIframeRef.current) {
-      cardIframeRef.current.contentWindow?.postMessage(JSON.stringify({ event: 'listening', id: 1 }), '*');
+    let interval: NodeJS.Timeout;
+    if (hasStarted) {
+      interval = setInterval(() => {
+        if (cardIframeRef.current) {
+          cardIframeRef.current.contentWindow?.postMessage(JSON.stringify({ event: 'listening', id: videoId }), '*');
+        }
+      }, 500);
     }
-  }, [hasStarted]);
+    return () => clearInterval(interval);
+  }, [hasStarted, videoId]);
 
+  // 👇 TIMING DINAMIS (KLIK = 3.5s, LEAVE = 1.5s, PAUSE = 5s) 👇
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     if (showUI) {
-      const delay = cardPlaying ? 3500 : 5000; 
+      let delay = 5000; // Default pause
+      if (cardPlaying) {
+        delay = isMouseLeft ? 1500 : 3500; // Kalau kursor keluar 1.5s, kalau klik/hover 3.5s
+      }
       timeout = setTimeout(() => setShowUI(false), delay);
     }
     return () => clearTimeout(timeout);
-  }, [showUI, cardPlaying, interactionTime]);
+  }, [showUI, cardPlaying, interactionTime, isMouseLeft]);
 
-  const handleInteraction = (e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
+  const handleInteraction = (e?: React.MouseEvent | Event) => {
+    if (e && 'stopPropagation' in e) e.stopPropagation();
     setShowUI(true);
+    setIsMouseLeft(false); // Reset mouse left status
     setInteractionTime(Date.now());
   };
 
@@ -128,11 +144,6 @@ function ClientVideoCard({ mediaUrl, title }: { mediaUrl: string; title: string 
       setHasStarted(true);
       setCardPlaying(true);
     } else {
-      // 👇 FIX 2: Reset ke detik 0 HANYA saat tombol Play ditekan (1x klik fiks ngacir) 👇
-      if (isEnded) {
-        ytCommand(cardIframeRef.current, "seekTo", [0, true]);
-        setIsEnded(false);
-      }
       setCardPlaying(!cardPlaying);
     }
     handleInteraction(); 
@@ -151,13 +162,17 @@ function ClientVideoCard({ mediaUrl, title }: { mediaUrl: string; title: string 
         className="w-full h-full relative bg-black/5 dark:bg-zinc-800/50 overflow-hidden cursor-pointer group"
         onMouseEnter={handleInteraction}
         onMouseMove={handleInteraction}
-        onMouseLeave={() => { /* Biarkan timer bekerja */ }}
+        onMouseLeave={() => {
+          if (cardPlaying) {
+            setIsMouseLeft(true); // Kasih tau kursor keluar
+            setInteractionTime(Date.now()); // Mulai hitung mundur 1.5 detik
+          }
+        }}
         onClick={() => {
           if (!hasStarted) {
             togglePlay();
           } else {
-            setShowUI((prev) => !prev);
-            setInteractionTime(Date.now());
+            handleInteraction(); // Klik area memicu delay 3.5 detik
           }
         }}
       >
@@ -174,7 +189,6 @@ function ClientVideoCard({ mediaUrl, title }: { mediaUrl: string; title: string 
         )}
         
         <div className="absolute inset-0 z-[5] bg-transparent pointer-events-auto" />
-
         <div className={`absolute inset-0 transition-opacity duration-500 pointer-events-none z-10 ${isUIActive ? 'bg-black/50' : 'bg-transparent'}`} />
 
         <div className={`absolute top-0 left-0 w-full p-3 flex justify-end gap-2 z-20 transition-opacity duration-500 ${isUIActive ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
@@ -219,6 +233,7 @@ function NativeVideoCard({ url }: { url: string }) {
   const [isMuted, setIsMuted] = useState(false); 
   const [fitClass, setFitClass] = useState("object-cover"); 
   const [showUI, setShowUI] = useState(false);
+  const [isMouseLeft, setIsMouseLeft] = useState(false);
   const [interactionTime, setInteractionTime] = useState(Date.now());
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -232,18 +247,23 @@ function NativeVideoCard({ url }: { url: string }) {
     }
   }, [isPlaying]);
 
+  // 👇 TIMING DINAMIS NATIVE 👇
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     if (showUI) {
-      const delay = isPlaying ? 3500 : 5000;
+      let delay = 5000;
+      if (isPlaying) {
+        delay = isMouseLeft ? 1500 : 3500;
+      }
       timeout = setTimeout(() => setShowUI(false), delay);
     }
     return () => clearTimeout(timeout);
-  }, [showUI, isPlaying, interactionTime]);
+  }, [showUI, isPlaying, interactionTime, isMouseLeft]);
 
   const handleInteraction = (e?: React.MouseEvent | Event) => {
     if (e && 'stopPropagation' in e) e.stopPropagation();
     setShowUI(true);
+    setIsMouseLeft(false); // Reset mouse left
     setInteractionTime(Date.now());
   };
 
@@ -251,12 +271,6 @@ function NativeVideoCard({ url }: { url: string }) {
 
   const togglePlay = (e?: React.MouseEvent) => {
     if (e) { e.preventDefault(); e.stopPropagation(); }
-    
-    // 👇 FIX 3: Reset Native MP4 ke nol HANYA saat user mencet Play 👇
-    if (videoRef.current && videoRef.current.ended) {
-      videoRef.current.currentTime = 0;
-    }
-    
     setIsPlaying(!isPlaying);
     handleInteraction();
   };
@@ -266,15 +280,18 @@ function NativeVideoCard({ url }: { url: string }) {
       className="w-full h-full relative bg-black/5 dark:bg-zinc-800/50 overflow-hidden cursor-pointer"
       onMouseEnter={handleInteraction}
       onMouseMove={handleInteraction}
-      onMouseLeave={() => { /* Dibiarkan kosong */ }}
-      onClick={() => {
-        setShowUI((prev) => !prev);
-        setInteractionTime(Date.now());
+      onMouseLeave={() => {
+        if (isPlaying) {
+          setIsMouseLeft(true);
+          setInteractionTime(Date.now()); // Mulai 1.5 detik
+        }
       }}
+      onClick={() => handleInteraction()} // Klik trigger 3.5 detik
     >
       <video
         ref={videoRef}
         src={url}
+        loop // Loop dipertahanin
         muted={isMuted}
         playsInline
         preload="metadata"
@@ -285,11 +302,6 @@ function NativeVideoCard({ url }: { url: string }) {
         onPlaying={() => setIsBuffering(false)}
         onPlay={() => setIsPlaying(true)}
         onPause={() => { setIsPlaying(false); handleInteraction(); }}
-        // JANGAN RESET currentTime DI SINI BIAR STATE GAK BENTROK
-        onEnded={() => {
-          setIsPlaying(false);
-          setShowUI(true);
-        }}
         onLoadedMetadata={(e) => {
           const { videoWidth, videoHeight } = e.currentTarget;
           if (videoWidth > videoHeight) setFitClass("object-contain");
@@ -299,7 +311,6 @@ function NativeVideoCard({ url }: { url: string }) {
       />
 
       <div className="absolute inset-0 z-[5] bg-transparent pointer-events-auto" />
-
       <div className={`absolute inset-0 transition-opacity duration-500 pointer-events-none z-10 ${isUIActive ? 'bg-black/50' : 'bg-transparent'}`} />
       
       <div className={`absolute top-0 left-0 w-full p-3 flex justify-end gap-2 z-20 transition-opacity duration-500 ${isUIActive ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
