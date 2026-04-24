@@ -5,9 +5,13 @@ import { supabase } from "@/lib/supabase";
 import { FloatingBackButton } from "@/components/floating-back-button";
 import { 
   Play, Pause, SkipBack, SkipForward, Volume2, VolumeX,
-  Music2, ListMusic, Loader2, SearchX, Maximize2, Minimize2, Mic2 
+  Music2, ListMusic, Loader2, SearchX, Maximize2, Minimize2, Mic2, 
+  Activity // <-- Tambahan icon buat Immersive Mode
 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+
+// 👇 FIX: Import Komponen Overlay Lu 👇
+import SoundscapeOverlay from "@/components/soundscape-overlay"; 
 
 interface Song {
   id: number;
@@ -34,6 +38,9 @@ export default function MusicPage() {
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
   const [isLyricsExpanded, setIsLyricsExpanded] = useState(false);
+  
+  // 👇 FIX: Tambahan State Buat Overlay 👇
+  const [showVisualizer, setShowVisualizer] = useState(false);
   
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
@@ -263,7 +270,8 @@ export default function MusicPage() {
     <div className="min-h-screen bg-[#eaeced] dark:bg-[#0a0a0a] text-foreground pb-0 md:pb-6 transition-colors duration-300 relative flex flex-col">
       <audio 
         ref={audioRef} 
-        src={currentSong?.audio_url} 
+        src={currentSong?.audio_url}
+        crossOrigin="anonymous" 
         onLoadedMetadata={onLoadedMetadata}
         onEnded={handleNext}
       />
@@ -276,7 +284,7 @@ export default function MusicPage() {
       >
         <div className="absolute inset-0 bg-[#eaeced]/95 dark:bg-[#0a0a0a]/95 transition-opacity duration-500" onClick={() => setIsLyricsExpanded(false)} />
         
-        <div className={`relative w-full h-[90vh] md:h-full max-w-4xl md:max-h-[70vh] bg-white/50 dark:bg-zinc-900/50 rounded-t-3xl md:rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl flex flex-col z-10 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+        <div className={`relative w-full h-[90vh] md:h-full max-w-4xl md:max-h-[70vh] bg-white/50 dark:bg-zinc-900/50 rounded-t-3xl md:rounded-3xl border border-black/5 dark:border-white/10 shadow-2xl flex flex-col z-10 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
           isLyricsExpanded ? 'translate-y-0 scale-100' : 'translate-y-full md:translate-y-12 md:scale-95'
         }`}>
           <div className="flex items-center justify-between p-6 pb-4 border-b border-black/5 dark:border-white/5 bg-white/10 dark:bg-zinc-900/10 backdrop-blur-md rounded-t-3xl md:rounded-t-3xl">
@@ -323,7 +331,16 @@ export default function MusicPage() {
             </div>
             
             <h1 className="text-3xl md:text-5xl font-bold mb-2 tracking-tight line-clamp-1">{currentSong?.title}</h1>
-            <p className="text-xl text-[#2398f7] font-medium mb-8">{currentSong?.artist}</p>
+            <p className="text-xl text-[#2398f7] font-medium mb-6">{currentSong?.artist}</p>
+            
+            {/* 👇 FIX: Tombol Utama Immersive Mode (Aman buat Mobile & Desktop) 👇 */}
+            <button 
+              onClick={() => setShowVisualizer(true)}
+              className="flex items-center gap-2 px-6 py-2.5 mb-8 text-sm font-bold text-[#2398f7] border-2 border-[#2398f7]/30 rounded-full hover:bg-[#2398f7]/10 hover:border-[#2398f7] transition-all hover:scale-105 active:scale-95 shadow-sm"
+            >
+              <Activity className="w-4 h-4" />
+              Immersive Mode
+            </button>
             
             <div 
               onClick={() => parsedLyrics.length > 0 && setIsLyricsExpanded(true)}
@@ -438,6 +455,11 @@ export default function MusicPage() {
               className="hidden md:flex items-center gap-3 w-1/3 justify-end custom-slider"
               onClick={(e) => e.stopPropagation()}
             >
+              {/* 👇 FIX: Icon Immersive Mode kecil di bar bawah (khusus desktop) 👇 */}
+              <button onClick={() => setShowVisualizer(true)} className="text-muted-foreground hover:text-[#2398f7] transition-colors mr-2" title="Immersive Mode">
+                <Activity className="w-5 h-5" />
+              </button>
+              
               <button onClick={toggleMute} className="text-muted-foreground hover:text-[#2398f7] transition-colors">
                 {isMuted || volume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
               </button>
@@ -455,10 +477,17 @@ export default function MusicPage() {
         </div>
       </div>
 
-      {/* 👇 FIX: Tombol Back disembunyiin di mobile, muncul di desktop 👇 */}
       <div className="hidden md:block">
         <FloatingBackButton />
       </div>
+
+      {/* 👇 FIX: Pasang Komponen Overlay di paling bawah 👇 */}
+      <SoundscapeOverlay 
+        isOpen={showVisualizer} 
+        onClose={() => setShowVisualizer(false)} 
+        songTitle={currentSong?.title}
+        audioRef={audioRef} 
+      />
 
       <style jsx global>{`
         @keyframes music-bar {
