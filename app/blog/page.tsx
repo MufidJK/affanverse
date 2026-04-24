@@ -2,6 +2,7 @@
 import { supabase } from '@/lib/supabase' 
 import BlogCard from '@/components/blog-card' // Sesuaikan sama nama file
 import { FloatingBackButton } from "@/components/floating-back-button"
+import { Guestbook } from "@/components/guestbook";
 
 // Biar datanya fresh terus (revalidate tiap 1 menit)
 export const revalidate = 60;
@@ -55,6 +56,12 @@ export default async function BlogPage() {
         
       </div>
       <FloatingBackButton />
+      <Guestbook 
+        variant="section" 
+        pageId="chronicle" 
+        title="Chronicle Logs" 
+        description="Apa tanggapan lu soal artikel-artikel diatas?" 
+      />
     </main>
   )
 }

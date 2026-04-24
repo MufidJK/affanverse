@@ -9,7 +9,7 @@ import { MinigamePortal } from "@/components/minigame-portal";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Footer } from "@/components/footer";
+import { Guestbook } from "@/components/guestbook";
 
 export default function Home() {
   return (
@@ -88,6 +88,8 @@ export default function Home() {
 
       {/* Minigame Portal Section */}
       <MinigamePortal />
+
+      <Guestbook variant="floating" pageId="home" />
     </>
   );
 }
