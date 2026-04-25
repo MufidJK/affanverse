@@ -2,15 +2,22 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { ThemeToggle } from "./theme-toggle"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+  const pathname = usePathname()
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const closeMenu = () => setIsMenuOpen(false)
+
+  // LOGIKA BUAT NGE-HIDE NAVBAR DI PAGE TERTENTU
+  if (pathname === "/memory-leak" || pathname === "/terminal") {
+    return null
+  }
 
   return (
     <nav className="sticky top-0 z-40 w-full bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md shadow-sm dark:shadow-none dark:border-b dark:border-zinc-800">
@@ -34,6 +41,9 @@ export function Navbar() {
             </Button>
             <Button variant="ghost" className="text-muted-foreground hover:text-primary" asChild>
               <Link href="/blog">Chronicle</Link>
+            </Button>
+            <Button variant="ghost" className="text-muted-foreground hover:text-primary" asChild>
+              <Link href="/memory-leak">Memory Leak</Link>
             </Button>
             <Button variant="ghost" className="text-muted-foreground hover:text-primary" asChild>
               <Link href="/contact">Contact</Link>
@@ -70,6 +80,9 @@ export function Navbar() {
             </Button>
             <Button variant="ghost" className="justify-start text-muted-foreground hover:text-primary" asChild onClick={closeMenu}>
               <Link href="/blog">Chronicle</Link>
+            </Button>
+            <Button variant="ghost" className="justify-start text-muted-foreground hover:text-primary" asChild onClick={closeMenu}>
+              <Link href="/memory-leak">Memory Leak</Link>
             </Button>
             <Button variant="ghost" className="justify-start text-muted-foreground hover:text-primary" asChild onClick={closeMenu}>
               <Link href="/contact">Contact</Link>
