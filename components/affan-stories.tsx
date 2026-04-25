@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
 import {
   Card,
   CardContent,
@@ -51,22 +51,17 @@ const MOCK_STORIES = [
   },
 ];
 
-// ─── Data Fetcher ────────────────────────────────────────────────────
+// ─── Data Fetcher (uses shared singleton — no more zombie clients) ──
 async function fetchStories() {
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-    if (!supabaseUrl || !supabaseAnonKey) return MOCK_STORIES;
-
-    const supabase = createClient(supabaseUrl, supabaseAnonKey);
-    for (const table of ["stories", "gallery", "memories"]) {
+    for (const table of ["stories", "gallery", "memories"] as const) {
       try {
-        const { data, error } = await supabase
-          .from(table)
+        const { data, error } = await (supabase
+          .from(table as any)
           .select("*")
           .contains("sections", ["stories"])
-          .order("created_at", { ascending: false });
-        if (!error && data && data.length > 0) return data;
+          .order("created_at", { ascending: false }) as any);
+        if (!error && data && (data as any[]).length > 0) return data as any[];
       } catch {
         continue;
       }

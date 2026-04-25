@@ -16,24 +16,133 @@ export interface Database {
           created_at: string;
           /** Title of the gallery item */
           title: string | null;
+          /** Description / caption for the gallery item */
+          description: string | null;
           /** Public URL to the media file (image/video) */
           media_url: string | null;
           /** Content type, e.g. "image" or "video" */
           type: string | null;
+          /** Section tags for filtering, e.g. ["stories", "gallery_dump"] */
+          sections: string[] | null;
+          /** Optional tags for categorization */
+          tags: string[] | string | null;
+          /** Content body (for stories) */
+          content: string | null;
+          /** Caption text */
+          caption: string | null;
+          /** Body text */
+          body: string | null;
+          /** Image URL alias */
+          image_url: string | null;
         };
         Insert: {
           id?: number;
           created_at?: string;
           title?: string | null;
+          description?: string | null;
           media_url?: string | null;
           type?: string | null;
+          sections?: string[] | null;
+          tags?: string[] | string | null;
+          content?: string | null;
+          caption?: string | null;
+          body?: string | null;
+          image_url?: string | null;
         };
         Update: {
           id?: number;
           created_at?: string;
           title?: string | null;
+          description?: string | null;
           media_url?: string | null;
           type?: string | null;
+          sections?: string[] | null;
+          tags?: string[] | string | null;
+          content?: string | null;
+          caption?: string | null;
+          body?: string | null;
+          image_url?: string | null;
+        };
+      };
+      guestbook: {
+        Row: {
+          id: number;
+          created_at: string;
+          name: string;
+          message: string;
+          page_id: string;
+        };
+        Insert: {
+          id?: number;
+          created_at?: string;
+          name: string;
+          message: string;
+          page_id: string;
+        };
+        Update: {
+          id?: number;
+          created_at?: string;
+          name?: string;
+          message?: string;
+          page_id?: string;
+        };
+      };
+      projects: {
+        Row: {
+          id: number;
+          created_at: string;
+          title: string | null;
+          description: string | null;
+          image_url: string | null;
+          url: string | null;
+          tags: string[] | string | null;
+        };
+        Insert: {
+          id?: number;
+          created_at?: string;
+          title?: string | null;
+          description?: string | null;
+          image_url?: string | null;
+          url?: string | null;
+          tags?: string[] | string | null;
+        };
+        Update: {
+          id?: number;
+          created_at?: string;
+          title?: string | null;
+          description?: string | null;
+          image_url?: string | null;
+          url?: string | null;
+          tags?: string[] | string | null;
+        };
+      };
+      chapters: {
+        Row: {
+          id: string;
+          volume: number;
+          chapter_number: number;
+          log_code: string;
+          title: string;
+          content: string;
+          system_note: string | null;
+        };
+        Insert: {
+          id?: string;
+          volume: number;
+          chapter_number: number;
+          log_code: string;
+          title: string;
+          content: string;
+          system_note?: string | null;
+        };
+        Update: {
+          id?: string;
+          volume?: number;
+          chapter_number?: number;
+          log_code?: string;
+          title?: string;
+          content?: string;
+          system_note?: string | null;
         };
       };
     };

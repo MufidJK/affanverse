@@ -2,14 +2,9 @@
 
 import React, { useState, useEffect } from "react"
 import { MessageSquare, X, Send, Loader2 } from "lucide-react"
-import { createClient } from "@supabase/supabase-js"
+import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
-
-// Inisialisasi Supabase
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-const supabase = createClient(supabaseUrl, supabaseKey)
 
 interface GuestbookProps {
   pageId: string;
@@ -70,7 +65,7 @@ export function Guestbook({ pageId, variant, title = "Tinggalkan Jejak", descrip
     }
 
     setIsSubmitting(true)
-    const { error } = await supabase
+    const { error } = await (supabase as any)
       .from("guestbook")
       .insert([{ name: name.trim(), message: message.trim(), page_id: pageId }])
 

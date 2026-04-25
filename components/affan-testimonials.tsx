@@ -1,18 +1,16 @@
 import React from "react";
 import { Quote, User } from "lucide-react";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
+import type { Gallery } from "@/types/database";
 
 export async function AffanTestimonials() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
   // fetch the data based on the 'testimonials' section.
   // change 'gallery' to your actual table name if needed
   const { data: dbData } = await supabase
     .from("gallery")
     .select("*")
-    .contains("sections", ["testimonials"]);
+    .contains("sections", ["testimonials"]) as unknown as { data: Gallery[] | null, error: any };
 
   const baseRow1 = [
     { name: "Jeka", role: "Teman", text: "Orangnya bahaya kalau dibiarin nganggur, mending suruh rebahan aja.", avatarUrl: "/images/pfps/jeka-pfp.png" },

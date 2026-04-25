@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,12 +9,6 @@ import { FolderGit2 } from "lucide-react";
 // Server action or direct data fetch logic
 async function getProjects() {
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-    
-    if (!supabaseUrl || !supabaseAnonKey) return { data: null, error: true };
-    
-    const supabase = createClient(supabaseUrl, supabaseAnonKey);
     const { data, error } = await supabase.from("projects").select("*");
     
     if (error) return { data: null, error: true };

@@ -12,14 +12,32 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 /**
- * Supabase client instance.
+ * Supabase client — SINGLETON via globalThis.
  *
- * This is a singleton client that can be imported from any page or component.
- * It uses the public anon key, so it's safe to use in both server and client
- * components for read operations that respect RLS policies.
+ * WHY: Each `createClient()` call spawns a GoTrueClient with internal
+ * `setInterval` timers for token auto-refresh. In dev mode, Turbopack HMR
+ * re-evaluates modules, creating NEW client instances without cleaning up
+ * the old ones. The zombie timers hold closure references, preventing GC,
+ * and the heap grows until Node.js OOMs.
  *
- * Usage:
- *   import { supabase } from "@/lib/supabase";
- *   const { data } = await supabase.from("gallery").select("*");
+ * FIX: Cache the client on `globalThis` so HMR reuses the same instance.
+ * Also disable auth features we don't need (this app only does public reads).
  */
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
+const globalForSupabase = globalThis as unknown as {
+  supabase: ReturnType<typeof createClient<Database>> | undefined;
+};
+
+export const supabase =
+  globalForSupabase.supabase ??
+  createClient<Database>(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      persistSession: false,     // No session to persist on server
+      autoRefreshToken: false,   // Kill the background setInterval timer
+      detectSessionInUrl: false, // Not using OAuth redirects
+    },
+  });
+
+// In development, cache on globalThis so HMR doesn't create new instances
+if (process.env.NODE_ENV !== "production") {
+  globalForSupabase.supabase = supabase;
+}

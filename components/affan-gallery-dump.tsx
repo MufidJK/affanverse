@@ -1,14 +1,12 @@
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
+import type { Gallery } from "@/types/database";
 
 export async function AffanGalleryDump() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
   const { data: photos, error } = await supabase
     .from("gallery")
     .select("*")
-    .contains("sections", ["gallery_dump"]);
+    .contains("sections", ["gallery_dump"]) as unknown as { data: Gallery[] | null, error: any };
     
   if (error) {
     console.error("Error fetching gallery photos:", error);
