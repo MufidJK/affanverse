@@ -201,6 +201,7 @@ export default function MemoryLeakTerminal() {
                       src="/apexPredator.jpeg" 
                       alt="Apex Predator Profile" 
                       fill 
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
                     />
                   </div>

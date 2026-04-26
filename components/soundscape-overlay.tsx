@@ -39,6 +39,10 @@ export default function SoundscapeOverlay({ isOpen, onClose, songTitle = "Unknow
   useEffect(() => {
     if (!isOpen || !audioRef.current || !canvasRef.current) return;
 
+    // ── KEY FIX: aborted flag breaks the rAF loop immediately on cleanup ──
+    // Without this, the draw() closure can outlive the component via stale refs
+    let aborted = false;
+
     const audio = audioRef.current;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d', { alpha: false }); // Optimasi performa canvas
@@ -57,7 +61,10 @@ export default function SoundscapeOverlay({ isOpen, onClose, songTitle = "Unknow
       (window as any).audioCtx = audioCtx;
     }
 
-    let analyser = (audio as any).analyser;
+    // ── FIX: Guard against duplicate MediaElementSource creation ──
+    // createMediaElementSource() throws if the element already has a source.
+    // We cache both the analyser AND the source on the audio element.
+    let analyser = (audio as any).__analyser;
     if (!analyser) {
       analyser = audioCtx.createAnalyser();
       analyser.fftSize = 256; 
@@ -66,9 +73,12 @@ export default function SoundscapeOverlay({ isOpen, onClose, songTitle = "Unknow
         const source = audioCtx.createMediaElementSource(audio);
         source.connect(analyser);
         analyser.connect(audioCtx.destination);
-        (audio as any).analyser = analyser;
+        (audio as any).__analyser = analyser;
+        (audio as any).__source = source;
       } catch (e) {
-        console.warn("Audio node connected.", e);
+        // Already connected — reuse existing analyser if available
+        analyser = (audio as any).__analyser || analyser;
+        console.warn("Audio node already connected.", e);
       }
     }
 
@@ -77,6 +87,7 @@ export default function SoundscapeOverlay({ isOpen, onClose, songTitle = "Unknow
     setIsAudioReady(true);
 
     const draw = () => {
+      if (aborted) return; // ── KEY FIX: stop loop on cleanup ──
       animationRef.current = requestAnimationFrame(draw);
       analyser.getByteFrequencyData(dataArray);
 
@@ -211,6 +222,7 @@ export default function SoundscapeOverlay({ isOpen, onClose, songTitle = "Unknow
     draw(); 
 
     return () => {
+      aborted = true; // ── KEY FIX: signal the rAF loop to stop immediately ──
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener('resize', resizeCanvas);
       canvas.removeEventListener('mousedown', handleMouseDown);
@@ -219,6 +231,15 @@ export default function SoundscapeOverlay({ isOpen, onClose, songTitle = "Unknow
       canvas.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
+
+      // ── FIX: Release the full pixel buffer by zeroing canvas dimensions ──
+      // clearRect alone doesn't free the bitmap; setting width/height to 0 does.
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      canvas.width = 0;
+      canvas.height = 0;
+
+      // ── FIX: Reset audio ready state so loading UI shows on re-open ──
+      setIsAudioReady(false);
     };
   }, [isOpen, audioRef]);
 

@@ -1,38 +1,175 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { useState, Suspense, useEffect, useRef, useCallback } from "react";
+import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import { useGLTF, OrbitControls, Center, Html, Bounds } from "@react-three/drei";
 import { Button } from "@/components/ui/button";
 import { Box, Sparkles } from "lucide-react";
+import * as THREE from "three";
 
-function CursedModels({ modelIndex }: { modelIndex: number }) {
-  const model1 = useGLTF('/models/cursed-1.glb');
-  const model2 = useGLTF('/models/cursed-2.glb');
-  const model3 = useGLTF('/models/cursed-3.glb');
+// ─────────────────────────────────────────────────────────────────────
+// DEEP DISPOSE UTILITY
+// Recursively traverses a Three.js object and disposes ALL GPU
+// resources: geometries, materials (including arrays), and every
+// texture property found on each material.
+// ─────────────────────────────────────────────────────────────────────
+function deepDispose(obj: THREE.Object3D) {
+  obj.traverse((child) => {
+    // Dispose geometry
+    if ((child as THREE.Mesh).geometry) {
+      (child as THREE.Mesh).geometry.dispose();
+    }
 
-  return (
-    <>
-      {modelIndex === 0 && <primitive object={model1.scene} />}
-      {modelIndex === 1 && <primitive object={model2.scene} />}
-      {modelIndex === 2 && <primitive object={model3.scene} />}
-    </>
-  );
+    // Dispose material(s)
+    const mesh = child as THREE.Mesh;
+    if (mesh.material) {
+      const materials = Array.isArray(mesh.material)
+        ? mesh.material
+        : [mesh.material];
+
+      for (const mat of materials) {
+        // Dispose every texture on the material
+        for (const value of Object.values(mat)) {
+          if (value instanceof THREE.Texture) {
+            value.dispose();
+          }
+        }
+        mat.dispose();
+      }
+    }
+  });
 }
 
-useGLTF.preload('/models/cursed-1.glb');
-useGLTF.preload('/models/cursed-2.glb');
-useGLTF.preload('/models/cursed-3.glb');
+// ─────────────────────────────────────────────────────────────────────
+// MODEL PATHS
+// ─────────────────────────────────────────────────────────────────────
+const MODEL_PATHS = [
+  "/models/cursed-1.glb",
+  "/models/cursed-2.glb",
+  "/models/cursed-3.glb",
+] as const;
 
+// NOTE: useGLTF.preload() calls have been INTENTIONALLY REMOVED.
+// They are module-scope side-effects that re-execute on every
+// Turbopack HMR cycle, creating new loader instances that accumulate
+// in the Node.js heap and contribute to the OOM crash.
+
+// ─────────────────────────────────────────────────────────────────────
+// CursedModel
+//
+// Loads ONLY the current model. Uses scene.clone(true) to create an
+// independent copy, so that disposal doesn't corrupt useGLTF's cache.
+//
+// On unmount or when modelPath changes:
+//   1. Removes the clone from the group
+//   2. Calls deepDispose() on the clone to free all GPU resources
+// ─────────────────────────────────────────────────────────────────────
+function CursedModel({ modelPath }: { modelPath: string }) {
+  const { scene } = useGLTF(modelPath);
+  const groupRef = useRef<THREE.Group>(null);
+  const cloneRef = useRef<THREE.Object3D | null>(null);
+  const prevPathRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    const group = groupRef.current;
+    if (!group) return;
+
+    // Step 1: Remove and dispose the PREVIOUS clone (prevents stacking)
+    if (cloneRef.current) {
+      group.remove(cloneRef.current);
+      deepDispose(cloneRef.current);
+      cloneRef.current = null;
+    }
+
+    // Step 1b: Evict the PREVIOUS model from drei's useGLTF cache
+    // This frees the raw parsed GLTF data that useGLTF holds internally.
+    // Safe because we always clone on load — the cache copy is redundant.
+    if (prevPathRef.current && prevPathRef.current !== modelPath) {
+      useGLTF.clear(prevPathRef.current);
+    }
+    prevPathRef.current = modelPath;
+
+    // Step 2: Clone the new scene and add it
+    const clone = scene.clone(true);
+    cloneRef.current = clone;
+    group.add(clone);
+
+    // Step 3: Cleanup on unmount OR on next modelPath change
+    return () => {
+      if (cloneRef.current && group) {
+        group.remove(cloneRef.current);
+        deepDispose(cloneRef.current);
+        cloneRef.current = null;
+      }
+      // On full unmount, also evict current model from cache
+      if (prevPathRef.current) {
+        useGLTF.clear(prevPathRef.current);
+        prevPathRef.current = null;
+      }
+    };
+  }, [scene, modelPath]);
+
+  return <group ref={groupRef} />;
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// RendererCleanup
+//
+// Captures the WebGL renderer via useThree() and on unmount:
+//   1. Calls renderer.dispose() to free WebGL state
+//   2. Calls renderer.forceContextLoss() to release the GPU context
+//
+// Without this, navigating away from the page leaves a zombie WebGL
+// context consuming GPU memory that V8 GC cannot reclaim.
+// ─────────────────────────────────────────────────────────────────────
+function RendererCleanup() {
+  const { gl } = useThree();
+
+  useEffect(() => {
+    return () => {
+      gl.dispose();
+      gl.forceContextLoss();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return null;
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// Main Component
+// ─────────────────────────────────────────────────────────────────────
 export function CursedArtifact() {
   const [modelIndex, setModelIndex] = useState(0);
+  const [isInView, setIsInView] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const toggleDimension = () => {
+  // ── IntersectionObserver: pause render loop when off-screen ──
+  // Switches frameloop to "demand" (no frames) when the section is
+  // not visible, freeing GPU for Hero CSS animations at the top.
+  // rootMargin of 200px wakes the canvas slightly before it scrolls
+  // into view to prevent pop-in.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { rootMargin: "200px", threshold: 0 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const toggleDimension = useCallback(() => {
     setModelIndex((prev) => (prev + 1) % 3);
-  };
+  }, []);
 
   return (
-    <section className="w-full py-24 bg-zinc-950 text-white overflow-hidden relative">
+    <section ref={sectionRef} className="w-full py-24 bg-zinc-950 text-white overflow-hidden relative">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#2398f7]/5 via-transparent to-transparent pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -55,7 +192,10 @@ export function CursedArtifact() {
         <div className="relative group">
           {/* Canvas Container */}
           <div className="h-[500px] w-full rounded-3xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm overflow-hidden relative">
-            <Canvas camera={{ position: [0, 0, 1.8] }}>
+            <Canvas dpr={[1, 1.5]} frameloop={isInView ? "always" : "demand"} camera={{ position: [0, 0, 1.8] }}>
+              {/* Cleanup: disposes WebGL renderer on unmount */}
+              <RendererCleanup />
+
               <ambientLight intensity={4.0} />
               <directionalLight position={[10, 15, 10]} intensity={3.0} castShadow />
               <pointLight position={[-10, -10, -10]} intensity={2.0} color="white" />
@@ -69,7 +209,8 @@ export function CursedArtifact() {
               }>
                 <Bounds fit clip observe>
                   <Center>
-                    <CursedModels modelIndex={modelIndex} />
+                    {/* KEY: modelPath changes trigger the useEffect cleanup cycle */}
+                    <CursedModel modelPath={MODEL_PATHS[modelIndex]} />
                   </Center>
                 </Bounds>
               </Suspense>

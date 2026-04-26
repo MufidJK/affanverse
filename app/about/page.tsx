@@ -135,6 +135,7 @@ export default function AboutPage() {
                 src="/mufid.jpeg" // <--- GANTI PATH GAMBAR LU
                 alt="Mufid Refaya"
                 fill 
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover transition-transform duration-700"
               />
             </div>
@@ -211,6 +212,7 @@ export default function AboutPage() {
                   src="/affan-1.jpeg" // <--- MASUKIN GAMBAR LU DI SINI
                   alt="Affan The Anomaly"
                   fill 
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover opacity-90 mix-blend-lighten filter contrast-125"
                 />
                 {/* Overlay Biru Gelap Biar Kesan "Void" Nyatu sama Hexagon */}

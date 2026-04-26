@@ -4,30 +4,31 @@ import React, { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
 import { Activity } from "lucide-react"
 
+// FIX: Hoisted to module scope — the setInterval closure no longer
+// captures a new copy of this array on every re-render.
+const STATUSES = [
+  "Exploring the Void...",
+  "Compiling memories...",
+  "Analyzing neural patterns...",
+  "Monitoring system integrity...",
+  "Floating in zero gravity...",
+  "Restructuring dimensional data...",
+  "Entering the abyss...",
+  "Turu scroll tiktok...",
+  "Hacking system mobility affanverse...",
+];
+
 export function AffanStatus() {
   const { theme } = useTheme()
   const [mounted, setMounted] = useState(false)
   
-  // Daftar status random Affan
-  const statuses = [
-    "Exploring the Void...",
-    "Compiling memories...",
-    "Analyzing neural patterns...",
-    "Monitoring system integrity...",
-    "Floating in zero gravity...",
-    "Restructuring dimensional data...",
-    "Entering the abyss...",
-    "Turu scroll tiktok...",
-    "Hacking system mobility affanverse...",
-  ]
-
-  const [currentStatus, setCurrentStatus] = useState(statuses[0])
+  const [currentStatus, setCurrentStatus] = useState(STATUSES[0])
 
   useEffect(() => {
     setMounted(true)
     const interval = setInterval(() => {
-      const randomIndex = Math.floor(Math.random() * statuses.length)
-      setCurrentStatus(statuses[randomIndex])
+      const randomIndex = Math.floor(Math.random() * STATUSES.length)
+      setCurrentStatus(STATUSES[randomIndex])
     }, 4000) // Ganti tiap 4 detik otomatis
     return () => clearInterval(interval)
   }, [])

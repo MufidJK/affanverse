@@ -126,12 +126,18 @@ function ClientVideoCard({ mediaUrl, title }: { mediaUrl: string; title: string 
     return () => clearTimeout(timeout);
   }, [showUI, cardPlaying, interactionTime, isMouseLeft]);
 
-  const handleInteraction = (e?: React.MouseEvent | Event) => {
+  // FIX: Throttle handleInteraction — at most once per 300ms.
+  // Without this, every pixel of mouse movement triggers a React re-render.
+  const lastInteractionRef = useRef(0);
+  const handleInteraction = useCallback((e?: React.MouseEvent | Event) => {
     if (e && 'stopPropagation' in e) e.stopPropagation();
+    const now = Date.now();
+    if (now - lastInteractionRef.current < 300) return;
+    lastInteractionRef.current = now;
     setShowUI(true);
-    setIsMouseLeft(false); // Reset mouse left status
-    setInteractionTime(Date.now());
-  };
+    setIsMouseLeft(false);
+    setInteractionTime(now);
+  }, []);
 
   const isUIActive = !cardPlaying || showUI;
 
@@ -260,12 +266,17 @@ function NativeVideoCard({ url }: { url: string }) {
     return () => clearTimeout(timeout);
   }, [showUI, isPlaying, interactionTime, isMouseLeft]);
 
-  const handleInteraction = (e?: React.MouseEvent | Event) => {
+  // FIX: Throttle handleInteraction — at most once per 300ms.
+  const lastInteractionRef = useRef(0);
+  const handleInteraction = useCallback((e?: React.MouseEvent | Event) => {
     if (e && 'stopPropagation' in e) e.stopPropagation();
+    const now = Date.now();
+    if (now - lastInteractionRef.current < 300) return;
+    lastInteractionRef.current = now;
     setShowUI(true);
-    setIsMouseLeft(false); // Reset mouse left
-    setInteractionTime(Date.now());
-  };
+    setIsMouseLeft(false);
+    setInteractionTime(now);
+  }, []);
 
   const isUIActive = !isPlaying || showUI;
 

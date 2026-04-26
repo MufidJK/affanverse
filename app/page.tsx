@@ -1,11 +1,11 @@
 import { Hero3DEffect } from "@/components/hero-3d";
 import { AffanStories } from "@/components/affan-stories";
 import { AffanTestimonials } from "@/components/affan-testimonials";
-import { CursedArtifact } from "@/components/cursed-artifact";
 import { AffanSkillTree } from "@/components/affan-skill-tree";
 import { AffanFAQ } from "@/components/affan-faq";
 import { AffanGalleryDump } from "@/components/affan-gallery-dump";
 import { MinigamePortal } from "@/components/minigame-portal";
+import { CursedArtifactLoader } from "@/components/cursed-artifact-loader";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -70,7 +70,7 @@ export default function Home() {
 
       {/* Cursed Artifact Section */}
       <section className="mt-40 overflow-hidden relative border-t border-black/10 dark:border-white/10">
-        <CursedArtifact />
+        <CursedArtifactLoader />
       </section>
 
       {/* Skill Tree Section */}

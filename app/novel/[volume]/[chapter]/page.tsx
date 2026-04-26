@@ -1,3 +1,4 @@
+import { createClient } from "@supabase/supabase-js"
 import { supabase } from "@/lib/supabase"
 import Link from "next/link"
 import { Suspense } from "react"
@@ -27,8 +28,19 @@ export default async function ChapterReader({ params, searchParams }: Props) {
   const volNumber = resolvedParams.volume.replace('vol-', '');
   const isFocusMode = resolvedSearch.mode === 'focus'; 
 
-  // 1. Fetch Current Chapter
-  const { data: chapterData, error } = await supabase
+  // FIX: Use cache: 'no-store' to prevent Next.js from indefinitely caching
+  // large chapter text blobs in the Node.js memory heap during dev.
+  const noCache = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+      global: { fetch: (url, init) => fetch(url, { ...init, cache: 'no-store' }) },
+    }
+  );
+
+  // 1. Fetch Current Chapter (no-cache to prevent heap bloat)
+  const { data: chapterData, error } = await noCache
     .from('novel_chapters')
     .select('*')
     .eq('volume', volNumber)
@@ -48,14 +60,14 @@ export default async function ChapterReader({ params, searchParams }: Props) {
   }
 
   // 2. Fetch Next/Prev Chapters in PARALLEL (eliminates waterfall)
-  const prevQuery = supabase
+  const prevQuery = noCache
     .from('novel_chapters')
     .select('log_code')
     .eq('volume', volNumber)
     .eq('chapter_number', chapterData.chapter_number - 1)
     .maybeSingle() as unknown as Promise<{ data: { log_code: string } | null, error: any }>;
 
-  const nextQuery = supabase
+  const nextQuery = noCache
     .from('novel_chapters')
     .select('log_code')
     .eq('volume', volNumber)
@@ -114,7 +126,7 @@ export default async function ChapterReader({ params, searchParams }: Props) {
         <div className="w-full font-serif text-lg md:text-xl leading-loose whitespace-pre-wrap transition-colors">
           {paragraphs.map((para: string, i: number) => {
             if (!para.trim()) return <br key={i} />;
-            return <p key={i} id={`frag-${i}`} className="mb-6">{para}</p>;
+            return <p key={i} id={`frag-${i}`} className="mb-6 indent-8">{para}</p>;
           })}
         </div>
 

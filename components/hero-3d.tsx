@@ -40,6 +40,7 @@ export function Hero3DEffect() {
       <motion.div
         animate={isHovered ? { y: 0 } : { y: [-10, 10, -10] }}
         transition={{ repeat: isHovered ? 0 : Infinity, duration: 4, ease: "easeInOut" }}
+        className="will-change-transform [transform:translateZ(0)]"
       >
         {/* Inner Wrapper: Interactive Tilt Tracking */}
         <motion.div
@@ -52,7 +53,7 @@ export function Hero3DEffect() {
             transformStyle: "preserve-3d",
           }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="relative w-[300px] h-[400px] md:w-[400px] md:h-[500px] rounded-3xl overflow-visible touch-none cursor-pointer"
+          className="relative w-[300px] h-[400px] md:w-[400px] md:h-[500px] rounded-3xl overflow-visible touch-none cursor-pointer will-change-transform"
         >
           {/* Background card with glass effect */}
           <div 
@@ -73,7 +74,7 @@ export function Hero3DEffect() {
                 src="/affannobg.png"
                 alt="Affan portrait"
                 fill
-                className="object-contain object-center drop-shadow-2xl"
+                className="object-contain object-center drop-shadow-2xl transition-transform duration-300 ease-out will-change-transform [transform:translateZ(0)] hover:scale-105"
                 priority
                 sizes="(max-width: 768px) 300px, 400px"
               />

@@ -78,10 +78,16 @@ export function AffanStories() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
+
     fetchStories().then((res) => {
-      setStories(res);
-      setLoading(false);
+      if (mounted) {
+        setStories(res);
+        setLoading(false);
+      }
     });
+
+    return () => { mounted = false; };
   }, []);
 
   return (

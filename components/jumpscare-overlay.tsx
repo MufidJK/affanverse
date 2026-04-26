@@ -21,6 +21,11 @@ export function JumpscareOverlay() {
       return
     }
 
+    // FIX: Track pending scare-clear timeout so we can cancel it on cleanup.
+    // Without this, switching theme mid-timeout fires setScares([]) after
+    // the cleanup function has already run — a dangling closure.
+    let scareClearTimeout: ReturnType<typeof setTimeout> | null = null;
+
     // 1. MESIN SWAP TEMA (Tiap 2.5 Detik)
     // Ini yang bikin Hitam ke Putih tanpa ngerusak CSS lu!
     const swapInterval = setInterval(() => {
@@ -87,14 +92,16 @@ export function JumpscareOverlay() {
         setScares(scatterScares)
       }
 
-      // Hilang dalam 200ms
-      setTimeout(() => setScares([]), 200)
+      // Hilang dalam 200ms — FIX: tracked so cleanup can cancel it
+      if (scareClearTimeout) clearTimeout(scareClearTimeout);
+      scareClearTimeout = setTimeout(() => setScares([]), 200)
 
     }, 5000)
 
     return () => {
       clearInterval(swapInterval)
       clearInterval(jumpInterval)
+      if (scareClearTimeout) clearTimeout(scareClearTimeout)
       document.body.classList.remove('glitch-invert')
     }
   }, [theme])

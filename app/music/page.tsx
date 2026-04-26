@@ -172,19 +172,14 @@ export default function MusicPage() {
     }
   }, [volume, isMuted]);
 
-  useEffect(() => {
-    let animationFrameId: number;
-    const updateProgress = () => {
-      if (audioRef.current && isPlaying) {
-        setProgress(audioRef.current.currentTime);
-        animationFrameId = requestAnimationFrame(updateProgress);
-      }
-    };
-    if (isPlaying) {
-      animationFrameId = requestAnimationFrame(updateProgress);
+  // FIX: Replaced requestAnimationFrame loop (60 re-renders/sec) with
+  // onTimeUpdate handler on <audio> element (~4 re-renders/sec).
+  // The handler is defined here and passed to the <audio> element below.
+  const onTimeUpdateHandler = () => {
+    if (audioRef.current) {
+      setProgress(audioRef.current.currentTime);
     }
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [isPlaying]);
+  };
 
   const togglePlay = () => setIsPlaying(!isPlaying);
 
@@ -274,6 +269,7 @@ export default function MusicPage() {
         crossOrigin="anonymous" 
         onLoadedMetadata={onLoadedMetadata}
         onEnded={handleNext}
+        onTimeUpdate={onTimeUpdateHandler}
       />
 
       {/* MODAL LIRIK */}
