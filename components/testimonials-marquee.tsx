@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Quote, User } from "lucide-react";
+import { motion } from "framer-motion";
 
 export interface TestimonialItem {
   name: string;
@@ -16,17 +17,11 @@ export function TestimonialsMarquee({
 }: {
   testimonials: TestimonialItem[];
 }) {
+  // Gandain array buat ilusi loop tak terbatas
+  const duplicatedTestimonials = [...testimonials, ...testimonials];
+
   return (
     <div className="w-full relative flex flex-col items-center">
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes marquee { 
-          0% { transform: translateX(0); } 
-          100% { transform: translateX(-50%); } 
-        }
-        .animate-marquee { animation: marquee 30s linear infinite; }
-        .animate-marquee:hover { animation-play-state: paused; }
-      `}} />
-
       <div className="text-center mb-12 space-y-3 px-6">
         <p className="text-sm font-medium uppercase tracking-widest text-[#2398f7]">
           Testimonials from the Multiverse
@@ -36,25 +31,39 @@ export function TestimonialsMarquee({
         </h2>
       </div>
 
-      <div className="overflow-hidden flex w-full relative py-4">
-        {/* Left & Right gradient masks for smooth fade effect */}
+      <div className="overflow-hidden flex w-full relative py-4 group">
+        {/* Left & Right gradient masks */}
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        <div className="flex w-max animate-marquee space-x-6 px-6">
-          {[...testimonials, ...testimonials].map((testimonial, i) => (
+        {/* THE ULTIMATE FIX: Pake Framer Motion.
+          Ini bakal jalan nempel sama refresh rate layar lu (165Hz/200Hz).
+        */}
+        <motion.div
+          className="flex w-max space-x-6 px-3 will-change-transform"
+          animate={{
+            x: ["0%", "-50%"],
+          }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 35, // Makin gede angkanya, makin pelan jalannya
+              ease: "linear",
+            },
+          }}
+        >
+          {duplicatedTestimonials.map((testimonial, i) => (
             <div
               key={i}
-              className="w-[350px] rounded-3xl border border-[#2398f7]/30 bg-background/50 backdrop-blur-md p-6 shadow-sm flex flex-col gap-4 relative overflow-hidden"
+              className="w-[350px] rounded-3xl border border-[#2398f7]/30 bg-background/95 p-6 flex flex-col gap-4 relative overflow-hidden transform-gpu [backface-visibility:hidden]"
             >
-              {/* Subtle Glow Effect */}
-              <div className="absolute -inset-10 bg-[#2398f7]/10 blur-2xl rounded-full z-0 pointer-events-none" />
+              {/* Radial gradient aman tanpa efek blur */}
+              <div className="absolute -inset-10 bg-[radial-gradient(circle_at_center,_rgba(35,152,247,0.15)_0%,_transparent_70%)] rounded-full z-0 pointer-events-none" />
 
               <div className="relative z-10 flex flex-col h-full">
-                
-                {/* Header Profile Section */}
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 shrink-0 rounded-full border-2 border-[#2398f7]/50 overflow-hidden bg-background/80 flex items-center justify-center">
+                  <div className="w-12 h-12 shrink-0 rounded-full border-2 border-[#2398f7]/50 overflow-hidden bg-background flex items-center justify-center">
                     {testimonial.name === "Anonim" ? (
                       <User className="w-6 h-6 text-muted-foreground" />
                     ) : (
@@ -77,7 +86,6 @@ export function TestimonialsMarquee({
                   </div>
                 </div>
 
-                {/* Testimonial Quote and Text */}
                 <Quote className="w-6 h-6 text-[#2398f7]/40 mb-2" />
                 <p className="text-muted-foreground text-sm leading-relaxed min-h-[60px] italic">
                   "{testimonial.text}"
@@ -85,7 +93,7 @@ export function TestimonialsMarquee({
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
