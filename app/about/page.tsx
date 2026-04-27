@@ -102,7 +102,7 @@ export default function AboutPage() {
         </h2>
         {/* Margin top dipepetin pake mt-1.5 */}
         <p className="mt-1.5 md:mt-2 text-xs md:text-sm text-zinc-700 dark:text-zinc-200 font-medium inline-block px-6 py-2 rounded-full bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-xl">
-          Menjembatani realitas The Architect dan anomali The Entity.
+          Menjembatani realitas The Architect dan anomali The Apex Predator.
         </p>
       </div>
       {/* ==================================================== */}
@@ -157,7 +157,7 @@ export default function AboutPage() {
           <div className="space-y-4 pt-4">
             <h3 className="text-sm font-bold uppercase tracking-widest text-zinc-400">Current Arsenal</h3>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <li className="flex items-center gap-3 text-sm text-zinc-700 dark:text-zinc-300"><Code2 className="w-4 h-4 text-zinc-400" /> Next.js & React</li>
+              <li className="flex items-center gap-3 text-sm text-zinc-700 dark:text-zinc-300"><Code2 className="w-4 h-4 text-zinc-400" /> Next.js, React & Supabase</li>
               <li className="flex items-center gap-3 text-sm text-zinc-700 dark:text-zinc-300"><Sparkles className="w-4 h-4 text-zinc-400" /> Tailwind & shadcn/ui</li>
               <li className="flex items-center gap-3 text-sm text-zinc-700 dark:text-zinc-300"><BrainCircuit className="w-4 h-4 text-zinc-400" /> ML (KNN, SVM, Trees, KMeans)</li>
               <li className="flex items-center gap-3 text-sm text-zinc-700 dark:text-zinc-300"><Cpu className="w-4 h-4 text-zinc-400" /> Local AI Workflows</li>
@@ -226,7 +226,7 @@ export default function AboutPage() {
 
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#2398f7]/10 text-xs font-mono text-[#2398f7] border border-[#2398f7]/20 shadow-[0_0_10px_rgba(35,152,247,0.2)]">
             <Sparkles className="w-3 h-3" />
-            <span>The Entity</span>
+            <span>The Apex Predator</span>
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#2398f7] to-purple-400 drop-shadow-sm">

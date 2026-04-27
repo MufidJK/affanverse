@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import { ThemeToggle } from "./theme-toggle"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
-import { cn } from "@/lib/utils" // Pastikan lu punya utility cn standar shadcn
+import { cn } from "@/lib/utils"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
@@ -15,7 +15,6 @@ export function Navbar() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const closeMenu = () => setIsMenuOpen(false)
 
-  // LOGIKA BUAT NGE-HIDE NAVBAR DI PAGE TERTENTU
   if (pathname === "/memory-leak" || pathname === "/terminal") {
     return null
   }
@@ -25,6 +24,7 @@ export function Navbar() {
     { name: "Affan's Music", href: "/music" },
     { name: "Chronicle", href: "/blog" },
     { name: "Memory Leak", href: "/memory-leak" },
+    { name: "Apex Predator", href: "/novel" },
     { name: "Contact", href: "/contact" },
     { name: "About", href: "/about" },
   ]
@@ -33,7 +33,7 @@ export function Navbar() {
     <nav className="sticky top-0 z-40 w-full bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md shadow-sm dark:shadow-none dark:border-b dark:border-zinc-800">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-8">
         
-        {/* Kiri: Logo (Static as requested) */}
+        {/* Kiri: Logo */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center gap-2" onClick={closeMenu}>
             <span className="text-xl font-bold tracking-tight text-primary">Affanverse.</span>
@@ -44,7 +44,9 @@ export function Navbar() {
         <div className="hidden md:flex flex-1 items-center justify-end space-x-2">
           <nav className="flex items-center space-x-1 sm:space-x-2 font-medium">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href
+              // INI YANG DIGANTI BUAT DESKTOP
+              const isActive = pathname.startsWith(link.href) && link.href !== '/' || pathname === link.href
+
               return (
                 <Button
                   key={link.href}
@@ -97,7 +99,9 @@ export function Navbar() {
         <div className="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md absolute w-full shadow-lg transition-all animate-in slide-in-from-top-2">
           <nav className="flex flex-col p-4 space-y-2 font-medium">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href
+              // INI JUGA DIGANTI BUAT MOBILE
+              const isActive = pathname.startsWith(link.href) && link.href !== '/' || pathname === link.href
+
               return (
                 <Button
                   key={link.href}

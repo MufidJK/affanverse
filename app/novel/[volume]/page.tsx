@@ -3,6 +3,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { AlertCircle, BookText, ImageIcon, Lock } from "lucide-react"
 import { DynamicChapterList } from "./catalog-client"
+import { VolumeTabs } from "@/components/volume-tabs"
 
 type Chapter = {
   id: string;
@@ -47,7 +48,7 @@ export default async function NovelVolumeDetail({ params, searchParams }: Props)
     <div className="min-h-screen bg-background flex flex-col items-center">
       
       {/* HERO SECTION: Centered & High Contrast */}
-      <div className="relative w-full h-[45vh] min-h-[350px] flex flex-col items-center justify-center border-b border-border overflow-hidden">
+      <div className="relative w-full h-[45vh] min-h-[350px] flex flex-col items-center justify-center overflow-hidden">
         <Image 
           src="/apexPredator.jpeg" 
           alt="Apex Predator Cover" 
@@ -71,31 +72,7 @@ export default async function NovelVolumeDetail({ params, searchParams }: Props)
       </div>
 
       {/* TABS NAVIGATION: Centered */}
-      <div className="w-full border-b border-border flex justify-center mt-4">
-        <div className="flex gap-8 px-4 overflow-x-auto no-scrollbar">
-          <Link 
-            href={`?tab=ln`}
-            scroll={false}
-            className={`flex items-center gap-2 pb-4 font-bold transition-all relative hover:drop-shadow-[0_0_8px_#2398f7] ${
-              activeTab === 'ln' ? 'text-[#2398f7]' : 'text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            <BookText size={18} /> LIGHT NOVEL
-            {activeTab === 'ln' && <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#2398f7]" />}
-          </Link>
-          <Link 
-            href={`?tab=manhwa`}
-            scroll={false}
-            className={`flex items-center gap-2 pb-4 font-bold transition-all relative hover:drop-shadow-[0_0_8px_#2398f7] ${
-              activeTab === 'manhwa' ? 'text-[#2398f7]' : 'text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            <ImageIcon size={18} /> MANHWA ADAPTATION
-            {activeTab === 'manhwa' && <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#2398f7]" />}
-          </Link>
-        </div>
-      </div>
-
+      <VolumeTabs activeTab={activeTab} />
       {/* CONTENT AREA: Centered List */}
       <div className="w-full max-w-3xl px-4 py-10 pb-24 flex flex-col">
         
