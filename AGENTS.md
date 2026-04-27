@@ -4,9 +4,9 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
-# AFFANVERSE: STRICT PERFORMANCE & ANTI-LEAK SOP
+## AFFANVERSE: STRICT PERFORMANCE & ANTI-LEAK SOP
 **Developer:** Jeka
-**Stack:** Next.js 16 (Turbopack), React, Three.js (R3F), Supabase, Tailwind CSS.
+**Stack:** Next.js 16 (Turbopack), React, Three.js (R3F), Supabase, Tailwind CSS, Framer Motion.
 
 ## 🎯 CORE OBJECTIVE
 This project is a continuously expanding ecosystem with massive, interconnected features. The development server (`npm run dev`) and Production server (`npm run start`) MUST remain lightweight regardless of how many new complex features, multimedia elements, or heavy logic systems are added in the future. Any new code generated for this project MUST strictly adhere to the following memory management rules. Do not prioritize brief code over safe memory handling.
@@ -35,13 +35,27 @@ Unmounted 3D models do not automatically clear from GPU VRAM. They will stack an
 WebGL rendering must pause when out of the user's viewport to free up resources for CSS animations.
 * **Enforcement:** Use `IntersectionObserver` or `useInView`. If the 3D canvas is not on screen, dynamically set its prop to `frameloop="demand"`. Set back to `frameloop="always"` when visible.
 
-## 🛑 RULE 5: HARDWARE ACCELERATION FOR UI (CSS SMOOTHNESS)
-Heavy CSS animations will cause stuttering (FPS drops) if not handed off to the GPU.
+## 🛑 RULE 5: HARDWARE ACCELERATION & STRICT CSS LIMITS (UI SMOOTHNESS)
+Heavy CSS animations will cause Chromium Compositor to stutter if not properly optimized.
 * **Enforcement:** Use Tailwind classes `will-change-transform` and `transform-gpu` (or `[transform:translateZ(0)]`) on any continuously animating DOM element. 
-* **Animation Rules:** ONLY animate `transform` (scale, translate) and `opacity`. NEVER animate `width`, `height`, `top`, `left`, or `box-shadow` on continuous loops. Minimize `backdrop-blur` on moving elements.
+* **Prohibited Filters:** NEVER use `blur`, `backdrop-blur`, or `drop-shadow` on or inside elements that are animating (e.g., floating or scrolling). To create glow/shadow effects on moving objects, use static `radial-gradient` backgrounds.
+* **Animation Rules:** ONLY animate `transform` (scale, translate) and `opacity`. NEVER animate `width`, `height`, `margin`, or `box-shadow` on continuous loops.
 
-## 🛑 RULE 6: MEDIA & AUDIO CONTEXT
+## 🛑 RULE 6: CONTINUOUS LOOPS & MARQUEES (VSYNC & VRAM)
+Chromium browsers suffer from the "Giant Texture Bug" and VSync tearing on high-refresh-rate monitors when dealing with extremely wide moving DOMs.
+* **Enforcement:** Avoid native CSS `@keyframes` for continuous long scrolls. Use `framer-motion` (`animate={{ x: ... }}`) to ensure the animation syncs perfectly with the monitor's native refresh rate via `requestAnimationFrame`.
+
+## 🛑 RULE 7: MEDIA & AUDIO CONTEXT
 * **Enforcement:** AudioContexts and HTML5 `<audio>` or `<video>` instances must be paused, their streams closed, and properly unmounted when navigating away from the page.
+
+## 🛑 RULE 8: LAZY LOADING & DYNAMIC IMPORTS (INITIAL LOAD SAVER)
+Prevent massive JavaScript bundle sizes that block the main thread and eat browser RAM on initial load.
+* **Enforcement:** Heavy client-side components (like Three.js `<Canvas>`, massive Manhwa image lists, complex Audio Players, or Minigame engines) MUST be lazy-loaded using Next.js `dynamic()` with `ssr: false` when appropriate. Never import heavy libraries at the top of the file if they are not immediately visible above the fold.
+
+## 🛑 RULE 9: DOM RENDERING & ASSET PIPELINE (TABS & MANHWA)
+Prevent massive DOM bloat and network bottlenecking when handling heavy content like Manhwa image arrays or long Web Novels.
+* **Tab Switching Enforcement:** When switching between heavy views (e.g., Novel and Manhwa tabs), NEVER use CSS `display: none` or `hidden` to hide the inactive tab. You MUST use React conditional rendering (e.g., `{activeTab === 'manhwa' && <Manhwa />}`) to ensure the inactive component is completely destroyed and garbage-collected from the DOM.
+* **Image Optimization:** Massive image arrays (Manhwa chapters) must utilize Next.js `<Image>` components. Only the first 2-3 images above the fold should have `priority={true}`. The rest must rely on native lazy loading to prevent network freezing.
 
 ---
 **AI PROMPT DIRECTIVE:**
