@@ -60,7 +60,7 @@ export default async function NovelVolumeDetail({ params, searchParams }: Props)
         
         <div className="container relative z-10 px-4 flex flex-col items-center text-center mt-10">
           <div className="px-4 py-1.5 mb-6 border border-[#2398f7]/50 bg-[#2398f7]/20 text-[#2398f7] text-xs font-bold tracking-widest font-mono rounded backdrop-blur-sm shadow-[0_0_10px_rgba(35,152,247,0.2)]">
-            VOLUME {volNumber} // STATUS: ONGOING
+            VOLUME {volNumber} // STATUS: COMPLETED
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground tracking-tight mb-6 uppercase drop-shadow-xl">
             Affan: The Apex Predator

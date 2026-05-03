@@ -152,6 +152,7 @@ export default function AboutPage() {
           
           <p className="text-base md:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
             Lebih dikenal sebagai <strong className="text-zinc-900 dark:text-white">Jeka</strong>. Seorang mahasiswa Artificial Intelligence di Universitas Bunda Mulia yang terobsesi mengeksplorasi batas antara logika mesin dan kreativitas manusia.
+            Sosok dibalik pembuatan Affanverse.
           </p>
 
           <div className="space-y-4 pt-4">
