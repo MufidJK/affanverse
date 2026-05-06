@@ -146,6 +146,29 @@ export interface Database {
         };
       };
     };
+    minigame_scores: {
+      Row: {
+        id: string;
+        created_at: string;
+        player_name: string;
+        game_slug: string;
+        score: number;
+      };
+      Insert: {
+        id?: string;
+        created_at?: string;
+        player_name: string;
+        game_slug: string;
+        score: number;
+      };
+      Update: {
+        id?: string;
+        created_at?: string;
+        player_name?: string;
+        game_slug?: string;
+        score?: number;
+      };
+    };
     Views: Record<string, never>;
     Functions: Record<string, never>;
     Enums: Record<string, never>;

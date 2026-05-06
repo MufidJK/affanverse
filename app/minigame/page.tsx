@@ -45,7 +45,11 @@ interface MinigameData {
   playRoute: string
 }
 
-const MINIGAMES: MinigameData[] = [
+/**
+ * Mockup games — shown only when no real games exist yet.
+ * Kept in code so the hub never looks empty during development.
+ */
+const MOCKUP_GAMES: MinigameData[] = [
   {
     id: "abyss-runner",
     title: "The Abyss Runner",
@@ -71,6 +75,23 @@ const MINIGAMES: MinigameData[] = [
     playRoute: "/minigame/echoes-forgotten",
   },
 ]
+
+/**
+ * Real, playable games — these take priority over mockups.
+ */
+const REAL_GAMES: MinigameData[] = [
+  {
+    id: "flappy-affan",
+    title: "Flappy Affan",
+    thumbnail: "https://res.cloudinary.com/dcsh47583/image/upload/v1777988094/flappyAffan_x68vkz.jpg",
+    tags: ["Arcade", "Casual", "Flappy"],
+    description: "Dodge the glitch pillars and flap your way to the top of the leaderboard. How far can Affan fly? 67 miles wowkwkwkk",
+    playRoute: "/minigame/flappy-affan",
+  },
+]
+
+/** Hybrid fallback: show real games when available, otherwise mockups */
+const gamesToDisplay = REAL_GAMES.length > 0 ? REAL_GAMES : MOCKUP_GAMES
 
 export default function MinigameHub() {
   const router = useRouter()
@@ -134,7 +155,7 @@ export default function MinigameHub() {
               </h2>
               {/* Responsive Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {MINIGAMES.map((game, i) => (
+                {gamesToDisplay.map((game, i) => (
                   <motion.div
                     key={game.id}
                     initial={{ opacity: 0, y: 20 }}
@@ -149,6 +170,7 @@ export default function MinigameHub() {
                         src={game.thumbnail}
                         alt={game.title}
                         fill
+                        unoptimized={true}
                         priority={i < 2} // SOP RULE 9
                         className="object-cover transition-transform duration-500 will-change-transform transform-gpu group-hover:scale-105"
                       />
@@ -203,6 +225,7 @@ export default function MinigameHub() {
                     src={selectedGame.thumbnail}
                     alt={selectedGame.title}
                     fill
+                    unoptimized={true}
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
@@ -247,6 +270,7 @@ export default function MinigameHub() {
                     src={selectedGame.thumbnail}
                     alt={selectedGame.title}
                     fill
+                    unoptimized={true}
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background" />

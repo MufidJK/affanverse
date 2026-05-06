@@ -6,7 +6,8 @@ export function MinigamePortal() {
     "Access to Unstable Realities",
     "Existential Dread Beta",
     "Guaranteed Brain Damage (Temporary)",
-    "Flappy Affan Access (Soon™)"
+    "Flappy Affan Access (67% Off)",
+    "Gasss Mabar Bareng wowkwkwkwk"
   ];
 
   return (

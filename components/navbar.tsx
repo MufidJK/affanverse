@@ -15,7 +15,7 @@ export function Navbar() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const closeMenu = () => setIsMenuOpen(false)
 
-  if (pathname === "/memory-leak" || pathname === "/terminal") {
+  if (pathname === "/memory-leak" || pathname === "/terminal" || pathname.startsWith("/minigame/flappy-affan")) {
     return null
   }
 
