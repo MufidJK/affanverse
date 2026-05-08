@@ -57,6 +57,13 @@ Prevent massive DOM bloat and network bottlenecking when handling heavy content 
 * **Tab Switching Enforcement:** When switching between heavy views (e.g., Novel and Manhwa tabs), NEVER use CSS `display: none` or `hidden` to hide the inactive tab. You MUST use React conditional rendering (e.g., `{activeTab === 'manhwa' && <Manhwa />}`) to ensure the inactive component is completely destroyed and garbage-collected from the DOM.
 * **Image Optimization:** Massive image arrays (Manhwa chapters) must utilize Next.js `<Image>` components. Only the first 2-3 images above the fold should have `priority={true}`. The rest must rely on native lazy loading to prevent network freezing.
 
+## 🛑 RULE 10: STRICT TYPESCRIPT COMPLIANCE (NO RED LINES)
+Code that "works at runtime" but throws TypeScript compilation errors or IDE red lines is strictly unacceptable.
+
+* **Interface & Type Linkage:** All new variables, `useRef` hooks, state elements, and functional returns MUST be explicitly defined in their corresponding `interface` or `type` blocks before being used in JSX/TSX components.
+* **Type Narrowing & Logic Gates:** Pay strict attention to React conditional rendering bounds. Do not nest mutually exclusive conditionals that cause TypeScript to infer `never` or flag code as unreachable (e.g., placing `uiPhase === "ready"` inside a wrapper that already excluded `"ready"`).
+* **Type Safety:** Avoid implicit `any`. Ensure custom hook return objects match their documented `Interface` 100%.
+
 ---
 **AI PROMPT DIRECTIVE:**
 When generating ANY new code, component, page, or system for Affanverse—regardless of the feature's scope or complexity—you MUST read and apply this SOP first. Output the code ensuring ALL cleanup functions, memory disposals, correct caching strategies, and hardware accelerations are fully integrated from the very first draft.

@@ -88,6 +88,14 @@ const REAL_GAMES: MinigameData[] = [
     description: "Dodge the glitch pillars and flap your way to the top of the leaderboard. How far can Affan fly? 67 miles wowkwkwkk",
     playRoute: "/minigame/flappy-affan",
   },
+  {
+    id: "affan-strike",
+    title: "Affan Strike",
+    thumbnail: "https://res.cloudinary.com/dcsh47583/image/upload/v1778240766/affanStrike_uphjgn.png",
+    tags: ["Action", "Endless Runner", "Boss Fight"],
+    description: "Survive the endless run and face off against Dio in an epic boss fight! Use your fireball and ultimate to claim victory.",
+    playRoute: "/minigame/affan-strike",
+  },
 ]
 
 /** Hybrid fallback: show real games when available, otherwise mockups */
