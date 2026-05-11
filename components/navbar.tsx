@@ -5,15 +5,19 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ThemeToggle } from "./theme-toggle"
 import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
+import { Menu, X, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+  const [isBooksOpen, setIsBooksOpen] = React.useState(false)
   const pathname = usePathname()
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
-  const closeMenu = () => setIsMenuOpen(false)
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+    setIsBooksOpen(false)
+  }
 
   if (pathname === "/memory-leak" || pathname === "/terminal" || pathname.startsWith("/minigame/flappy-affan")) {
     return null
@@ -24,7 +28,10 @@ export function Navbar() {
     { name: "Affan's Music", href: "/music" },
     { name: "Chronicle", href: "/blog" },
     { name: "Memory Leak", href: "/memory-leak" },
-    { name: "Apex Predator", href: "/novel" },
+    { name: "The Books", subLinks: [
+      { name: "Affan: The Apex Predator", href: "/novel" },
+      { name: "Ambasuke (Spin off)", href: "/ambasuke" }
+    ] },
     { name: "Contact", href: "/contact" },
     { name: "About", href: "/about" },
   ]
@@ -44,12 +51,51 @@ export function Navbar() {
         <div className="hidden md:flex flex-1 items-center justify-end space-x-2">
           <nav className="flex items-center space-x-1 sm:space-x-2 font-medium">
             {navLinks.map((link) => {
+              if (link.subLinks) {
+                const isActive = link.subLinks.some(sub => pathname.startsWith(sub.href))
+                return (
+                  <div key={link.name} className="relative group">
+                    <Button
+                      variant="ghost"
+                      className={cn(
+                        "relative h-9 px-4 py-2 transition-all duration-300 overflow-hidden active:scale-95 active:bg-zinc-200 dark:active:bg-zinc-800",
+                        isActive ? "text-[#2398f7]" : "text-muted-foreground hover:text-[#2398f7]"
+                      )}
+                    >
+                      {link.name}
+                      <ChevronRight className="ml-1 h-4 w-4 transition-transform duration-200 transform-gpu group-hover:rotate-90" />
+                      <span className={cn(
+                        "absolute bottom-0 left-0 h-[2px] bg-[#2398f7] transition-all duration-300",
+                        isActive ? "w-full" : "w-0 group-hover:w-full"
+                      )} />
+                    </Button>
+                    <div className="absolute top-full left-0 mt-2 w-64 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-lg overflow-hidden z-50">
+                      {link.subLinks.map(sub => {
+                        const isSubActive = pathname.startsWith(sub.href) && sub.href !== '/' || pathname === sub.href
+                        return (
+                          <Link 
+                            key={sub.href} 
+                            href={sub.href}
+                            className={cn(
+                              "block px-4 py-3 text-sm font-semibold transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900",
+                              isSubActive ? "text-[#2398f7] bg-zinc-50 dark:bg-zinc-900/50" : "text-muted-foreground hover:text-foreground"
+                            )}
+                          >
+                            {sub.name}
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )
+              }
+
               // INI YANG DIGANTI BUAT DESKTOP
-              const isActive = pathname.startsWith(link.href) && link.href !== '/' || pathname === link.href
+              const isActive = pathname.startsWith(link.href!) && link.href !== '/' || pathname === link.href
 
               return (
                 <Button
-                  key={link.href}
+                  key={link.name}
                   variant="ghost"
                   asChild
                   className={cn(
@@ -57,7 +103,7 @@ export function Navbar() {
                     isActive ? "text-[#2398f7]" : "text-muted-foreground hover:text-[#2398f7]"
                   )}
                 >
-                  <Link href={link.href}>
+                  <Link href={link.href!}>
                     {link.name}
                     {/* Underline Animation */}
                     <span 
@@ -99,12 +145,55 @@ export function Navbar() {
         <div className="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md absolute w-full shadow-lg transition-all animate-in slide-in-from-top-2">
           <nav className="flex flex-col p-4 space-y-2 font-medium">
             {navLinks.map((link) => {
+              if (link.subLinks) {
+                const isActive = link.subLinks.some(sub => pathname.startsWith(sub.href))
+                return (
+                  <div key={link.name} className="flex flex-col space-y-1 pb-2">
+                    <Button 
+                      variant="ghost"
+                      onClick={() => setIsBooksOpen(!isBooksOpen)}
+                      className={cn(
+                        "flex w-full justify-between h-12 transition-all active:pl-6 active:bg-zinc-200 dark:active:bg-zinc-800",
+                        isActive ? "text-[#2398f7] bg-zinc-100 dark:bg-zinc-900" : "text-muted-foreground"
+                      )}
+                    >
+                      <span>{link.name}</span>
+                      <ChevronRight className={cn(
+                        "h-4 w-4 transition-transform duration-200 transform-gpu text-muted-foreground",
+                        isBooksOpen ? "rotate-90" : "rotate-0"
+                      )} />
+                    </Button>
+                    {isBooksOpen && (
+                      <div className="flex flex-col pl-4 border-l-2 border-zinc-200 dark:border-zinc-800 ml-4 space-y-1 mt-1 animate-in slide-in-from-top-1 fade-in-0 duration-200">
+                        {link.subLinks.map(sub => {
+                          const isSubActive = pathname.startsWith(sub.href) && sub.href !== '/' || pathname === sub.href
+                          return (
+                            <Button
+                              key={sub.href}
+                              variant="ghost"
+                              className={cn(
+                                "justify-start h-10 transition-all active:pl-6 active:bg-zinc-200 dark:active:bg-zinc-800",
+                                isSubActive ? "text-[#2398f7] bg-zinc-100 dark:bg-zinc-900" : "text-muted-foreground"
+                              )}
+                              asChild
+                              onClick={closeMenu}
+                            >
+                              <Link href={sub.href}>{sub.name}</Link>
+                            </Button>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
+                )
+              }
+
               // INI JUGA DIGANTI BUAT MOBILE
-              const isActive = pathname.startsWith(link.href) && link.href !== '/' || pathname === link.href
+              const isActive = pathname.startsWith(link.href!) && link.href !== '/' || pathname === link.href
 
               return (
                 <Button
-                  key={link.href}
+                  key={link.name}
                   variant="ghost"
                   className={cn(
                     "justify-start h-12 transition-all active:pl-6 active:bg-zinc-200 dark:active:bg-zinc-800",
@@ -113,7 +202,7 @@ export function Navbar() {
                   asChild
                   onClick={closeMenu}
                 >
-                  <Link href={link.href}>{link.name}</Link>
+                  <Link href={link.href!}>{link.name}</Link>
                 </Button>
               )
             })}

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Terminal, Lock, Unlock, AlertTriangle, ShieldAlert, LogOut, RotateCcw } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { TerminalKeyCopier } from "./TerminalKeyCopier";
 
 // 7 LORE RPD - Jangan diutak-atik
 const memoryLogs = [
@@ -217,9 +218,7 @@ export default function MemoryLeakTerminal() {
                     
                     <div className="bg-black/50 p-3 border border-red-500/50 rounded">
                       <p className="text-xs text-gray-500 mb-1">Akses root menuju The Abyss Secret Terminal telah diberikan. Gunakan key ini:</p>
-                      <div className="text-[#FF00FF] font-bold tracking-widest text-lg font-mono selection:bg-white selection:text-black">
-                        SUDO_RPD_APEX
-                      </div>
+                      <TerminalKeyCopier terminalKey="SUDO_RPD_APEX" />
                     </div>
                   </div>
                 </div>
