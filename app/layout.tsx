@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { JumpscareOverlay } from '@/components/jumpscare-overlay';
+import { AbyssTerminal } from '@/components/terminal/AbyssTerminal';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -40,6 +41,7 @@ export default function RootLayout({
             {children}
           </main>
           <JumpscareOverlay />
+          <AbyssTerminal />
         </ThemeProvider>
         <Footer />
       </body>

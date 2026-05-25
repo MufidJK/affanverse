@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Guestbook } from "@/components/guestbook";
+import { MemoryLeakTrigger } from "@/components/terminal/MemoryLeakTrigger";
 
 export default function Home() {
   return (
@@ -89,6 +90,7 @@ export default function Home() {
       {/* Minigame Portal Section */}
       <MinigamePortal />
 
+      <MemoryLeakTrigger />
       <Guestbook variant="floating" pageId="home" />
     </>
   );

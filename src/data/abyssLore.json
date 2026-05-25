@@ -1,0 +1,59 @@
+{
+  "help": {
+    "type": "system",
+    "content": "=== ABYSS CODENAME: APEX OVERRIDE SYSTEMS ===\nAvailable classification logs for extraction:\n -> read sanity_diagnostics.log\n -> read incident_redacted.txt\n -> read subject_true_form.dat\n -> read video_training_apex.dat\n -> read core_stabilizer.log\n -> read trauma_matrix.txt\n -> read prototype_apex_v1.dat\n -> read observer_casualty.log\n -> read collateral_void.txt\n -> read execution_transcript.txt\n -> read final_liminal_state.log\n -> read sacred_relic_67.dat\n -> read ascii_relic_67.dat\n -> render true_form.obj\n -> override --theme abyss\n -> restore --theme light\n -> clear\n============================================="
+  },
+  "sanity_diagnostics.log": {
+    "type": "text",
+    "content": "[CLASSIFIED MILITARY DIAGNOSTIC // SUBJECT: AFFAN]\nTimestamp: 2026-05-24 21:38:47\nHuman Emotional Response: 4.2% (Critical Degradation)\nNeural Synapse Acceleration: +412% over baseline.\nCognitive Matrix: Heavily fractured by predatory instincts. If human ego drops below 1%, total behavioral collapse is imminent."
+  },
+  "incident_redacted.txt": {
+    "type": "text",
+    "content": "[INCIDENT REPORT: AREA-09 OUTBREAK]\nStatus: ARCHIVED // TOTAL SECRECY ENFORCED\nSubject Affan entered state [APEX_PREDATOR_V3]. Casualty Assessment: Hostile units eliminated: 100%. Allied support squads: 0 survivors. Nearby Civilian Sanctuary: [REDACTED]. Every structure within a 3km radius flattened. Do not leak to Light Novel channels."
+  },
+  "subject_true_form.dat": {
+    "type": "ascii",
+    "content": "     .---.             .---.\n    /     \\  _     _  /     \\\n    \\  O  / ( \\___/ ) \\  O  /\n     '---'   \\     /   '---'\n             /  _  \\\n            / / \\ \\ \\\n           /_/   \\_\\_\\\n[CORRUPTED SCAN DATA: THE PREDATOR'S SILHOUETTE]\nHuman anatomy framework invalid. Biometric anomalies mutating under the skin. It's watching back."
+  },
+  "video_training_apex.dat": {
+    "type": "video",
+    "content": "[CLASSIFIED VIDEO ARCHIVE // CODENAME: APEX TRAINING FLIGHT]\nCaptured footage of Subject Affan engaging in high-intensity combat synchronization maneuvers with combatant Elio Zaynezz. Residual energy outputs completely saturated the optical sensors of the recording drone. Playback interface initialized below."
+  },
+  "core_stabilizer.log": {
+    "type": "text",
+    "content": "[LOG RECOVERY // SYS-CORE-02]\nExperimental neural dampeners attached to Subject Affan failed within 12 seconds of Apex activation. The sub-dermal inhibitors melted due to localized kinetic friction. Subject manifested a sudden burst of pure void mass. Engineering team recommends abandoning physical containment frameworks."
+  },
+  "trauma_matrix.txt": {
+    "type": "text",
+    "content": "[PSYCHOLOGICAL MATRIX DATA // ENCRYPTED]\nMemory parsing reveals deep temporal distortions. Subject Affan continuously relives combat loops that never happened in our current timeline. The presence of 'Elio Zaynezz' acts as both an emotional anchor and a highly volatile catalyst. Synergy levels are dangerously anomalous."
+  },
+  "prototype_apex_v1.dat": {
+    "type": "text",
+    "content": "[PROJECT ALPHA FILES: CODENAME PRE-APEX]\nEarly tracking records from Affan's childhood development stages. Subject displayed zero natural predator impulses until the localized collapse event. The awakening was not biological—it was an injected variable from an unknown outer continuum."
+  },
+  "observer_casualty.log": {
+    "type": "text",
+    "content": "[INTERNAL MEMO // DEPT OF QUANTUM TRACKING]\nThree field observers sent to record Subject's skirmish vanished from local space. No bodies recovered. Only their recording glasses remained, permanently fused into solid carbon glass blocks. Residual heat radiation reading: 4500K."
+  },
+  "collateral_void.txt": {
+    "type": "text",
+    "content": "[ENVIRONMENTAL DAMAGE ANALYSIS]\nRegions exposed to Affan's prolonged Apex presence exhibit a decay in standard physics rules. Local gravity fluctuates by +/- 18%. Light refraction bends inward toward the Subject's coordinates. The world is physically giving way to accommodate his existence."
+  },
+  "execution_transcript.txt": {
+    "type": "text",
+    "content": "[TRANSCRIPT ENGAGEMENT LOG // 0x77B]\nUnidentified Enemy Leader: 'What... what are you?'\nSubject Affan: [No spoken vocalization audio caught]\n[Sound of heavy bone acceleration, followed by sudden decompression of cabin atmospheric seal]\n[RECORDING TERMINATED: DATA BLOCK WIPED]"
+  },
+  "final_liminal_state.log": {
+    "type": "text",
+    "content": "[PREDICTIVE THREAT ASSESSMENT MODEL]\nIf Subject encounters an existential threat that forces an unthrottled Apex release, the localized web application matrix will experience absolute logic corruption. Reality sync status: UNSTABLE. Monitor closely."
+  },
+  "sacred_relic_67.dat": {
+    "type": "image",
+    "src": "/affan67.png",
+    "content": "[CLASSIFIED VISUAL DATA // CODENAME: RELIC 67]\nVisual documentation of the anomaly. The surrounding digital fabric exhibits intense radiation bleaching. Prolonged observation of this file may cause localized neural desync. Rendering visual core..."
+  },
+  "ascii_relic_67.dat": {
+    "type": "ascii",
+    "content": "▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒\n▒▒▒▒▒████████████████████▒▒▒▒▒▒▒\n▒▒▒▒██░░░░░░░░░░░░░░░░░░██▒▒▒▒▒▒\n▒▒▒██░░████░░░░░░████░░░░██▒▒▒▒▒\n▒▒██░░░████░░░░░░████░░░░░██▒▒▒▒\n▒▒██░░░░░░░░░░░░░░░░░░░░░░██▒▒▒▒\n▒▒██░░░░████████████░░░░░░██▒▒▒▒\n▒▒▒██░░░░▀▀▀▀▀▀▀▀▀▀░░░░░░██▒▒▒▒▒\n▒▒▒▒██░░░░░░░░░░░░░░░░░░██▒▒▒▒▒▒\n▒▒▒▒▒████████████████████▒▒▒▒▒▒▒\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒\n[CORRUPTED ASCII DUMP: ENTITY 67]\nRaw binary translation of the relic. The structural integrity of the facial data is completely unstable. It's degrading the terminal's memory heap."
+  }
+}
