@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import dynamic from "next/dynamic"
+import { FloatingBackButton } from "@/components/floating-back-button"
 
 import { X } from "lucide-react"
 
@@ -309,6 +310,7 @@ export default function MinigameHub() {
           </DialogContent>
         </Dialog>
       )}
+      <FloatingBackButton />
     </div>
   )
 }

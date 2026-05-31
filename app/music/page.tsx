@@ -315,7 +315,7 @@ export default function MusicPage() {
       }`}>
         <div className="flex flex-col lg:flex-row gap-12 items-start max-w-6xl mx-auto">
           
-          <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:text-left lg:items-start lg:sticky lg:top-28 z-10">
+          <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:text-left lg:items-start lg:sticky lg:top-28 lg:pb-40 2xl:pb-0 z-10">
             <div className="relative w-64 h-64 md:w-80 md:h-80 mb-8 shadow-2xl rounded-3xl overflow-hidden bg-zinc-200 dark:bg-zinc-800 flex-shrink-0">
               {currentSong?.cover_url ? (
                 <img src={currentSong.cover_url} alt={currentSong.title} className="w-full h-full object-cover" />

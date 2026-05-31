@@ -27,19 +27,19 @@ export default function Home() {
                   Hi, I'm <span className="text-[#2398f7]">Affan</span>
                 </h1>
                 <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-lg mx-auto lg:mx-0">
-                  A Full Stack Engineer crafting minimalist web apps and leading elegant digital experiences.
+                  An Apex Predator ruling the oceanic abyss, dominating the food chain while casually exploring the depths of marine sciences and fisheries.
                 </p>
               </div>
               
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                <Button asChild size="lg" className="w-full sm:w-auto px-8 text-base shadow-lg shadow-[#2398f7]/20 bg-[#2398f7] hover:bg-[#1a7cd4] text-white">
+                <Button asChild size="lg" className="w-full sm:w-auto px-8 text-base shadow-lg shadow-[#2398f7]/20 bg-[#2398f7] hover:bg-[#1a7cd4] text-white hover:text-[#2398f7] dark:hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#2398f7]/30">
                   <Link href="/projects">
                     View Projects <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="w-full sm:w-auto px-8 text-base border-[#2398f7]/20 text-[#2398f7] hover:bg-[#2398f7]/5">
                   <Link href="/contact">
-                    Contact Me
+                    Contact Us
                   </Link>
                 </Button>
               </div>

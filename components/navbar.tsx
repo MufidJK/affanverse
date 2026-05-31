@@ -65,11 +65,11 @@ export function Navbar() {
                       {link.name}
                       <ChevronRight className="ml-1 h-4 w-4 transition-transform duration-200 transform-gpu group-hover:rotate-90" />
                       <span className={cn(
-                        "absolute bottom-0 left-0 h-[2px] bg-[#2398f7] transition-all duration-300",
-                        isActive ? "w-full" : "w-0 group-hover:w-full"
+                        "absolute bottom-0 left-0 h-[2px] w-full bg-[#2398f7] origin-left transition-transform duration-300 will-change-transform transform-gpu",
+                        isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                       )} />
                     </Button>
-                    <div className="absolute top-full left-0 mt-2 w-64 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-lg overflow-hidden z-50">
+                    <div className="absolute top-full left-0 mt-2 w-64 opacity-0 invisible scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100 transition-all duration-200 ease-in-out will-change-transform transform-gpu bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-lg overflow-hidden z-50">
                       {link.subLinks.map(sub => {
                         const isSubActive = pathname.startsWith(sub.href) && sub.href !== '/' || pathname === sub.href
                         return (
@@ -77,7 +77,8 @@ export function Navbar() {
                             key={sub.href} 
                             href={sub.href}
                             className={cn(
-                              "block px-4 py-3 text-sm font-semibold transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900",
+                              "relative group/subitem block px-4 py-3 text-sm font-semibold transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900",
+                              "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-[#2398f7] after:origin-left after:scale-x-0 group-hover/subitem:after:scale-x-100 after:transition-transform after:duration-300 after:will-change-transform after:transform-gpu",
                               isSubActive ? "text-[#2398f7] bg-zinc-50 dark:bg-zinc-900/50" : "text-muted-foreground hover:text-foreground"
                             )}
                           >
@@ -108,8 +109,8 @@ export function Navbar() {
                     {/* Underline Animation */}
                     <span 
                       className={cn(
-                        "absolute bottom-0 left-0 h-[2px] bg-[#2398f7] transition-all duration-300",
-                        isActive ? "w-full" : "w-0 group-hover:w-full"
+                        "absolute bottom-0 left-0 h-[2px] w-full bg-[#2398f7] origin-left transition-transform duration-300 will-change-transform transform-gpu",
+                        isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                       )} 
                     />
                   </Link>
