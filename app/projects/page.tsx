@@ -381,6 +381,299 @@ end)`
   }
 ];
 
+const OceanographyLab = () => {
+  const [temp, setTemp] = useState<number>(15);
+  const [salinity, setSalinity] = useState<number>(35);
+  const [depth, setDepth] = useState<number>(1000);
+  const [frequency, setFrequency] = useState<number>(50);
+
+  const [velocity, setVelocity] = useState<number>(0);
+  const [echoTime, setEchoTime] = useState<number>(0);
+
+  useEffect(() => {
+    const v =
+      1449.2 +
+      4.6 * temp -
+      0.055 * (temp * temp) +
+      1.34 * (salinity - 35) +
+      0.016 * depth;
+    const time = (depth * 2) / v;
+
+    setVelocity(v);
+    setEchoTime(time);
+  }, [temp, salinity, depth, frequency]);
+
+  return (
+    <section className="relative w-full py-20 overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-8 max-w-[90rem]">
+        {/* OBJECTIVE 1: HEADER SECTION */}
+        <div className="text-center space-y-3 mb-12">
+          <div className="text-cyan-400 text-sm tracking-widest font-bold uppercase mb-2">
+            Interactive Experiment
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            <span className="relative inline-block pb-3">
+              The Oceanography Lab
+              <span className="absolute bottom-0 left-0 w-full h-1 bg-cyan-400 rounded-full" />
+              <motion.span
+                className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 rounded-full"
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }}
+              />
+            </span>
+          </h2>
+          <p className="text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mt-4">
+            Welcome to the marine acoustics lab. As an oceanographic engineer, hydro-acoustic calculations are vital for tracking deep-sea anomalies like El Maja. Tweak the environmental variables below to dynamically calculate the speed of sound in water and sonar echo return times in real-time.
+          </p>
+        </div>
+
+        {/* OBJECTIVE 2: MAIN CARD & VISUALIZATION */}
+        <div className="max-w-4xl mx-auto bg-slate-800/80 backdrop-blur-md rounded-2xl p-6 md:p-10 border border-slate-700 shadow-2xl mt-12 transform-gpu">
+          <div className="relative w-full h-48 sm:h-64 flex items-center justify-center overflow-hidden mb-8 rounded-xl bg-slate-900/50 border border-slate-700/50">
+            <div className="absolute z-10 w-4 h-4 bg-cyan-400 rounded-full shadow-[0_0_15px_rgba(34,211,238,1)] flex items-center justify-center">
+              <div className="w-2 h-2 bg-slate-900 rounded-full" />
+            </div>
+
+            <motion.div
+              className="absolute w-16 h-16 border border-cyan-400/50 rounded-full"
+              animate={{ scale: [1, 2.5, 4], opacity: [0.8, 0.4, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div
+              className="absolute w-16 h-16 border border-cyan-400/50 rounded-full"
+              animate={{ scale: [1, 2.5, 4], opacity: [0.8, 0.4, 0] }}
+              transition={{ duration: 2, delay: 0.6, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div
+              className="absolute w-16 h-16 border border-cyan-400/50 rounded-full"
+              animate={{ scale: [1, 2.5, 4], opacity: [0.8, 0.4, 0] }}
+              transition={{ duration: 2, delay: 1.2, repeat: Infinity, ease: "linear" }}
+            />
+            
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(34,211,238,0.05)_1px,transparent_1px)] bg-[size:100%_4px] pointer-events-none opacity-30" />
+          </div>
+
+          {/* OBJECTIVE 3: CALCULATOR LOGIC & INSET DISPLAY */}
+          <div className="bg-[#0f172a] rounded-xl p-6 text-center shadow-inner border border-slate-700/50 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-cyan-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <h3 className="text-xs font-mono tracking-widest text-slate-400 uppercase mb-3">
+              Echo Return Time
+            </h3>
+            <div className="text-4xl sm:text-5xl font-mono font-bold text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)] mb-2 tracking-tight">
+              {echoTime.toFixed(3)} <span className="text-2xl text-cyan-500 font-medium">s</span>
+            </div>
+            <div className="text-sm font-mono text-cyan-200/70 bg-cyan-950/40 inline-block px-4 py-1.5 rounded-full border border-cyan-900/50">
+              Sound Velocity: <span className="text-cyan-300 font-semibold">{velocity.toFixed(1)} m/s</span>
+            </div>
+          </div>
+
+          {/* OBJECTIVE 4: INPUT DROPDOWNS */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+            <div className="space-y-2">
+              <label className="text-xs font-mono text-slate-400 tracking-wider uppercase block text-left">Water Temp</label>
+              <select
+                value={temp}
+                onChange={(e) => setTemp(Number(e.target.value))}
+                className="bg-slate-700 text-white border border-slate-600 rounded-lg p-2.5 w-full font-mono text-sm focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none transition-colors"
+              >
+                <option value={5}>5°C (Deep Cold)</option>
+                <option value={15}>15°C (Average)</option>
+                <option value={25}>25°C (Tropical)</option>
+                <option value={30}>30°C (Surface)</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-mono text-slate-400 tracking-wider uppercase block text-left">Salinity</label>
+              <select
+                value={salinity}
+                onChange={(e) => setSalinity(Number(e.target.value))}
+                className="bg-slate-700 text-white border border-slate-600 rounded-lg p-2.5 w-full font-mono text-sm focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none transition-colors"
+              >
+                <option value={0}>Fresh (0 ppt)</option>
+                <option value={20}>Brackish (20 ppt)</option>
+                <option value={35}>Ocean (35 ppt)</option>
+                <option value={50}>Dead Sea (50 ppt)</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-mono text-slate-400 tracking-wider uppercase block text-left">Target Depth</label>
+              <select
+                value={depth}
+                onChange={(e) => setDepth(Number(e.target.value))}
+                className="bg-slate-700 text-white border border-slate-600 rounded-lg p-2.5 w-full font-mono text-sm focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none transition-colors"
+              >
+                <option value={100}>Epipelagic (100m)</option>
+                <option value={500}>Mesopelagic (500m)</option>
+                <option value={1000}>Bathypelagic (1000m)</option>
+                <option value={4000}>Abyssopelagic (4000m)</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-mono text-slate-400 tracking-wider uppercase block text-left">Ping Freq</label>
+              <select
+                value={frequency}
+                onChange={(e) => setFrequency(Number(e.target.value))}
+                className="bg-slate-700 text-white border border-slate-600 rounded-lg p-2.5 w-full font-mono text-sm focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none transition-colors"
+              >
+                <option value={10}>Low (10 kHz)</option>
+                <option value={50}>Med (50 kHz)</option>
+                <option value={200}>High (200 kHz)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const DiplomacyCommandCenter = () => {
+  const [aiPolicy, setAiPolicy] = useState<number>(25);
+  const [trade, setTrade] = useState<number>(15);
+  const [stance, setStance] = useState<number>(25);
+  const [region, setRegion] = useState<number>(1.2);
+
+  const rawGsi = (30 + aiPolicy + trade + stance) * region;
+  const gsi = Math.min(99.9, Math.max(0.1, rawGsi));
+  const gdpImpact = ((gsi - 50) / 8).toFixed(2);
+
+  return (
+    <section className="relative w-full py-20 overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-8 max-w-[90rem]">
+        {/* OBJECTIVE 3: UI & LIGHT/DARK MODE STYLING */}
+        <div className="text-center space-y-3 mb-12">
+          <div className="text-orange-600 dark:text-orange-400 text-sm tracking-widest font-bold uppercase mb-2">
+            Geopolitical Simulation
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            <span className="relative inline-block pb-3">
+              The Diplomacy Command Center
+              <span className="absolute bottom-0 left-0 w-full h-1 bg-orange-500 rounded-full" />
+              <motion.span
+                className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 via-amber-500 to-yellow-500 rounded-full"
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }}
+              />
+            </span>
+          </h2>
+          <p className="text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mt-4">
+            A global stability matrix for the 2030 Great Reset. Adjust the strategic variables below to simulate how different policies affect the Global Stability Index (GSI) and forecast global economic impacts.
+          </p>
+        </div>
+
+        {/* MAIN CARD & VISUALIZATION */}
+        <div className="max-w-4xl mx-auto bg-white dark:bg-slate-800/80 backdrop-blur-md rounded-2xl p-6 md:p-10 border border-slate-200 dark:border-slate-700 shadow-xl mt-12 transform-gpu">
+          <div className="relative w-full h-48 sm:h-64 flex items-center justify-center overflow-hidden mb-8 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700/50">
+            {/* Simple Framer Motion Animated Network */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative w-32 h-32">
+                {/* Connecting lines */}
+                <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="50%" y1="10%" x2="15%" y2="85%" stroke="currentColor" strokeWidth="1" className="text-orange-500/30 dark:text-orange-500/50" />
+                  <line x1="50%" y1="10%" x2="85%" y2="85%" stroke="currentColor" strokeWidth="1" className="text-orange-500/30 dark:text-orange-500/50" />
+                  <line x1="15%" y1="85%" x2="85%" y2="85%" stroke="currentColor" strokeWidth="1" className="text-orange-500/30 dark:text-orange-500/50" />
+                </svg>
+
+                {/* Nodes */}
+                <motion.div
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-orange-500 rounded-full shadow-[0_0_10px_rgba(249,115,22,0.8)]"
+                  animate={{ scale: [1, 1.5, 1], opacity: [0.7, 1, 0.7] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                />
+                <motion.div
+                  className="absolute bottom-0 left-0 w-4 h-4 bg-orange-500 rounded-full shadow-[0_0_10px_rgba(249,115,22,0.8)]"
+                  animate={{ scale: [1, 1.5, 1], opacity: [0.7, 1, 0.7] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+                />
+                <motion.div
+                  className="absolute bottom-0 right-0 w-4 h-4 bg-orange-500 rounded-full shadow-[0_0_10px_rgba(249,115,22,0.8)]"
+                  animate={{ scale: [1, 1.5, 1], opacity: [0.7, 1, 0.7] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+                />
+              </div>
+            </div>
+            {/* Background decorative grid */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(249,115,22,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(249,115,22,0.05)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
+          </div>
+
+          {/* INSET DISPLAY */}
+          <div className="bg-slate-50 dark:bg-[#0f172a] rounded-xl p-6 text-center shadow-inner border border-slate-200 dark:border-slate-700/50 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-orange-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <h3 className="text-xs font-mono tracking-widest text-slate-500 dark:text-slate-400 uppercase mb-3">
+              Global Stability Index (GSI)
+            </h3>
+            <div className="text-4xl sm:text-5xl font-mono font-bold text-orange-500 drop-shadow-[0_0_8px_rgba(249,115,22,0.4)] mb-2 tracking-tight">
+              {gsi.toFixed(1)} <span className="text-2xl text-orange-400 font-medium">%</span>
+            </div>
+            <div className="text-sm font-mono text-slate-600 dark:text-slate-300 font-medium inline-block px-4 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+              Est. Global GDP Impact: <span className="text-orange-500 dark:text-orange-400 font-bold">{Number(gdpImpact) > 0 ? "+" : ""}{gdpImpact}%</span>
+            </div>
+          </div>
+
+          {/* INPUT DROPDOWNS */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+            <div className="space-y-2">
+              <label className="text-xs font-mono text-slate-500 dark:text-slate-400 tracking-wider uppercase block text-left">AI Policy</label>
+              <select
+                value={aiPolicy}
+                onChange={(e) => setAiPolicy(Number(e.target.value))}
+                className="bg-white dark:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 rounded-lg p-2.5 w-full font-mono text-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-colors"
+              >
+                <option value={-10}>Unrestricted (-10)</option>
+                <option value={10}>Regulated (+10)</option>
+                <option value={25}>Balanced (+25)</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-mono text-slate-500 dark:text-slate-400 tracking-wider uppercase block text-left">Trade Deal</label>
+              <select
+                value={trade}
+                onChange={(e) => setTrade(Number(e.target.value))}
+                className="bg-white dark:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 rounded-lg p-2.5 w-full font-mono text-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-colors"
+              >
+                <option value={-5}>Protectionist (-5)</option>
+                <option value={15}>Strategic (+15)</option>
+                <option value={20}>Free Trade (+20)</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-mono text-slate-500 dark:text-slate-400 tracking-wider uppercase block text-left">Diplomacy Stance</label>
+              <select
+                value={stance}
+                onChange={(e) => setStance(Number(e.target.value))}
+                className="bg-white dark:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 rounded-lg p-2.5 w-full font-mono text-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-colors"
+              >
+                <option value={-20}>Aggressive (-20)</option>
+                <option value={5}>Neutral (+5)</option>
+                <option value={25}>Cooperative (+25)</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-mono text-slate-500 dark:text-slate-400 tracking-wider uppercase block text-left">Target Region</label>
+              <select
+                value={region}
+                onChange={(e) => setRegion(Number(e.target.value))}
+                className="bg-white dark:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 rounded-lg p-2.5 w-full font-mono text-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-colors"
+              >
+                <option value={0.9}>North America (0.9)</option>
+                <option value={1.0}>Eurozone (1.0)</option>
+                <option value={1.1}>Global South (1.1)</option>
+                <option value={1.2}>APAC (1.2)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 export default function ProjectsPage() {
   const [selectedProject, setSelectedProject] = useState<ProjectCardData | null>(null);
 
@@ -623,7 +916,7 @@ export default function ProjectsPage() {
       </section>
 
       {/* 3. THE MULTIVERSE OF AFFAN (Interactive Toggle Component - Lazy Loaded) */}
-      <div className="container mx-auto px-4 sm:px-8 max-w-6xl">
+      <div className="container mx-auto px-4 sm:px-8 max-w-[90rem]">
         <section className="space-y-6">
           <div className="border-t border-border/60 pt-10 relative">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-px bg-gradient-to-r from-transparent via-[#2398f7]/50 to-transparent" />
@@ -642,18 +935,42 @@ export default function ProjectsPage() {
         </section>
       </div>
 
-      {/* 4. FOOTER CROSSROADS ACTION */}
+      {/* 4. THE OCEANOGRAPHY LAB (Interactive Sonar Calculator) */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.5 }}
+      >
+        <OceanographyLab />
+      </motion.div>
+
+      {/* 5. THE DIPLOMACY COMMAND CENTER (Interactive Geopolitical Calculator) */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.5 }}
+      >
+        <DiplomacyCommandCenter />
+      </motion.div>
+
+      {/* 6. FOOTER CROSSROADS ACTION */}
       <div className="container mx-auto px-4 sm:px-8 max-w-6xl">
-        <section className="w-full text-center py-8">
-          <div className="inline-flex flex-col items-center space-y-4 max-w-lg mx-auto">
-            <div className="p-3 bg-slate-900 border border-[#2398f7]/20 rounded-full text-[#2398f7]">
-              <Flame className="w-5 h-5 animate-pulse" />
-            </div>
-            <h3 className="text-xl font-bold text-white tracking-tight">Decide the Destiny</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
+        <section className="w-full text-center py-16">
+          <div className="inline-flex flex-col items-center space-y-6 max-w-3xl mx-auto">
+            <motion.div 
+              className="flex items-center justify-center bg-slate-900 border border-[#2398f7]/20 rounded-full text-[#2398f7] w-16 h-16 md:w-20 md:h-20"
+              animate={{ scale: [1, 1.15, 1], boxShadow: ["0px 0px 0px rgba(35,152,247,0)", "0px 0px 20px rgba(35,152,247,0.6)", "0px 0px 0px rgba(35,152,247,0)"] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Flame className="w-8 h-8 md:w-10 md:h-10" />
+            </motion.div>
+            <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Decide the Destiny</h3>
+            <p className="text-base md:text-lg lg:text-xl font-medium text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
               Which pathway will Affan solidify? Send your telemetry data directly to his inbox or schedule a briefing session to state your thesis.
             </p>
-            <Button asChild size="sm" className="bg-[#2398f7] hover:bg-[#1a7cd4] text-white tracking-wide font-medium shadow-md shadow-[#2398f7]/15">
+            <Button asChild className="px-8 py-4 h-auto bg-[#2398f7] text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-base md:text-lg border-2 border-transparent hover:bg-transparent hover:text-[#2398f7] hover:border-[#2398f7] dark:hover:bg-transparent dark:hover:text-[#4db4ff] dark:hover:border-[#4db4ff]">
               <Link href="/contact">
                 Initiate Contact Channel
               </Link>

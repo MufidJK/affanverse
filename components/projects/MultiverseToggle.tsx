@@ -271,7 +271,7 @@ export default function MultiverseToggle() {
   return (
     <div 
       ref={containerRef} 
-      className="relative overflow-hidden rounded-2xl border border-border/80 bg-card/50 backdrop-blur-md transition-all duration-300 shadow-xl shadow-black/30 w-full min-h-[500px] flex flex-col transform-gpu will-change-transform"
+      className="relative overflow-hidden rounded-2xl border border-border/80 bg-card/50 backdrop-blur-md transition-all duration-300 shadow-xl shadow-black/30 w-full min-h-[700px] flex flex-col transform-gpu will-change-transform"
     >
       {/* Canvas background containing the optimized render loop */}
       <canvas 
@@ -280,7 +280,7 @@ export default function MultiverseToggle() {
       />
 
       {/* Main interactive panel grid */}
-      <div className="relative z-10 p-6 sm:p-8 flex flex-col flex-grow">
+      <div className="relative z-10 p-8 md:p-12 lg:p-16 flex flex-col flex-grow">
         
         {/* Multiverse Title & Subtitle */}
         <div className="mb-8 text-center sm:text-left">
@@ -298,7 +298,7 @@ export default function MultiverseToggle() {
 
         {/* Custom Cyberpunk Sliding Toggle Control */}
         <div className="flex justify-center mb-10 w-full">
-          <div className="relative flex p-1.5 rounded-full bg-slate-900/90 border border-slate-800 w-full max-w-[450px] shadow-inner select-none">
+          <div className="flex w-full max-w-xl mx-auto p-1.5 bg-slate-800/80 backdrop-blur-md rounded-full border border-slate-700 mb-12 relative shadow-inner select-none">
             {/* Sliding Highlight Block */}
             <div 
               className={`absolute top-1.5 bottom-1.5 rounded-full bg-gradient-to-r from-[#2398f7] to-[#1072c4] shadow-md shadow-[#2398f7]/30 transition-all duration-500 ease-out pointer-events-none`}
@@ -311,7 +311,7 @@ export default function MultiverseToggle() {
             {/* IPA Selector */}
             <button
               onClick={() => handleToggle("ipa")}
-              className={`flex-1 z-10 flex items-center justify-center gap-2 py-3.5 rounded-full text-xs sm:text-sm font-bold tracking-wide uppercase transition-colors duration-300 ${
+              className={`w-1/2 z-10 flex items-center justify-center gap-2 text-center px-4 py-3 rounded-full text-xs md:text-sm font-bold transition-all duration-300 ${
                 mode === "ipa" ? "text-white" : "text-slate-400 hover:text-slate-200"
               }`}
             >
@@ -322,7 +322,7 @@ export default function MultiverseToggle() {
             {/* IPS Selector */}
             <button
               onClick={() => handleToggle("ips")}
-              className={`flex-1 z-10 flex items-center justify-center gap-2 py-3.5 rounded-full text-xs sm:text-sm font-bold tracking-wide uppercase transition-colors duration-300 ${
+              className={`w-1/2 z-10 flex items-center justify-center gap-2 text-center px-4 py-3 rounded-full text-xs md:text-sm font-bold transition-all duration-300 ${
                 mode === "ips" ? "text-white" : "text-slate-400 hover:text-slate-200"
               }`}
             >
