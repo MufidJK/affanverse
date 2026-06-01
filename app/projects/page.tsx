@@ -698,7 +698,7 @@ export default function ProjectsPage() {
           className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch w-full transform-gpu"
         >
           {/* Main Narrative Bento Block (Spans 8 columns on large) */}
-          <div className="lg:col-span-8 flex flex-col justify-between p-8 rounded-2xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-card/30 backdrop-blur-sm relative overflow-hidden transform-gpu">
+          <div className="lg:col-span-8 flex flex-col justify-between h-full p-8 rounded-2xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-card/30 backdrop-blur-sm relative overflow-hidden transform-gpu">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#2398f7]/5 rounded-full blur-3xl pointer-events-none" />
             
             <div className="space-y-6">
@@ -722,6 +722,21 @@ export default function ProjectsPage() {
               </div>
             </div>
 
+            <div className="grid grid-cols-3 gap-3 md:gap-4 my-6">
+              <div className="bg-slate-50 dark:bg-[#0f172a]/50 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4 flex flex-col items-center justify-center shadow-sm">
+                <div className="text-2xl md:text-3xl font-black text-[#2398f7]">8+</div>
+                <div className="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 text-center mt-1 uppercase tracking-wide">Multiverse Projects</div>
+              </div>
+              <div className="bg-slate-50 dark:bg-[#0f172a]/50 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4 flex flex-col items-center justify-center shadow-sm">
+                <div className="text-2xl md:text-3xl font-black text-emerald-500">100</div>
+                <div className="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 text-center mt-1 uppercase tracking-wide">Days Ambatron</div>
+              </div>
+              <div className="bg-slate-50 dark:bg-[#0f172a]/50 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4 flex flex-col items-center justify-center shadow-sm">
+                <div className="text-2xl md:text-3xl font-black text-orange-500">Lvl 19</div>
+                <div className="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 text-center mt-1 uppercase tracking-wide">Current Entity Age</div>
+              </div>
+            </div>
+
             <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-slate-300 dark:border-slate-700 mt-8">
               <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 font-mono">
                 <GraduationCap className="w-3.5 h-3.5 text-[#2398f7]" />
@@ -736,7 +751,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* Mental Metrics Bento Block (Spans 4 columns on large) */}
-          <div className="lg:col-span-4 p-8 rounded-2xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950/80 flex flex-col justify-between relative overflow-hidden transform-gpu">
+          <div className="lg:col-span-4 p-8 rounded-2xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950/80 flex flex-col justify-between h-full relative overflow-hidden transform-gpu">
             {/* Subtle static gradient background instead of heavy animated blurs */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#2398f7]/5 to-transparent pointer-events-none" />
             
@@ -750,7 +765,7 @@ export default function ProjectsPage() {
                 <div className="space-y-1">
                   <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 block tracking-wider uppercase">MENTOR GUIDANCE DIRECTIVE</span>
                   <span className="text-sm font-semibold text-slate-800 dark:text-white font-mono flex items-center gap-1.5">
-                    JEKA <span className="text-slate-500 text-[10px] font-normal">{"[SYSTEM SOVEREIGN]"}</span>
+                    ELIO ZAYNEEZ <span className="text-slate-500 text-[10px] font-normal">{"[MENTOR & EX-LEADER OF RPD]"}</span>
                   </span>
                 </div>
 
@@ -761,6 +776,27 @@ export default function ProjectsPage() {
                     <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">CRITICAL DUALITY</span>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center justify-center flex-grow py-4">
+              <div className="relative flex items-center justify-center">
+                <svg viewBox="0 0 36 36" className="w-32 h-32 md:w-40 md:h-40 transform -rotate-90">
+                  <circle cx="18" cy="18" r="15.91549430918954" fill="transparent" stroke="currentColor" strokeWidth="4" className="text-slate-200 dark:text-slate-700"></circle>
+                  <circle cx="18" cy="18" r="15.91549430918954" fill="transparent" stroke="#10b981" strokeWidth="4" strokeDasharray="20 80" strokeDashoffset="0"></circle>
+                  <circle cx="18" cy="18" r="15.91549430918954" fill="transparent" stroke="#2398f7" strokeWidth="4" strokeDasharray="40 60" strokeDashoffset="-20"></circle>
+                  <circle cx="18" cy="18" r="15.91549430918954" fill="transparent" stroke="#f97316" strokeWidth="4" strokeDasharray="40 60" strokeDashoffset="-60"></circle>
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="font-bold text-slate-800 dark:text-white leading-none">100%</span>
+                  <span className="text-[10px] text-slate-500 font-mono mt-1">AFFAN</span>
+                </div>
+              </div>
+              
+              <div className="flex gap-3 text-[10px] text-slate-500 font-mono mt-3 uppercase">
+                <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-emerald-500"></div>Sport 20%</div>
+                <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-[#2398f7]"></div>IPA 40%</div>
+                <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-orange-500"></div>IPS 40%</div>
               </div>
             </div>
 
