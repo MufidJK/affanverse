@@ -717,7 +717,7 @@ export default function ProjectsPage() {
                 </h1>
                 
                 <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl font-light">
-                  At 16, Affan stands before a digital crossroads that splits his academic destiny. On one vector lies the <strong className="text-[#2398f7] font-medium">IPA Pathway</strong>—deciphering fluid physics, marine tracking and computational oceanography. On the opposite vector lies the <strong className="text-amber-600 dark:text-amber-400 font-medium">IPS Pathway</strong>—orchestrating global digital diplomacy networks and soft power strategies. Guided by his development mentor, Jeka, this is the timeline detailing the circuits of his split ambition.
+                  At 16, Affan stands before a digital crossroads that splits his academic destiny. On one vector lies the <strong className="text-[#2398f7] font-medium">IPA Pathway</strong>—deciphering fluid physics, marine tracking and computational oceanography. On the opposite vector lies the <strong className="text-amber-600 dark:text-amber-400 font-medium">IPS Pathway</strong>—orchestrating global digital diplomacy networks and soft power strategies. Guided by his development mentor, Elio Zayneez, this is the timeline detailing the circuits of his split ambition.
                 </p>
               </div>
             </div>
