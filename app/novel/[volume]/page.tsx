@@ -1,9 +1,8 @@
 import { supabase } from "@/lib/supabase"
 import Link from "next/link"
 import Image from "next/image"
-import { AlertCircle, BookText, ImageIcon, Lock } from "lucide-react"
+import { AlertCircle, BookText } from "lucide-react"
 import { DynamicChapterList } from "./catalog-client"
-import { VolumeTabs } from "@/components/volume-tabs"
 
 type Chapter = {
   id: string;
@@ -16,16 +15,12 @@ type Chapter = {
 
 type Props = {
   params: Promise<{ volume: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export default async function NovelVolumeDetail({ params, searchParams }: Props) {
+export default async function NovelVolumeDetail({ params }: Props) {
   const resolvedParams = await params;
-  const resolvedSearch = await searchParams;
   
   const volNumber = resolvedParams.volume.replace('vol-', '');
-  const tabParam = resolvedSearch.tab;
-  const activeTab = typeof tabParam === 'string' ? tabParam : 'ln'; 
 
   const { data: chapters, error } = await supabase
     .from('novel_chapters')
@@ -71,35 +66,9 @@ export default async function NovelVolumeDetail({ params, searchParams }: Props)
         </div>
       </div>
 
-      {/* TABS NAVIGATION: Centered */}
-      <VolumeTabs activeTab={activeTab} />
-      {/* CONTENT AREA: Centered List */}
+      {/* CONTENT AREA: Chapter List */}
       <div className="w-full max-w-3xl px-4 py-10 pb-24 flex flex-col">
-        
-        {activeTab === 'ln' && (
-          <DynamicChapterList chapters={chapters || []} volume={volNumber} />
-        )}
-
-        {activeTab === 'manhwa' && (
-          <div className="p-16 border-2 border-dashed border-border rounded-xl bg-muted/10 flex flex-col items-center justify-center text-center relative overflow-hidden group">
-            <style>{`
-              @keyframes glitch-anim {
-                0% { transform: translate(0) }
-                20% { transform: translate(-2px, 2px); text-shadow: -2px 0 red, 2px 0 #2398f7; }
-                40% { transform: translate(-2px, -2px); text-shadow: 2px 0 red, -2px 0 #2398f7; }
-                60% { transform: translate(2px, 2px); text-shadow: -2px 0 red, 2px 0 #2398f7; }
-                80% { transform: translate(2px, -2px); text-shadow: 2px 0 red, -2px 0 #2398f7; }
-                100% { transform: translate(0); text-shadow: none; }
-              }
-              .glitch-text { animation: glitch-anim 0.5s cubic-bezier(.25, .46, .45, .94) both; }
-            `}</style>
-            <Lock className="w-12 h-12 text-muted-foreground mb-4 group-hover:text-[#2398f7] transition-colors" />
-            <h3 className="glitch-text text-2xl font-bold mb-2 font-mono uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-white to-blue-500 animate-pulse">
-              Data Corrupted
-            </h3>
-            <p className="text-muted-foreground max-w-md">Visualisasi dimensi ini sedang dalam proses rekonstruksi sistem.</p>
-          </div>
-        )}
+        <DynamicChapterList chapters={chapters || []} volume={volNumber} />
       </div>
     </div>
   )

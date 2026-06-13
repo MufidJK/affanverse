@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 export type NovelItem = {
   id: string;
@@ -11,12 +10,6 @@ export type NovelItem = {
   description: string;
   cover: string;
 };
-
-const MANHWA = [
-  { id: "ch-1-10", title: "Chapters 1-10", description: "Dawn", cover: "https://placehold.co/600x800/f8fafc/0f172a?text=Ch+1-10" },
-  { id: "ch-11-20", title: "Chapters 11-20", description: "Rise", cover: "https://placehold.co/600x800/f8fafc/0f172a?text=Ch+11-20" },
-  { id: "ch-21-30", title: "Chapters 21-30", description: "Clash", cover: "https://placehold.co/600x800/f8fafc/0f172a?text=Ch+21-30" },
-];
 
 const Card = ({ item, index, hrefBase }: { item: NovelItem; index: number; hrefBase: string }) => {
   return (
@@ -56,56 +49,10 @@ const LightNovelGrid = ({ novels }: { novels: NovelItem[] }) => (
   </div>
 );
 
-const ManhwaGrid = () => (
-  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
-    {MANHWA.map((comic, idx) => (
-      <Card key={comic.id} item={comic} index={idx} hrefBase="manhwa" />
-    ))}
-  </div>
-);
-
 export default function NovelTabs({ lightNovels }: { lightNovels: NovelItem[] }) {
-  const [activeTab, setActiveTab] = useState<"light-novel" | "manhwa">("light-novel");
-
-  const TABS = [
-    { id: "light-novel", label: "Light Novel" },
-    { id: "manhwa", label: "Manhwa" },
-  ] as const;
-
   return (
-    <>
-      {/* Tabs Navigation */}
-      <div className="flex justify-center mb-12">
-        <div className="relative flex bg-black/5 dark:bg-zinc-900 p-1.5 rounded-full border border-black/5 dark:border-white/10">
-          {TABS.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`relative px-8 py-2.5 text-sm md:text-base font-semibold rounded-full transition-colors z-10 ${
-                activeTab === tab.id ? "text-white" : "text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white"
-              }`}
-            >
-              {activeTab === tab.id && (
-                <motion.div
-                  layoutId="active-tab-indicator"
-                  className="absolute inset-0 bg-[#2398f7] rounded-full -z-10"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* 
-        SOP RULE 9: DOM Rendering & Asset Pipeline.
-        Strict React conditional rendering used here to ensure inactive tab 
-        is completely unmounted and garbage-collected. No CSS display:none! 
-      */}
-      <div className="mt-8 min-h-[500px]">
-        {activeTab === "light-novel" ? <LightNovelGrid novels={lightNovels} /> : <ManhwaGrid />}
-      </div>
-    </>
+    <div className="mt-8 min-h-[500px]">
+      <LightNovelGrid novels={lightNovels} />
+    </div>
   );
 }

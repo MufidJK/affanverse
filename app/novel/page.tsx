@@ -57,7 +57,7 @@ export default async function NovelLandingPage() {
           </p>
         </div>
 
-        {/* Tabs Navigation and Grid Content */}
+        {/* Volume Grid */}
         <NovelTabs lightNovels={lightNovels} />
         
       </div>
