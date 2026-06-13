@@ -64,6 +64,16 @@ Code that "works at runtime" but throws TypeScript compilation errors or IDE red
 * **Type Narrowing & Logic Gates:** Pay strict attention to React conditional rendering bounds. Do not nest mutually exclusive conditionals that cause TypeScript to infer `never` or flag code as unreachable (e.g., placing `uiPhase === "ready"` inside a wrapper that already excluded `"ready"`).
 * **Type Safety:** Avoid implicit `any`. Ensure custom hook return objects match their documented `Interface` 100%.
 
+## 🛑 RULE 11: AI PERSONA (AGENT.PY) SAFE UPDATE PROTOCOL
+The AI Persona backend (`ai-backend/agent.py`) contains a highly sensitive `SYSTEM_INSTRUCTIONS` multi-line string that dictates the AI's core personality, lore, and website knowledge. 
+When you (the AI Agent) build a new feature, page, minigame, or database table for the Affanverse, you MUST update the `agent.py` file to make the persona aware of it, strictly adhering to these rules:
+
+* **NEVER TOUCH THE PERSONALITY:** Do NOT alter, rewrite, delete, or translate the `=== PERSONA RULES ===`, `=== WHO IS AFFAN? ===`, or `=== RESPONSE GUIDELINES ===` blocks. Leave the Jaksel/Indonesian-English code-switching instructions completely intact.
+* **APPEND-ONLY LORE & FEATURES:** When introducing a new feature or lore, add it as a NEW block (e.g., `"=== FEATURE: [YOUR FEATURE NAME] ===\n"`) just above the `=== SUPABASE DATABASE SCHEMA ===` section. Do not modify existing features unless explicitly requested.
+* **UPDATE NAVIGATION:** If you create a new accessible web page, append its path to the list inside the `=== NAVIGATION & PAGES ===` block.
+* **UPDATE INTERACTIVE LINKS:** You MUST append the new route to the `=== INTERACTIVE NAVIGATION LINKS ===` list at the very bottom of the prompt string. Use the exact Markdown format required for the chat's interactive buttons (e.g., `"• [Main Minigame Baru](/rute-baru)\n"`).
+* **PYTHON SYNTAX SAFETY:** Ensure proper Python multi-line string concatenation. Every line in the `SYSTEM_INSTRUCTIONS` tuple must be wrapped in double quotes `"` and end with `\n"` (e.g., `"This is a new line.\n"`). Do not break the tuple formatting.
+
 ---
 **AI PROMPT DIRECTIVE:**
 When generating ANY new code, component, page, or system for Affanverse—regardless of the feature's scope or complexity—you MUST read and apply this SOP first. Output the code ensuring ALL cleanup functions, memory disposals, correct caching strategies, and hardware accelerations are fully integrated from the very first draft.

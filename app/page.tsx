@@ -11,6 +11,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Guestbook } from "@/components/guestbook";
 import { MemoryLeakTrigger } from "@/components/terminal/MemoryLeakTrigger";
+import AIPersonaChatWrapper from "@/components/AIPersonaChatWrapper";
 
 export default function Home() {
   return (
@@ -55,6 +56,11 @@ export default function Home() {
 
           </div>
         </div>
+      </section>
+
+      {/* AI Persona Chat Section */}
+      <section className="mt-6">
+        <AIPersonaChatWrapper />
       </section>
 
       {/* Best Affan Stories Section */}
