@@ -30,7 +30,9 @@ export default function Home() {
                     Hi, I'm <span className="text-[#2398f7]">Affan</span>
                   </h1>
                   <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-lg mx-auto lg:mx-0">
-                    An Apex Predator ruling the oceanic abyss, dominating the food chain while casually exploring the depths of marine sciences and fisheries.
+                    An Apex Predator ruling the oceanic abyss while casually exploring marine sciences. Refusing to be confined, 
+                    he bridges the ocean's raw power with the global chessboard to master the geopolitical tides 
+                    of International Relations.
                   </p>
                 </div>
                 

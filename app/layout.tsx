@@ -14,7 +14,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Affanverse",
-  description: "Modern minimalist web about Affan",
+  description: "Welcome to the Affanverse. A minimalist reality blending advanced AI systems with the journey of an anomaly that defies reality itself.",
 };
 
 export default function RootLayout({
