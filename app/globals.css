@@ -271,3 +271,24 @@ body.glitch-invert {
     transform: translateY(0);
   }
 }
+
+/* ========================================= */
+/* SANITY CHECK: Glitch Easter Egg (RULE 5)  */
+/* Only animates transform + opacity         */
+/* ========================================= */
+@keyframes sanityShake {
+  0%, 100% { transform: translate(0); opacity: 1; }
+  10% { transform: translate(-4px, 2px) skew(1deg); }
+  20% { transform: translate(3px, -3px) skew(-1deg); opacity: 0.85; }
+  30% { transform: translate(-2px, 1px); }
+  40% { transform: translate(4px, -1px) skew(2deg); opacity: 0.9; }
+  50% { transform: translate(-3px, 3px); }
+  60% { transform: translate(2px, -2px) skew(-1deg); opacity: 0.8; }
+  70% { transform: translate(-4px, 1px) skew(1deg); }
+  80% { transform: translate(3px, -3px); opacity: 0.95; }
+  90% { transform: translate(-1px, 2px) skew(-2deg); }
+}
+
+body.sanity-glitch {
+  animation: sanityShake 0.15s infinite linear;
+}

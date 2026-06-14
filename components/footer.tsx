@@ -1,10 +1,65 @@
 "use client";
 
+import { useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FaGithub, FaXTwitter, FaInstagram, FaLinkedin, FaSkullCrossbones } from "react-icons/fa6";
+import { useTerminalStore } from "@/store/useTerminalStore";
+import { toast } from "sonner";
+import { motion } from "framer-motion";
+import { CreatorMessages } from "@/components/creator-messages";
 
 export function Footer() {
   const pathname = usePathname();
+  const { setTerminalVisible } = useTerminalStore();
+  const [creatorMessagesOpen, setCreatorMessagesOpen] = useState(false);
+  const glitchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Sanity Check: 2-second glitch easter egg + toast
+  const handleSanityCheck = useCallback(() => {
+    // Prevent stacking if already glitching
+    if (glitchTimeoutRef.current) return;
+
+    document.body.classList.add("sanity-glitch");
+    glitchTimeoutRef.current = setTimeout(() => {
+      document.body.classList.remove("sanity-glitch");
+      glitchTimeoutRef.current = null;
+    }, 2000);
+
+    toast.custom(
+      (t) => (
+        <div className="relative overflow-hidden w-full max-w-sm rounded-lg bg-[#0a0a0a] border border-gray-800 shadow-2xl flex flex-col font-mono">
+          {/* Left accent bar */}
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#2398f7]" />
+          
+          <div className="flex items-start gap-4 p-4 pl-5">
+            <div className="mt-0.5 text-[#2398f7]">
+              <FaSkullCrossbones className="w-5 h-5 animate-pulse" />
+            </div>
+            <div className="flex-1 space-y-1">
+              <p className="text-sm font-bold text-white uppercase tracking-wider">
+                [SYSTEM ERROR]
+              </p>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Reality Sync: Unstable. Sanity Level: 67%. Are you sure you are awake?
+              </p>
+            </div>
+          </div>
+
+          {/* Animated Countdown Progress Bar */}
+          <div className="h-1 w-full bg-gray-900 mt-auto">
+            <motion.div
+              initial={{ width: "100%" }}
+              animate={{ width: "0%" }}
+              transition={{ duration: 8, ease: "linear" }}
+              className="h-full bg-[#2398f7]"
+            />
+          </div>
+        </div>
+      ),
+      { duration: 8000 }
+    );
+  }, []);
 
   // Logika ngilangin footer di page terminal
   if (pathname === "/memory-leak" || pathname === "/terminal") {
@@ -15,48 +70,54 @@ export function Footer() {
     {
       title: "Navigation",
       links: [
-        { label: "Halaman Utama", href: "/" },
-        { label: "Skill Tree", href: "#skill-tree" },
-        { label: "Gallery Dump", href: "#gallery" },
-        { label: "Cursed Artifacts", href: "#artifact" },
+        { label: "Archives", href: "/archives" },
+        { label: "Music", href: "/music" },
+        { label: "Memory Leak", href: "/memory-leak" },
+        { label: "Projects", href: "/projects" },
+        { label: "Chronicle", href: "/chronicle" },
+        { label: "Contact", href: "/contact" },
       ],
     },
     {
       title: "Dimensions",
       links: [
-        { label: "Minigame Portal", href: "/minigame" },
-        { label: "Void Explorer", href: "#" },
-        { label: "Fragment Reality", href: "#" },
-        { label: "Chaos Theory", href: "#" },
+        { label: "Affan AI Chat", href: "/#affan-ai-chat" },
+        { label: "Void Portal", href: "/minigame" },
+        { label: "The Abyss", href: "#", action: () => setTerminalVisible(true) },
+        { label: "Apex Predator", href: "/novel" },
+        { label: "Ambasuke Spin-off", href: "/ambasuke" },
+        { label: "Behind the Code", href: "/behind-the-scenes" },
       ],
     },
     {
       title: "Support",
       links: [
-        { label: "Report Bugs", href: "#" },
-        { label: "FAQ", href: "#faq" },
-        { label: "Creator Messages", href: "#testimonials" },
-        { label: "Sanity Check", href: "#" },
+        { label: "FAQ", href: "/#faq" },
+        { label: "Creator Messages", href: "#", action: () => setCreatorMessagesOpen(true) },
+        { label: "Sanity Check", href: "#", action: handleSanityCheck },
+        { label: "Saweria", href: "https://saweria.co/MufidJK", external: true },
+        { label: "Trakteer", href: "https://trakteer.id/mufidjk", external: true }
       ],
     },
     {
       title: "Legal",
       links: [
-        { label: "Privacy Policy", href: "#" },
-        { label: "Terms of Chaos", href: "#" },
-        { label: "Cookie Protocol", href: "#" },
+        { label: "Privacy Policy", href: "/privacy-policy" },
+        { label: "Terms of Chaos", href: "/terms-of-chaos" },
+        { label: "Cookie Protocol", href: "/cookie-protocol" },
       ],
     },
   ];
 
   const socialLinks = [
-    { label: "GitHub", href: "#" },
-    { label: "Twitter", href: "#" },
-    { label: "Instagram", href: "#" },
-    { label: "Email", href: "#" },
+    { label: "GitHub", href: "https://github.com/MufidJK", icon: FaGithub },
+    { label: "X / Twitter", href: "https://x.com/mufidjk", icon: FaXTwitter },
+    { label: "Instagram", href: "https://www.instagram.com/mufid.jk", icon: FaInstagram },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/mufidrefaya/", icon: FaLinkedin },
   ];
 
   return (
+    <>
     <footer className="w-full bg-gray-950 border-t border-white/5 pt-16 pb-8 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12 mb-16">
@@ -68,18 +129,24 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-gray-400 mb-6 leading-relaxed max-w-xs">
-              Exploring the boundaries of reality and digital chaos. A premium experience designed for the brave.
+              A digital ecosystem where reality meets anomaly. The official archives of The Apex Predator, built for those who dare to explore the glitch.
             </p>
-            <div className="flex flex-wrap gap-4">
-              {socialLinks.map((social, i) => (
-                <Link
-                  key={i}
-                  href={social.href}
-                  className="text-xs font-bold text-gray-400 hover:text-[#2398f7] transition-all duration-300"
-                >
-                  {social.label.toUpperCase()}
-                </Link>
-              ))}
+            <div className="flex flex-wrap gap-3">
+              {socialLinks.map((social, i) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={i}
+                    href={social.href}
+                    aria-label={social.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-600 text-gray-400 hover:border-[#2398f7] hover:text-[#2398f7] transition-colors duration-300"
+                  >
+                    <Icon className="w-4 h-4" />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -93,12 +160,31 @@ export function Footer() {
               <ul className="space-y-4">
                 {section.links.map((link, j) => (
                   <li key={j}>
-                    <Link
-                      href={link.href}
-                      className="text-gray-400 hover:text-[#2398f7] text-sm transition-colors duration-300"
-                    >
-                      {link.label}
-                    </Link>
+                    {('action' in link && link.action) ? (
+                      <button
+                        type="button"
+                        onClick={link.action as () => void}
+                        className="text-gray-400 hover:text-[#2398f7] text-sm transition-colors duration-300"
+                      >
+                        {link.label}
+                      </button>
+                    ) : ('external' in link && link.external) ? (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-[#2398f7] text-sm transition-colors duration-300"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="text-gray-400 hover:text-[#2398f7] text-sm transition-colors duration-300"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -123,5 +209,12 @@ export function Footer() {
         </div>
       </div>
     </footer>
+
+    {/* Creator Messages Terminal Drawer */}
+    <CreatorMessages
+      open={creatorMessagesOpen}
+      onOpenChange={setCreatorMessagesOpen}
+    />
+    </>
   );
 }

@@ -105,7 +105,7 @@ export function Hero3DEffect() {
                     alt={`Affan portrait ${currentIndex + 1}`}
                     fill
                     className="object-contain object-center"
-                    priority={currentIndex === 0}
+                    priority={true}
                     sizes="(max-width: 768px) 300px, 400px"
                   />
                 </motion.div>

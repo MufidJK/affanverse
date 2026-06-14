@@ -7,6 +7,8 @@ import { Footer } from "@/components/footer";
 import { JumpscareOverlay } from '@/components/jumpscare-overlay';
 import { AbyssTerminal } from '@/components/terminal/AbyssTerminal';
 
+import { Toaster } from '@/components/ui/sonner';
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -42,6 +44,7 @@ export default function RootLayout({
           </main>
           <JumpscareOverlay />
           <AbyssTerminal />
+          <Toaster />
         </ThemeProvider>
         <Footer />
       </body>

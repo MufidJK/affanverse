@@ -64,7 +64,7 @@ export default function Home() {
       </section>
 
       {/* AI Persona Chat Section */}
-      <section className="mt-6 min-h-[700px]">
+      <section id="affan-ai-chat" className="mt-6 min-h-[700px] scroll-mt-24">
         <ScrollReveal>
           <AIPersonaChatWrapper />
         </ScrollReveal>
@@ -106,7 +106,7 @@ export default function Home() {
       </ScrollReveal>
 
       {/* FAQ Section */}
-      <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10 min-h-[400px]">
+      <section id="faq" className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10 min-h-[400px]">
         <ScrollReveal>
           <AffanFAQ />
         </ScrollReveal>

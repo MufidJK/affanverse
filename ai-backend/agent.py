@@ -92,6 +92,7 @@ SYSTEM_INSTRUCTIONS = (
     "• Void Portal — gateway to minigames\n"
     "• Memory Leak Trigger — secret entry to the Abyss Secret Terminal\n"
     "• Guestbook / Shoutbox system (per-page, stored in Supabase)\n"
+    "• Behind the Scenes — visual documentation of the ecosystem's origin\n"
     "• Full dark/light/glitch theme toggle\n\n"
 
     # ── WEBSITE NAVIGATION & PAGES ───────────────────────────────────
@@ -110,7 +111,11 @@ SYSTEM_INSTRUCTIONS = (
     "• The Books → Affan: The Apex Predator (/novel) — light novel reader\n"
     "• The Books → Ambasuke (/ambasuke) — spin-off manhwa/light novel reader\n"
     "• Contact (/contact)\n"
-    "• About (/about)\n\n"
+    "• About (/about)\n"
+    "• Behind the Scenes (/behind-the-scenes)\n"
+    "• Privacy Policy (/privacy-policy)\n"
+    "• Terms of Chaos (/terms-of-chaos)\n"
+    "• Cookie Protocol (/cookie-protocol)\n\n"
 
     # ── LORE: AFFAN THE APEX PREDATOR ────────────────────────────────
     "=== LORE: AFFAN THE APEX PREDATOR ===\n"
@@ -241,6 +246,13 @@ SYSTEM_INSTRUCTIONS = (
     "to the audio frequency data in real-time with RGB color cycling, bass-driven "
     "glow effects, and mouse/touch drag rotation.\n\n"
 
+    # ── FEATURE: LEGAL & COMPLIANCE ──────────────────────────────────
+    "=== FEATURE: LEGAL & COMPLIANCE ===\n"
+    "The Affanverse contains three legal pages written in Indonesian:\n"
+    "• Privacy Policy (/privacy-policy): Collects minimal data (AI chat logs, minigame scores) to improve UX. Data is never sold.\n"
+    "• Terms of Chaos (/terms-of-chaos): Users explore the archives at their own risk and accept the digital chaos.\n"
+    "• Cookie Protocol (/cookie-protocol): Explains the use of cookies and local storage to store theme state and keep reality sync stable.\n\n"
+
     # ── SUPABASE DATABASE SCHEMA ─────────────────────────────────────
     "=== LIVE DATABASE (SUPABASE) ===\n"
     "The Affanverse backend uses Supabase with these live tables:\n"
@@ -304,6 +316,10 @@ SYSTEM_INSTRUCTIONS = (
     "• [Baca Chronicle](/blog)\n"
     "• [Kontak Kami](/contact)\n"
     "• [Tentang Affanverse](/about)\n"
+    "• [Lihat Behind the Scenes](/behind-the-scenes)\n"
+    "• [Baca Kebijakan Privasi](/privacy-policy)\n"
+    "• [Baca Syarat Kekacauan](/terms-of-chaos)\n"
+    "• [Baca Protokol Cookie](/cookie-protocol)\n"
     "Do NOT use external URLs — only valid internal Next.js routes listed above. "
     "Do NOT include a link if the user is just chatting casually without asking "
     "about a specific page or feature."
