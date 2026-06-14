@@ -1,4 +1,3 @@
-import { Hero3DEffect } from "@/components/hero-3d";
 import { AffanStories } from "@/components/affan-stories";
 import { AffanTestimonials } from "@/components/affan-testimonials";
 import { AffanSkillTree } from "@/components/affan-skill-tree";
@@ -13,13 +12,14 @@ import { Guestbook } from "@/components/guestbook";
 import { MemoryLeakTrigger } from "@/components/terminal/MemoryLeakTrigger";
 import AIPersonaChatWrapper from "@/components/AIPersonaChatWrapper";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { Hero3DWrapper } from "@/components/Hero3DWrapper";
 
 export default function Home() {
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section — Pure CSS fade-in (no Framer Motion) to avoid blocking hydration */}
       <section className="relative flex items-center justify-center min-h-[calc(100vh-80px)] w-full">
-        <ScrollReveal className="w-full">
+        <div className="w-full animate-[heroFadeIn_0.7s_ease-out_both]">
           <div className="container mx-auto px-4 sm:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center w-full max-w-6xl mx-auto">
               
@@ -53,23 +53,23 @@ export default function Home() {
                 {/* Subtle Glowing Premium Blob */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#2398f7]/20 rounded-full blur-[100px] -z-10 pointer-events-none" />
                 
-                <Hero3DEffect />
+                <Hero3DWrapper />
               </div>
 
             </div>
           </div>
-        </ScrollReveal>
+        </div>
       </section>
 
       {/* AI Persona Chat Section */}
-      <section className="mt-6">
+      <section className="mt-6 min-h-[700px]">
         <ScrollReveal>
           <AIPersonaChatWrapper />
         </ScrollReveal>
       </section>
 
       {/* Best Affan Stories Section */}
-      <section className="w-full py-24 relative mt-16">
+      <section className="w-full py-24 relative mt-16 min-h-[500px]">
         {/* Solid Subtle Divider Edge-to-Edge */}
         <div className="absolute top-0 left-0 right-0 w-full h-px bg-black/10 dark:bg-white/10" />
         <ScrollReveal>
@@ -78,21 +78,21 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10">
+      <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10 min-h-[400px]">
         <ScrollReveal>
           <AffanTestimonials />
         </ScrollReveal>
       </section>
 
       {/* Cursed Artifact Section */}
-      <section className="mt-40 overflow-hidden relative border-t border-black/10 dark:border-white/10">
+      <section className="mt-40 overflow-hidden relative border-t border-black/10 dark:border-white/10 min-h-[400px]">
         <ScrollReveal>
           <CursedArtifactLoader />
         </ScrollReveal>
       </section>
 
       {/* Skill Tree Section */}
-      <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10">
+      <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10 min-h-[500px]">
         <ScrollReveal>
           <AffanSkillTree />
         </ScrollReveal>
@@ -104,7 +104,7 @@ export default function Home() {
       </ScrollReveal>
 
       {/* FAQ Section */}
-      <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10">
+      <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10 min-h-[400px]">
         <ScrollReveal>
           <AffanFAQ />
         </ScrollReveal>

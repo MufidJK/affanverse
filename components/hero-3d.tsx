@@ -39,7 +39,7 @@ export function Hero3DEffect() {
       <motion.div
         animate={isHovered ? { y: 0 } : { y: [-10, 10, -10] }}
         transition={{ repeat: isHovered ? 0 : Infinity, duration: 4, ease: "easeInOut" }}
-        className="will-change-transform"
+        className="transform-gpu"
         style={{ transform: "translateZ(0)" }} // Paksa masuk GPU layer
       >
         {/* Inner Wrapper: Interactive Tilt Tracking */}
@@ -52,7 +52,7 @@ export function Hero3DEffect() {
             rotateY: isHovered ? rotateY : 0,
             transformStyle: "preserve-3d",
           }}
-          className="relative w-[300px] h-[400px] md:w-[400px] md:h-[500px] rounded-3xl overflow-visible touch-none cursor-pointer will-change-transform"
+          className="relative w-[300px] h-[400px] md:w-[400px] md:h-[500px] rounded-3xl overflow-visible touch-none cursor-pointer transform-gpu"
         >
           {/* Background card: GANTI backdrop-blur-lg jadi warna solid semi-transparan biar enteng */}
           <div 
@@ -62,7 +62,7 @@ export function Hero3DEffect() {
           
           {/* Elegant Image Floating Layout */}
           <div 
-            className="absolute inset-0 z-10 flex items-center justify-center overflow-visible transition-transform duration-300 ease-out will-change-transform"
+            className="absolute inset-0 z-10 flex items-center justify-center overflow-visible transition-transform duration-300 ease-out transform-gpu"
             style={{ 
               transform: isHovered ? "translateZ(80px) scale(1.05)" : "translateZ(30px) scale(1)",
             }}

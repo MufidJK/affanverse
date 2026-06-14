@@ -254,3 +254,20 @@ body.glitch-invert {
   75% { filter: hue-rotate(270deg); transform: translate(-2px, 3px) skew(-4deg); text-shadow: 5px -3px 0 yellow, -5px 3px 0 cyan; }
   100% { filter: hue-rotate(360deg); transform: translate(2px, -3px) skew(2deg); text-shadow: 3px 0 0 lime, -3px 0 0 red; }
 }
+
+/* ========================================= */
+/* HERO FADE-IN (Pure CSS — no Framer Motion) */
+/* Uses only transform + opacity (RULE 5)    */
+/* Runs on the compositor thread, never      */
+/* blocks React hydration on the main thread */
+/* ========================================= */
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

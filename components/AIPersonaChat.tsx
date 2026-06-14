@@ -27,25 +27,19 @@ export default function AIPersonaChat() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const isInitialMount = useRef(true);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const hasUserInteracted = useRef(false);
 
-  // Force scroll to top on mount to override browser scroll restoration
+  // Scroll to bottom of chat ONLY after the user has sent a message.
+  // Uses direct scrollTop on the chat container instead of scrollIntoView,
+  // which prevents the browser from scrolling the outer page viewport.
   useEffect(() => {
-    const scrollTimer = setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 50);
-    return () => clearTimeout(scrollTimer);
-  }, []);
-
-  // Scroll to bottom of chat only when new messages are added or loading status changes after mount
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (!hasUserInteracted.current) return;
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }, [messages, isLoading]);
 
@@ -63,6 +57,7 @@ export default function AIPersonaChat() {
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsLoading(true);
+    hasUserInteracted.current = true;
 
     try {
       const response = await fetch("/api/chat", {
@@ -149,7 +144,7 @@ export default function AIPersonaChat() {
             </div>
 
             {/* Chat Output Window */}
-            <ScrollArea className="h-[400px] md:h-[450px] lg:max-h-[70vh] 2xl:h-[600px] 2xl:max-h-none p-4 sm:p-6 bg-zinc-50/50 dark:bg-[#070b12] font-mono text-sm" tabIndex={-1}>
+            <ScrollArea className="h-[400px] md:h-[450px] lg:max-h-[70vh] 2xl:h-[600px] 2xl:max-h-none p-4 sm:p-6 bg-zinc-50/50 dark:bg-[#070b12] font-mono text-sm [overflow-anchor:none]" tabIndex={-1} ref={chatContainerRef}>
               <div className="space-y-6">
                 {messages.map((msg) => (
                   <div key={msg.id} className={`flex gap-3 items-start ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
@@ -232,7 +227,7 @@ export default function AIPersonaChat() {
                     </div>
                   </div>
                 )}
-                <div ref={scrollRef} />
+
               </div>
             </ScrollArea>
 
