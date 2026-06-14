@@ -1,13 +1,34 @@
 "use client"
 
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion"
+import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from "framer-motion"
 import Image from "next/image"
-import { useState, MouseEvent } from "react"
+import { useState, useEffect, MouseEvent } from "react"
+
+const HERO_IMAGES = [
+  '/affan-no-bg-1.png',
+  '/affan-no-bg-2.png',
+  '/affan-no-bg-3.png',
+  '/affan-no-bg-4.png',
+  '/affan-no-bg-5.png'
+]
 
 export function Hero3DEffect() {
   const [isHovered, setIsHovered] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
+
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
+
+  // Auto-cycle logic strictly managed with cleanup (RULE 2)
+  useEffect(() => {
+    if (isHovered) return;
+
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 2500);
+
+    return () => clearInterval(intervalId);
+  }, [isHovered]);
 
   // Spring animations for smooth follow (Damping dinaikin dikit biar gak terlalu liar)
   const springConfig = { damping: 25, stiffness: 150 }
@@ -47,6 +68,8 @@ export function Hero3DEffect() {
           onMouseMove={handleMouseMove}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={handleMouseLeave}
+          onTouchStart={() => setIsHovered(true)}
+          onTouchEnd={handleMouseLeave}
           style={{
             rotateX: isHovered ? rotateX : 0,
             rotateY: isHovered ? rotateY : 0,
@@ -68,15 +91,25 @@ export function Hero3DEffect() {
             }}
           >
             <div className="relative w-full h-full scale-[1.3] -translate-y-[12%] flex items-center justify-center pointer-events-none">
-              {/* IMAGE: HAPUS drop-shadow-2xl dan CSS hover scale, biarin Framer yang ngatur scale di div atasnya */}
-              <Image
-                src="/affannobg.png"
-                alt="Affan portrait"
-                fill
-                className="object-contain object-center"
-                priority
-                sizes="(max-width: 768px) 300px, 400px"
-              />
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentIndex}
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -40 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  className="absolute inset-0 flex items-center justify-center transform-gpu will-change-transform"
+                >
+                  <Image
+                    src={HERO_IMAGES[currentIndex]}
+                    alt={`Affan portrait ${currentIndex + 1}`}
+                    fill
+                    className="object-contain object-center"
+                    priority={currentIndex === 0}
+                    sizes="(max-width: 768px) 300px, 400px"
+                  />
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
           
