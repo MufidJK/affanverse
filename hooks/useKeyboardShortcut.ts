@@ -11,7 +11,7 @@ export const useKeyboardShortcut = (combo: KeyCombo, callback: () => void) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // Check if the pressed key matches the desired combo
-      const isKeyMatch = event.key.toLowerCase() === combo.key.toLowerCase() || event.code.toLowerCase() === combo.key.toLowerCase();
+      const isKeyMatch = event.key?.toLowerCase() === combo.key?.toLowerCase() || event.code?.toLowerCase() === combo.key?.toLowerCase();
       
       const isCtrlMatch = !!combo.ctrlKey === event.ctrlKey;
       const isAltMatch = !!combo.altKey === event.altKey;

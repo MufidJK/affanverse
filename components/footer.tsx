@@ -110,10 +110,11 @@ export function Footer() {
   ];
 
   const socialLinks = [
+    { label: "Instagram (Mufid)", href: "https://www.instagram.com/mufid.jk", icon: FaInstagram },
+    { label: "LinkedIn (Mufid)", href: "https://www.linkedin.com/in/mufidrefaya/", icon: FaLinkedin },
+    { label: "Instagram (Affan)", href: "https://www.instagram.com/affanhaa", icon: FaInstagram },
     { label: "GitHub", href: "https://github.com/MufidJK", icon: FaGithub },
     { label: "X / Twitter", href: "https://x.com/mufidjk", icon: FaXTwitter },
-    { label: "Instagram", href: "https://www.instagram.com/mufid.jk", icon: FaInstagram },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/mufidrefaya/", icon: FaLinkedin },
   ];
 
   return (
@@ -141,7 +142,7 @@ export function Footer() {
                     aria-label={social.label}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-600 text-gray-400 hover:border-[#2398f7] hover:text-[#2398f7] transition-colors duration-300"
+                    className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-600 text-gray-400 hover:border-[#2398f7] hover:text-[#2398f7] transition-all duration-300 hover:shadow-[0_0_15px_rgba(35,152,247,0.3)] hover:scale-105"
                   >
                     <Icon className="w-4 h-4" />
                   </a>
