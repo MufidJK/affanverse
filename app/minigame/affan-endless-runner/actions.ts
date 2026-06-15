@@ -1,0 +1,71 @@
+'use server'
+
+import { supabase } from '@/lib/supabase'
+
+/* ═══════════════════════════════════════════════
+   TYPES
+   ═══════════════════════════════════════════════ */
+
+interface ScorePayload {
+  player_name: string
+  game_slug: 'affan-endless-runner'
+  score: number
+}
+
+interface ScoreResult {
+  success: boolean
+  error?: string
+}
+
+/* ═══════════════════════════════════════════════
+   SERVER ACTION — Secure Score Submission
+   ═══════════════════════════════════════════════ */
+
+/**
+ * Upserts a score into the minigame_scores table.
+ * Uses the UNIQUE(player_name, game_slug) constraint
+ * to overwrite only if the new score is higher.
+ *
+ * Runs server-side — the Supabase client is never
+ * exposed to the browser bundle.
+ */
+export async function submitEndlessRunnerScore(
+  payload: ScorePayload
+): Promise<ScoreResult> {
+  // ── Input Validation ──────────────────────────
+  const name = payload.player_name?.trim()
+  if (!name || name.length === 0 || name.length > 30) {
+    return { success: false, error: 'Invalid player name' }
+  }
+  if (payload.game_slug !== 'affan-endless-runner') {
+    return { success: false, error: 'Invalid game slug' }
+  }
+  if (
+    typeof payload.score !== 'number' ||
+    !Number.isFinite(payload.score) ||
+    payload.score < 0
+  ) {
+    return { success: false, error: 'Invalid score' }
+  }
+
+  try {
+    const { error } = await (supabase.from('minigame_scores') as any).upsert(
+      {
+        player_name: name,
+        game_slug: 'affan-endless-runner' as const,
+        score: Math.floor(payload.score),
+      },
+      { onConflict: 'player_name,game_slug' }
+    )
+
+    if (error) {
+      console.error('[AffanEndlessRunner] Supabase upsert error:', error)
+      return { success: false, error: 'Database error' }
+    }
+
+    return { success: true }
+  } catch (err) {
+    console.error('[AffanEndlessRunner] Unexpected error:', err)
+    return { success: false, error: 'Server error' }
+  }
+}

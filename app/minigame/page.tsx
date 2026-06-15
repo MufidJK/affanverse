@@ -105,6 +105,14 @@ const REAL_GAMES: MinigameData[] = [
     description: "Navigate the corrupted data streams as Ambasuke. Slash through waves of Corrupted Entities in this cyberpunk survival protocol. How long can you maintain uplink?",
     playRoute: "/minigame/ambasuke-protocol",
   },
+  {
+    id: "affan-endless-runner",
+    title: "Affan Endless Runner",
+    thumbnail: "https://res.cloudinary.com/dcsh47583/image/upload/v1781539929/affanEndlessRunner_iyizn9.png",
+    tags: ["Action", "Gravity Shift", "Endless"],
+    description: "Shift gravity through the digital abyss. Dodge Memory Leak hazards and collect Data Fragments as the void accelerates around you.",
+    playRoute: "/minigame/affan-endless-runner",
+  },
 ]
 
 /** Hybrid fallback: show real games when available, otherwise mockups */
