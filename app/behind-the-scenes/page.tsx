@@ -41,6 +41,9 @@ const TIMELINE = [
       "Fix kritis: LCP performance warning pada Hero Section — priority={true} pada semua gambar above-the-fold.",
       "Pembuatan halaman Behind the Scenes — dokumentasi genesis Affanverse.",
       "Sinkronisasi knowledge base AI Persona (agent.py) dengan seluruh fitur dan rute baru.",
+      "Integrasi komponen System Briefing Video (YouTube) pada struktur halaman utama dengan dukungan sinkronisasi agent backend.",
+      "Pengembangan minigame 'The Ambasuke Protocol' — Top-down Hack & Slash Canvas Minigame dengan rendering engine kustom, aset audio, dan integrasi persistent leaderboard.",
+      "Pengembangan minigame 'Affan Endless Runner' — Zero-leak Canvas Engine yang sangat dioptimasi dengan mekanik Gravity Shift dan implementasi DOM-based Framer Motion Parallax."
     ],
   },
 ];
