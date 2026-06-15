@@ -97,6 +97,14 @@ const REAL_GAMES: MinigameData[] = [
     description: "Survive the endless run and face off against Dio in an epic boss fight! Use your fireball and ultimate to claim victory.",
     playRoute: "/minigame/affan-strike",
   },
+  {
+    id: "ambasuke-protocol",
+    title: "The Ambasuke Protocol",
+    thumbnail: "https://res.cloudinary.com/dcsh47583/image/upload/v1781531209/ambasukeProtocol_ykbia5.png",
+    tags: ["Survival", "Hack & Slash", "Anomaly"],
+    description: "Navigate the corrupted data streams as Ambasuke. Slash through waves of Corrupted Entities in this cyberpunk survival protocol. How long can you maintain uplink?",
+    playRoute: "/minigame/ambasuke-protocol",
+  },
 ]
 
 /** Hybrid fallback: show real games when available, otherwise mockups */

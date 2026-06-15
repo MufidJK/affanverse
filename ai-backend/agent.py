@@ -115,7 +115,8 @@ SYSTEM_INSTRUCTIONS = (
     "• Behind the Scenes (/behind-the-scenes)\n"
     "• Privacy Policy (/privacy-policy)\n"
     "• Terms of Chaos (/terms-of-chaos)\n"
-    "• Cookie Protocol (/cookie-protocol)\n\n"
+    "• Cookie Protocol (/cookie-protocol)\n"
+    "• Minigame: The Ambasuke Protocol (/minigame/ambasuke-protocol)\n\n"
 
     # ── LORE: AFFAN THE APEX PREDATOR ────────────────────────────────
     "=== LORE: AFFAN THE APEX PREDATOR ===\n"
@@ -231,6 +232,9 @@ SYSTEM_INSTRUCTIONS = (
     "Tags: Arcade, Casual, Flappy.\n"
     "• Affan Strike — endless runner with boss fight against Dio, featuring fireball "
     "and ultimate attacks. Tags: Action, Endless Runner, Boss Fight.\n"
+    "• The Ambasuke Protocol — cyberpunk survival hack & slash where Ambasuke "
+    "navigates corrupted data streams and slashes through waves of Corrupted Entities. "
+    "Tags: Survival, Hack & Slash, Anomaly.\n"
     "Leaderboard scores are stored in Supabase 'minigame_scores' table with "
     "player_name, game_slug, and score. Each minigame page has its own Guestbook "
     "section called 'Void Echoes'.\n\n"
@@ -259,6 +263,19 @@ SYSTEM_INSTRUCTIONS = (
     "It has a hacker/terminal aesthetic with a neon blue ([#2398f7]) theme. The video acts "
     "as an introductory demonstration of the Affanverse ecosystem. It uses a facade pattern "
     "for performance where users must click 'Initialize_Playback' to load the actual feed.\n\n"
+
+    # ── FEATURE: THE AMBASUKE PROTOCOL (MINIGAME) ─────────────────────
+    "=== FEATURE: THE AMBASUKE PROTOCOL (MINIGAME) ===\n"
+    "A cyberpunk survival hack & slash minigame at /minigame/ambasuke-protocol. "
+    "The player controls Ambasuke navigating corrupted data streams rendered as a "
+    "dark grid with scanline effects. Red glitchy rectangles called 'Corrupted Entities' "
+    "chase the player from all edges of the screen. Combat is auto-attack — enemies "
+    "that enter the player's proximity radius get slashed with a neon blue (#2398f7) "
+    "sword trail. Score counts kills. Difficulty ramps over time (faster spawns, faster "
+    "enemies). Features dark synthwave BGM, sword slash SFX, and a death whistle on "
+    "game over. Desktop uses WASD/Arrow keys; mobile landscape uses a virtual joystick. "
+    "Mobile portrait shows a system error message requiring landscape rotation. "
+    "Scores are saved to the minigame_scores table via a secure Server Action.\n\n"
 
     # ── SUPABASE DATABASE SCHEMA ─────────────────────────────────────
     "=== LIVE DATABASE (SUPABASE) ===\n"
@@ -327,6 +344,7 @@ SYSTEM_INSTRUCTIONS = (
     "• [Baca Kebijakan Privasi](/privacy-policy)\n"
     "• [Baca Syarat Kekacauan](/terms-of-chaos)\n"
     "• [Baca Protokol Cookie](/cookie-protocol)\n"
+    "• [Main The Ambasuke Protocol](/minigame/ambasuke-protocol)\n"
     "Do NOT use external URLs — only valid internal Next.js routes listed above. "
     "Do NOT include a link if the user is just chatting casually without asking "
     "about a specific page or feature."
