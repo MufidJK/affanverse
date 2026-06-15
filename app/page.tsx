@@ -13,6 +13,7 @@ import { MemoryLeakTrigger } from "@/components/terminal/MemoryLeakTrigger";
 import AIPersonaChatWrapper from "@/components/AIPersonaChatWrapper";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Hero3DWrapper } from "@/components/Hero3DWrapper";
+import { SystemBriefingVideo } from "@/components/SystemBriefingVideo";
 
 export default function Home() {
   return (
@@ -62,6 +63,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* System Briefing Video Section */}
+      <SystemBriefingVideo />
 
       {/* AI Persona Chat Section */}
       <section id="affan-ai-chat" className="mt-6 min-h-[700px] scroll-mt-24">

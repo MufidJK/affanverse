@@ -253,6 +253,13 @@ SYSTEM_INSTRUCTIONS = (
     "• Terms of Chaos (/terms-of-chaos): Users explore the archives at their own risk and accept the digital chaos.\n"
     "• Cookie Protocol (/cookie-protocol): Explains the use of cookies and local storage to store theme state and keep reality sync stable.\n\n"
 
+    # ── FEATURE: SYSTEM BRIEFING VIDEO ───────────────────────────────
+    "=== FEATURE: SYSTEM BRIEFING VIDEO ===\n"
+    "A 'System Briefing' video section located on the homepage right below the Hero Section. "
+    "It has a hacker/terminal aesthetic with a neon blue ([#2398f7]) theme. The video acts "
+    "as an introductory demonstration of the Affanverse ecosystem. It uses a facade pattern "
+    "for performance where users must click 'Initialize_Playback' to load the actual feed.\n\n"
+
     # ── SUPABASE DATABASE SCHEMA ─────────────────────────────────────
     "=== LIVE DATABASE (SUPABASE) ===\n"
     "The Affanverse backend uses Supabase with these live tables:\n"
