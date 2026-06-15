@@ -68,7 +68,7 @@ const ENEMY_SPAWN_INTERVAL_INITIAL = 1.6; // seconds
 const ENEMY_SPAWN_INTERVAL_MIN = 0.4;
 const ENEMY_SPAWN_RAMP = 0.015; // interval decrease per kill
 
-const KILLS_PER_WAVE = 50;
+const KILLS_PER_WAVE = 32;
 const WAVE_SPEED_BONUS = 0.12; // +12% enemy speed per wave
 const WAVE_SPAWN_REDUCTION = 0.15; // -15% spawn interval per wave
 
@@ -182,15 +182,15 @@ export default function AmbasukeEngine() {
     if (!bgmRef.current) {
       bgmRef.current = new Audio("/minigame/ambasuke-protocol/dark-Synthwave-Music.mp3");
       bgmRef.current.loop = true;
-      bgmRef.current.volume = 0.3;
+      bgmRef.current.volume = 0.5;
     }
     if (!sfxSlash.current) {
       sfxSlash.current = new Audio("/minigame/ambasuke-protocol/sword_slash.mp3");
-      sfxSlash.current.volume = 0.5;
+      sfxSlash.current.volume = 0.7;
     }
     if (!sfxDeath.current) {
       sfxDeath.current = new Audio("/minigame/ambasuke-protocol/ambatukam.mp3");
-      sfxDeath.current.volume = 0.9;
+      sfxDeath.current.volume = 1.0;
     }
   }, []);
 
