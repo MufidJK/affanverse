@@ -43,7 +43,10 @@ const TIMELINE = [
       "Sinkronisasi knowledge base AI Persona (agent.py) dengan seluruh fitur dan rute baru.",
       "Integrasi komponen System Briefing Video (YouTube) pada struktur halaman utama dengan dukungan sinkronisasi agent backend.",
       "Pengembangan minigame 'The Ambasuke Protocol' — Top-down Hack & Slash Canvas Minigame dengan rendering engine kustom, aset audio, dan integrasi persistent leaderboard.",
-      "Pengembangan minigame 'Affan Endless Runner' — Zero-leak Canvas Engine yang sangat dioptimasi dengan mekanik Gravity Shift dan implementasi DOM-based Framer Motion Parallax."
+      "Pengembangan minigame 'Affan Endless Runner' — Zero-leak Canvas Engine yang sangat dioptimasi dengan mekanik Gravity Shift dan implementasi DOM-based Framer Motion Parallax.",
+      "Penyelesaian struktur 'Nexus' — Integrasi arsitektur ekosistem Affanverse secara menyeluruh dengan sistem routing terpusat dan optimasi state management antar halaman.",
+      "Pengembangan minigame ke-5 'Affan Card Protocol' — Rogue-lite Deckbuilder yang ditenagai oleh useReducer state machine kompleks, sekuens animasi multi-step Framer Motion, dan sistem Leaderboard Supabase dengan optimasi zero-leak.",
+      "Pengembangan minigame ke-6 'Affan Low Cortisol' — EDM Rhythm Game WebGL mutakhir. Menggunakan Web Audio API untuk sinkronisasi beat presisi, procedural falling notes engine via HTML5 Canvas, dan hardware-accelerated 77-frame CSS sprite sheet dengan time-gated UI (Framer Motion)."
     ],
   },
 ];
