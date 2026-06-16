@@ -1,6 +1,6 @@
 <div align="center">
   <img src="https://res.cloudinary.com/dcsh47583/image/upload/v1781614707/icon_czc4th.png" width="150" alt="Affanverse Logo" />
-  <h1>🌌 Affanverse Ecosystem</h1>
+  <h1>🌌 Affanverse Web App</h1>
 </div>
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.2.4-black?style=for-the-badge&logo=next.js)
