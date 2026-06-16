@@ -113,6 +113,14 @@ const REAL_GAMES: MinigameData[] = [
     description: "Shift gravity through the digital abyss. Dodge Memory Leak hazards and collect Data Fragments as the void accelerates around you.",
     playRoute: "/minigame/affan-endless-runner",
   },
+  {
+    id: "affan-card-protocol",
+    title: "Affan Card Protocol",
+    thumbnail: "/minigame/affan-card-protocol/affan.png",
+    tags: ["Strategy", "Card Game", "Roguelite"],
+    description: "A high-stakes tactical rogue-lite deckbuilder built on the anomalies of the Nexus void. Draw cards, manage AP, and survive the data floors.",
+    playRoute: "/minigame/affan-card-protocol",
+  },
 ]
 
 /** Hybrid fallback: show real games when available, otherwise mockups */
