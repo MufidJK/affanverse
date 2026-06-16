@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -7,12 +8,13 @@ from google.genai import types
 from supabase import create_client, Client
 
 # ── API Key Setup ───────────────────────────────────────────────────────
-# Colok API Key Gemini di sini! Gak butuh path localharness lagi!
-os.environ["GEMINI_API_KEY"] = "AQ.Ab8RN6I73acpslwDTCOACGTIvJzzQFnM0oh9adW-1D7YGa5CAA"
+# Muat environment variable dari .env.local di folder root
+load_dotenv(dotenv_path="../.env.local")
 
-# Taruh URL Supabase & service_role key di sini (SAMA KAYA embed_lore.py)
-SUPABASE_URL = "https://kqzltfrcqlhuetxpdrtb.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtxemx0ZnJjcWxodWV0eHBkcnRiIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjMzNzEyMiwiZXhwIjoyMDkxOTEzMTIyfQ.fu6SRu3jydf68_mAykXd_uxF-tTBHMnQSHZg06Mkaq0"
+os.environ["GEMINI_API_KEY"] = os.getenv("GEMINI_API_KEY")
+
+SUPABASE_URL = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 app = FastAPI(

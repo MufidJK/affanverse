@@ -1,17 +1,18 @@
 import os
 import time
+from dotenv import load_dotenv
 from supabase import create_client, Client
 from google import genai
 
 # ==========================================
 # 1. SETUP KONEKSI
 # ==========================================
-# Taruh URL dan Service Role Key Supabase di sini
-SUPABASE_URL = "https://kqzltfrcqlhuetxpdrtb.supabase.co" # Ganti pake URL Supabase
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtxemx0ZnJjcWxodWV0eHBkcnRiIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjMzNzEyMiwiZXhwIjoyMDkxOTEzMTIyfQ.fu6SRu3jydf68_mAykXd_uxF-tTBHMnQSHZg06Mkaq0" # Ganti pake service_role key lu
+# Muat environment variable dari .env.local di folder root
+load_dotenv(dotenv_path="../.env.local")
 
-# Taruh Gemini API Key di sini (bisa copas dari agent.py)
-GEMINI_API_KEY = "AQ.Ab8RN6I73acpslwDTCOACGTIvJzzQFnM0oh9adW-1D7YGa5CAA"
+SUPABASE_URL = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # Inisialisasi client
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
