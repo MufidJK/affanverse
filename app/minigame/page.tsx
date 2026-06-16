@@ -121,6 +121,14 @@ const REAL_GAMES: MinigameData[] = [
     description: "A high-stakes tactical rogue-lite deckbuilder built on the anomalies of the Nexus void. Draw cards, manage AP, and survive the data floors.",
     playRoute: "/minigame/affan-card-protocol",
   },
+  {
+    id: "affan-low-cortisol",
+    title: "Affan Low Cortisol",
+    thumbnail: "https://res.cloudinary.com/dcsh47583/image/upload/v1781600565/affanLowCortisol_ct2lh4.png",
+    tags: ["Rhythm", "EDM", "Audio"],
+    description: "Feel the beat of the void. An EDM rhythm protocol where your cortisol level decides your fate. Keep the groove low, or the void consumes you.",
+    playRoute: "/minigame/affan-low-cortisol",
+  },
 ]
 
 /** Hybrid fallback: show real games when available, otherwise mockups */
