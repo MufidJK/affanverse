@@ -117,7 +117,9 @@ SYSTEM_INSTRUCTIONS = (
     "• Terms of Chaos (/terms-of-chaos)\n"
     "• Cookie Protocol (/cookie-protocol)\n"
     "• Minigame: The Ambasuke Protocol (/minigame/ambasuke-protocol)\n"
-    "• Minigame: Affan Endless Runner (/minigame/affan-endless-runner)\n\n"
+    "• Minigame: Affan Endless Runner (/minigame/affan-endless-runner)\n"
+    "• Nexus Dashboard (/nexus) — ecosystem status, metrics ledger, and performance tracker\n"
+    "• Abyss Term Documentation (/nexus/abyss-term) — classified policy and warning page for the Abyss Layer\n\n"
 
     # ── LORE: AFFAN THE APEX PREDATOR ────────────────────────────────
     "=== LORE: AFFAN THE APEX PREDATOR ===\n"
@@ -301,6 +303,25 @@ SYSTEM_INSTRUCTIONS = (
     "object pooling for hazards and collectibles (zero allocation during gameplay). "
     "Mobile requires landscape orientation. Tags: Action, Gravity Shift, Endless.\n\n"
 
+    # ── FEATURE: NEXUS DASHBOARD ─────────────────────────────────────
+    "=== FEATURE: NEXUS DASHBOARD ===\n"
+    "An advanced management dashboard located at /nexus called 'Nexus Coordinator'. "
+    "It presents mock metrics representing the live Supabase database state: total chapters in the "
+    "novel_chapters (150 chapters) and ambasuke_chapters (21 chapters) tables, along with anomaly deflection "
+    "rates from minigame_scores. It includes a dynamically rendered Recharts area chart showing ecosystem activity flow "
+    "and a detailed system performance monitor confirming adherence to the strict RAM, GPU, and CSS performance "
+    "directives (such as the Supabase client singleton pattern and demand-driven loops). The page features a "
+    "real-time ledger table for Recent Ecosystem Activity filtering.\n\n"
+
+    # ── FEATURE: ABYSS TERM DOCUMENTATION ────────────────────────────
+    "=== FEATURE: ABYSS TERM DOCUMENTATION ===\n"
+    "Located at /nexus/abyss-term, this page contains the 'Abyss Terms & Conditions' "
+    "and highly classified protocol guidelines for the Abyss Layer. It features a deep "
+    "visceral red aesthetic and outlines 'Protocol 0: Data Corruption', 'The Predator Pact', "
+    "and 'Neural Stability Warnings'. It dictates that unauthorized interaction with "
+    "fragmented minigame data results in neural severing, and acknowledges that "
+    "Gravity Shift is a feature, not a bug.\n\n"
+
     # ── SUPABASE DATABASE SCHEMA ─────────────────────────────────────
     "=== LIVE DATABASE (SUPABASE) ===\n"
     "The Affanverse backend uses Supabase with these live tables:\n"
@@ -370,6 +391,8 @@ SYSTEM_INSTRUCTIONS = (
     "• [Baca Protokol Cookie](/cookie-protocol)\n"
     "• [Main The Ambasuke Protocol](/minigame/ambasuke-protocol)\n"
     "• [Main Affan Endless Runner](/minigame/affan-endless-runner)\n"
+    "• [Kelola Dashboard Nexus](/nexus)\n"
+    "• [Baca Kebijakan Abyss Term](/nexus/abyss-term)\n"
     "Do NOT use external URLs — only valid internal Next.js routes listed above. "
     "Do NOT include a link if the user is just chatting casually without asking "
     "about a specific page or feature."

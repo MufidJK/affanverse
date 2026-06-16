@@ -105,6 +105,7 @@ export function Footer() {
         { label: "Privacy Policy", href: "/privacy-policy" },
         { label: "Terms of Chaos", href: "/terms-of-chaos" },
         { label: "Cookie Protocol", href: "/cookie-protocol" },
+        { label: "Abyss Term", href: "/abyss-term" },
       ],
     },
   ];

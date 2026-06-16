@@ -28,6 +28,7 @@ export function Navbar() {
     { name: "Affan's Music", href: "/music" },
     { name: "Chronicle", href: "/blog" },
     { name: "Memory Leak", href: "/memory-leak" },
+    { name: "Nexus", href: "/nexus" },
     { name: "The Books", subLinks: [
       { name: "Affan: The Apex Predator", href: "/novel" },
       { name: "Ambasuke (Spin off)", href: "/ambasuke" }
