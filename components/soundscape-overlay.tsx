@@ -255,14 +255,14 @@ export default function SoundscapeOverlay({ isOpen, onClose, songTitle = "Unknow
           <Activity className="w-4 h-4 animate-pulse" />
           <span>Reactive System Active</span>
         </div>
-        <h2 className="text-2xl md:text-4xl text-white font-black tracking-tight line-clamp-1 capitalize drop-shadow-lg">
+        <h2 className="text-2xl md:text-4xl text-white font-black tracking-tight line-clamp-1 capitalize" style={{ textShadow: '0 4px 8px rgba(0,0,0,0.5)' }}>
           {songTitle}
         </h2>
       </div>
 
       <button 
         onClick={onClose}
-        className="absolute top-8 right-8 z-20 p-3 md:p-4 rounded-full bg-white/5 hover:bg-white/20 border border-white/10 hover:border-white/50 text-white transition-all backdrop-blur-md group"
+        className="absolute top-8 right-8 z-20 p-3 md:p-4 rounded-full bg-black/60 hover:bg-black/80 border border-white/10 hover:border-white/50 text-white transition-colors transform-gpu group"
       >
         <X className="w-6 h-6 group-hover:scale-110 transition-transform" />
       </button>

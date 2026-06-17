@@ -191,7 +191,7 @@ export function CursedArtifact() {
 
         <div className="relative group">
           {/* Canvas Container */}
-          <div className="h-[500px] w-full rounded-3xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm overflow-hidden relative">
+          <div className="h-[500px] w-full rounded-3xl border border-zinc-800 bg-zinc-900/80 overflow-hidden relative">
             <Canvas dpr={[1, 1.5]} frameloop={isInView ? "always" : "demand"} camera={{ position: [0, 0, 1.8] }}>
               {/* Cleanup: disposes WebGL renderer on unmount */}
               <RendererCleanup />

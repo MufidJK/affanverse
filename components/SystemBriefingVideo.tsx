@@ -87,7 +87,7 @@ export function SystemBriefingVideo({ videoId = "dQw4w9WgXcQ" }: SystemBriefingV
                 version="1.1" 
                 viewBox="0 0 68 48" 
                 width="100%" 
-                className="w-16 h-16 sm:w-20 sm:h-20 drop-shadow-xl"
+                className="w-16 h-16 sm:w-20 sm:h-20"
               >
                 <path 
                   className="fill-[#FF0000] group-hover:fill-[#f00] transition-colors duration-300" 

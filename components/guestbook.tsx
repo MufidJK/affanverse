@@ -136,7 +136,7 @@ export function Guestbook({ pageId, variant, title = "Tinggalkan Jejak", descrip
             <div className={`dvd-y-${typeY}`}>
               
               {/* Card Chat-nya (Ada background & border) */}
-              <div className="bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 p-4 rounded-2xl rounded-tl-none shadow-2xl w-max max-w-[280px] pointer-events-auto">
+              <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 p-4 rounded-2xl rounded-tl-none shadow-2xl w-max max-w-[280px] pointer-events-auto">
                 <div className="flex justify-between items-center mb-1.5">
                   <span className="font-bold text-sm text-[#2398f7]">{msg.name}</span>
                 </div>
@@ -171,7 +171,7 @@ export function Guestbook({ pageId, variant, title = "Tinggalkan Jejak", descrip
         </Button>
 
         {isOpen && (
-          <div className="fixed bottom-24 right-6 w-[340px] max-h-[600px] flex flex-col bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl border border-zinc-200/50 dark:border-zinc-800/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-50 overflow-hidden animate-in slide-in-from-bottom-5 md:right-8 md:bottom-28">
+          <div className="fixed bottom-24 right-6 w-[340px] max-h-[600px] flex flex-col bg-white dark:bg-zinc-950 border border-zinc-200/50 dark:border-zinc-800/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-50 overflow-hidden animate-in slide-in-from-bottom-5 md:right-8 md:bottom-28">
             <div className="p-5 border-b border-zinc-100 dark:border-zinc-800/50">
               <h3 className="font-bold text-lg text-[#2398f7]">Home Shoutbox</h3>
             </div>

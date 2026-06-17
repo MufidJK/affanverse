@@ -49,10 +49,10 @@ export function Footer() {
           {/* Animated Countdown Progress Bar */}
           <div className="h-1 w-full bg-gray-900 mt-auto">
             <motion.div
-              initial={{ width: "100%" }}
-              animate={{ width: "0%" }}
+              initial={{ scaleX: 1 }}
+              animate={{ scaleX: 0 }}
               transition={{ duration: 8, ease: "linear" }}
-              className="h-full bg-[#2398f7]"
+              className="h-full bg-[#2398f7] origin-left will-change-transform transform-gpu"
             />
           </div>
         </div>

@@ -38,7 +38,7 @@ export function Navbar() {
   ]
 
   return (
-    <nav className="sticky top-0 z-40 w-full bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md shadow-sm dark:shadow-none dark:border-b dark:border-zinc-800">
+    <nav className="sticky top-0 z-40 w-full bg-white dark:bg-zinc-950 shadow-sm dark:shadow-none dark:border-b dark:border-zinc-800">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-8">
         
         {/* Kiri: Logo */}
@@ -59,7 +59,7 @@ export function Navbar() {
                     <Button
                       variant="ghost"
                       className={cn(
-                        "relative h-9 px-4 py-2 transition-all duration-300 overflow-hidden active:scale-95 active:bg-zinc-200 dark:active:bg-zinc-800",
+                        "relative h-9 px-4 py-2 transition duration-300 overflow-hidden active:scale-95 active:bg-zinc-200 dark:active:bg-zinc-800 transform-gpu",
                         isActive ? "text-[#2398f7]" : "text-muted-foreground hover:text-[#2398f7]"
                       )}
                     >
@@ -70,7 +70,7 @@ export function Navbar() {
                         isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                       )} />
                     </Button>
-                    <div className="absolute top-full left-0 mt-2 w-64 opacity-0 invisible scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100 transition-all duration-200 ease-in-out will-change-transform transform-gpu bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-lg overflow-hidden z-50">
+                    <div className="absolute top-full left-0 mt-2 w-64 opacity-0 invisible scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100 transition duration-200 ease-in-out will-change-transform transform-gpu bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-lg z-50 before:absolute before:-top-2 before:left-0 before:w-full before:h-2 before:bg-transparent">
                       {link.subLinks.map(sub => {
                         const isSubActive = pathname.startsWith(sub.href) && sub.href !== '/' || pathname === sub.href
                         return (
@@ -101,7 +101,7 @@ export function Navbar() {
                   variant="ghost"
                   asChild
                   className={cn(
-                    "relative h-9 px-4 py-2 transition-all duration-300 group overflow-hidden active:scale-95 active:bg-zinc-200 dark:active:bg-zinc-800",
+                    "relative h-9 px-4 py-2 transition duration-300 group overflow-hidden active:scale-95 active:bg-zinc-200 dark:active:bg-zinc-800 transform-gpu",
                     isActive ? "text-[#2398f7]" : "text-muted-foreground hover:text-[#2398f7]"
                   )}
                 >
@@ -122,7 +122,7 @@ export function Navbar() {
           <div className="w-px h-6 bg-border mx-2" />
           
           {/* Theme Toggle dengan Glow Effect */}
-          <div className="hover:drop-shadow-[0_0_8px_#2398f7] transition-all duration-300">
+          <div className="hover:shadow-[0_0_8px_#2398f7] rounded-md transition duration-300">
             <ThemeToggle />
           </div>
         </div>
@@ -143,19 +143,25 @@ export function Navbar() {
       </div>
 
       {/* Mobile Menu Dropdown */}
-      {isMenuOpen && (
-        <div className="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md absolute w-full shadow-lg transition-all animate-in slide-in-from-top-2">
+      <div 
+        className={cn(
+          "md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 absolute w-full shadow-lg transition-[opacity,transform,visibility] duration-300 ease-out will-change-transform transform-gpu origin-top z-50",
+          isMenuOpen 
+            ? "opacity-100 translate-y-0 visible" 
+            : "opacity-0 -translate-y-4 invisible pointer-events-none"
+        )}
+      >
           <nav className="flex flex-col p-4 space-y-2 font-medium">
             {navLinks.map((link) => {
               if (link.subLinks) {
                 const isActive = link.subLinks.some(sub => pathname.startsWith(sub.href))
                 return (
-                  <div key={link.name} className="flex flex-col space-y-1 pb-2">
+                  <div key={link.name} className="flex flex-col">
                     <Button 
                       variant="ghost"
                       onClick={() => setIsBooksOpen(!isBooksOpen)}
                       className={cn(
-                        "flex w-full justify-between h-12 transition-all active:pl-6 active:bg-zinc-200 dark:active:bg-zinc-800",
+                        "flex w-full justify-between h-12 transition active:translate-x-2 transform-gpu active:bg-zinc-200 dark:active:bg-zinc-800",
                         isActive ? "text-[#2398f7] bg-zinc-100 dark:bg-zinc-900" : "text-muted-foreground"
                       )}
                     >
@@ -165,8 +171,15 @@ export function Navbar() {
                         isBooksOpen ? "rotate-90" : "rotate-0"
                       )} />
                     </Button>
-                    {isBooksOpen && (
-                      <div className="flex flex-col pl-4 border-l-2 border-zinc-200 dark:border-zinc-800 ml-4 space-y-1 mt-1 animate-in slide-in-from-top-1 fade-in-0 duration-200">
+                    <div
+                      className={cn(
+                        "overflow-hidden transition-all duration-300 ease-in-out flex flex-col ml-4",
+                        isBooksOpen 
+                          ? "max-h-96 opacity-100 mt-1 mb-2 border-l-2 border-zinc-200 dark:border-zinc-800" 
+                          : "max-h-0 opacity-0 mt-0 mb-0 border-l-0 pointer-events-none"
+                      )}
+                    >
+                      <div className="pl-4 flex flex-col space-y-1">
                         {link.subLinks.map(sub => {
                           const isSubActive = pathname.startsWith(sub.href) && sub.href !== '/' || pathname === sub.href
                           return (
@@ -174,7 +187,7 @@ export function Navbar() {
                               key={sub.href}
                               variant="ghost"
                               className={cn(
-                                "justify-start h-10 transition-all active:pl-6 active:bg-zinc-200 dark:active:bg-zinc-800",
+                                "justify-start h-10 transition active:translate-x-2 transform-gpu active:bg-zinc-200 dark:active:bg-zinc-800",
                                 isSubActive ? "text-[#2398f7] bg-zinc-100 dark:bg-zinc-900" : "text-muted-foreground"
                               )}
                               asChild
@@ -185,7 +198,7 @@ export function Navbar() {
                           )
                         })}
                       </div>
-                    )}
+                    </div>
                   </div>
                 )
               }
@@ -198,7 +211,7 @@ export function Navbar() {
                   key={link.name}
                   variant="ghost"
                   className={cn(
-                    "justify-start h-12 transition-all active:pl-6 active:bg-zinc-200 dark:active:bg-zinc-800",
+                    "justify-start h-12 transition active:translate-x-2 transform-gpu active:bg-zinc-200 dark:active:bg-zinc-800",
                     isActive ? "text-[#2398f7] bg-zinc-100 dark:bg-zinc-900" : "text-muted-foreground"
                   )}
                   asChild
@@ -210,7 +223,6 @@ export function Navbar() {
             })}
           </nav>
         </div>
-      )}
     </nav>
   )
 }
