@@ -48,6 +48,17 @@ export default function Home() {
                       Contact Us
                     </Link>
                   </Button>
+                  
+                  {/* The Cosmic Button */}
+                  <Button asChild size="lg" className="relative w-full sm:w-auto px-8 text-base group overflow-hidden bg-zinc-950 hover:bg-zinc-900 text-white border-0 shadow-[0_0_20px_rgba(35,152,247,0.3)] hover:shadow-[0_0_35px_rgba(35,152,247,0.6)] transition-all duration-300">
+                    <Link href="/intercelestial">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#2398f7]/50 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] transition-all duration-1000" />
+                      <div className="absolute inset-0 rounded-md ring-1 ring-inset ring-[#2398f7]/50 group-hover:ring-[#2398f7] transition-all duration-300" />
+                      <span className="relative z-10 flex items-center gap-2 !text-white hover:!text-black dark:!text-white dark:hover:!text-white group-hover:!text-black dark:group-hover:!text-white transition-colors duration-300">
+                        Intercelestial 🌌
+                      </span>
+                    </Link>
+                  </Button>
                 </div>
               </div>
 

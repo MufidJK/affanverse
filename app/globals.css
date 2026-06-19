@@ -292,3 +292,7 @@ body.glitch-invert {
 body.sanity-glitch {
   animation: sanityShake 0.15s infinite linear;
 }
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}

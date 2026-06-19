@@ -14,7 +14,7 @@
 
 ## Project Overview
 
-The Affanverse Ecosystem is a high-performance, enterprise-grade monorepo integrating a Next.js 16 frontend ecosystem with a custom Python-based GenAI backend. Engineered to support dynamic multimedia modules and a 3D Interactive Reader, the platform emphasizes architectural scalability, strict memory management, and dual-stack separation of concerns.
+The Affanverse Web App Ecosystem is a high-performance, enterprise-grade monorepo integrating a Next.js 16 frontend ecosystem with a custom Python-based GenAI backend. Engineered to support dynamic multimedia modules and a 3D Interactive Reader, the platform emphasizes architectural scalability, strict memory management, and dual-stack separation of concerns.
 
 ---
 

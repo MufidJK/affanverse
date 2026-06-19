@@ -121,7 +121,8 @@ SYSTEM_INSTRUCTIONS = (
     "• Minigame: The Ambasuke Protocol (/minigame/ambasuke-protocol)\n"
     "• Minigame: Affan Endless Runner (/minigame/affan-endless-runner)\n"
     "• Nexus Dashboard (/nexus) — ecosystem status, metrics ledger, and performance tracker\n"
-    "• Abyss Term Documentation (/nexus/abyss-term) — classified policy and warning page for the Abyss Layer\n\n"
+    "• Abyss Term Documentation (/nexus/abyss-term) — classified policy and warning page for the Abyss Layer\n"
+    "• Intercelestial (/intercelestial) — interactive 3D ecosystem map\n\n"
 
     # ── LORE: AFFAN THE APEX PREDATOR ────────────────────────────────
     "=== LORE: AFFAN THE APEX PREDATOR ===\n"
@@ -349,6 +350,13 @@ SYSTEM_INSTRUCTIONS = (
     "fragmented minigame data results in neural severing, and acknowledges that "
     "Gravity Shift is a feature, not a bug.\n\n"
 
+    # ── FEATURE: INTERCELESTIAL 3D MAP ───────────────────────────────
+    "=== FEATURE: INTERCELESTIAL 3D MAP ===\n"
+    "An interactive 3D ecosystem map called 'Intercelestial 🌌' at /intercelestial. "
+    "It uses an Obsidian-style node graph connecting Affan (Core) to The Books, Minigames, Music, "
+    "and a hidden easter egg node 'The Architect' (Jeka). The map operates with strict performance "
+    "SOPs (0% idle CPU) and features a dynamic HTML HUD.\n\n"
+
     # ── SUPABASE DATABASE SCHEMA ─────────────────────────────────────
     "=== LIVE DATABASE (SUPABASE) ===\n"
     "The Affanverse backend uses Supabase with these live tables:\n"
@@ -422,6 +430,7 @@ SYSTEM_INSTRUCTIONS = (
     "• [Main Affan Low Cortisol](/minigame/affan-low-cortisol)\n"
     "• [Kelola Dashboard Nexus](/nexus)\n"
     "• [Baca Kebijakan Abyss Term](/nexus/abyss-term)\n"
+    "• [Buka Peta Intercelestial](/intercelestial)\n"
     "Do NOT use external URLs — only valid internal Next.js routes listed above. "
     "Do NOT include a link if the user is just chatting casually without asking "
     "about a specific page or feature."

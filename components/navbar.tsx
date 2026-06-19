@@ -118,6 +118,16 @@ export function Navbar() {
                 </Button>
               )
             })}
+            
+            {/* Intercelestial Button */}
+            <Button
+              asChild
+              className="relative h-9 rounded-full border border-[#2398f7]/50 shadow-[0_0_10px_rgba(35,152,247,0.3)] hover:shadow-[0_0_20px_rgba(35,152,247,0.6)] bg-[#2398f7]/10 hover:bg-[#2398f7]/20 text-[#2398f7] font-semibold transition-all duration-300 ml-2"
+            >
+              <Link href="/intercelestial">
+                Intercelestial
+              </Link>
+            </Button>
           </nav>
           <div className="w-px h-6 bg-border mx-2" />
           
@@ -221,6 +231,19 @@ export function Navbar() {
                 </Button>
               )
             })}
+
+            {/* Intercelestial Mobile Button */}
+            <div className="pt-2 mt-2 border-t border-zinc-200 dark:border-zinc-800">
+              <Button
+                asChild
+                className="w-full h-12 rounded-xl border border-[#2398f7]/50 shadow-[0_0_15px_rgba(35,152,247,0.2)] bg-[#2398f7]/10 hover:bg-[#2398f7]/20 text-[#2398f7] font-bold transition-all duration-300"
+                onClick={closeMenu}
+              >
+                <Link href="/intercelestial">
+                  Intercelestial 🌌
+                </Link>
+              </Button>
+            </div>
           </nav>
         </div>
     </nav>
