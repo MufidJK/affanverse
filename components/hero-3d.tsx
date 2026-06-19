@@ -90,7 +90,7 @@ export function Hero3DEffect() {
               transform: isHovered ? "translateZ(80px) scale(1.05)" : "translateZ(30px) scale(1)",
             }}
           >
-            <div className="relative w-full h-full scale-[1.3] -translate-y-[12%] flex items-center justify-center pointer-events-none">
+            <div className="relative w-full h-full scale-[1.3] origin-bottom flex items-center justify-center pointer-events-none">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentIndex}
@@ -104,7 +104,7 @@ export function Hero3DEffect() {
                     src={HERO_IMAGES[currentIndex]}
                     alt={`Affan portrait ${currentIndex + 1}`}
                     fill
-                    className="object-contain object-center"
+                    className="object-contain object-bottom"
                     priority={true}
                     sizes="(max-width: 768px) 300px, 400px"
                   />

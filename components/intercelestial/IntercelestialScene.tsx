@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { useThree, useFrame } from "@react-three/fiber";
 import { OrbitControls, Html, Line, Box } from "@react-three/drei";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 // --- Types & Data ---
 type NodeData = {
   id: string;
@@ -15,33 +15,112 @@ type NodeData = {
   synopsis: string;
   link: string;
   isEasterEgg?: boolean;
+  hideOnMobile?: boolean;
 };
 
 const NODES: NodeData[] = [
-  { id: "core", label: "Affan", position: [0, 0, 0], color: "#2398f7", size: 1.2, synopsis: "The Apex Predator. The central gravity of the Affanverse.", link: "/" },
+  // CORE (0)
+  { id: "core", label: "Affan", position: [0, 0, 0], color: "#2398f7", size: 1.5, synopsis: "The Apex Predator. The central gravity of the Affanverse.", link: "/" },
+
+  // LARGE (Major Routes)
+  { id: "archives", label: "Archives", position: [10, 6, -8], color: "#f59e0b", size: 0.9, synopsis: "The Vault of ancient records and sealed files.", link: "/archives" },
+  { id: "nexus", label: "Nexus", position: [-12, -5, 10], color: "#ec4899", size: 0.9, synopsis: "The interconnecting hub for dimensions.", link: "/nexus" },
+  { id: "projects", label: "Projects", position: [8, -10, 6], color: "#14b8a6", size: 0.85, synopsis: "Showcase of architectural endeavors and experiments.", link: "/projects" },
+  { id: "blog", label: "Chronicle", position: [-8, 8, 8], color: "#3b82f6", size: 0.8, synopsis: "Written thoughts, engineering logs, and updates.", link: "/blog" },
+
+  // MEDIUM (Sub-pages)
+  { id: "about", label: "About Affan", position: [6, 12, 4], color: "#8b5cf6", size: 0.6, synopsis: "The entity behind the universe. Lore and biography.", link: "/about" },
+  { id: "contact", label: "Contact", position: [-14, 2, -5], color: "#10b981", size: 0.55, synopsis: "Establish a direct communication link.", link: "/contact" },
+  { id: "behind-the-scenes", label: "Behind The Scenes", position: [14, 0, 5], color: "#64748b", size: 0.5, synopsis: "Unveil the backstage mechanics.", link: "/behind-the-scenes" },
+  { id: "ambasuke", label: "Ambasuke", position: [4, -14, -6], color: "#f43f5e", size: 0.5, synopsis: "A unique sector with classified origins.", link: "/ambasuke" },
+  
+  // ORIGINAL NODES
   { id: "books", label: "The Books", position: [-5, 3, -2], color: "#a855f7", size: 0.4, synopsis: "Chronicles and tales from the multiverse. Includes the main light novel.", link: "/novel" },
   { id: "games", label: "Minigames", position: [5, -2, 3], color: "#ef4444", size: 0.5, synopsis: "The Void Portal. Survive the anomalies and secure your sanity.", link: "/minigame" },
   { id: "music", label: "Music", position: [-3, -4, 4], color: "#10b981", size: 0.45, synopsis: "Immersive soundscapes and curated playlists.", link: "/music" },
-  { id: "architect", label: "The Architect", position: [1, -8, -6], color: "#ff003c", size: 0.2, synopsis: "System Initialized. Identity: Jeka.", link: "https://github.com/MufidJK", isEasterEgg: true }
+  { id: "architect", label: "The Architect", position: [1, -8, -6], color: "#ff003c", size: 0.2, synopsis: "System Initialized. Identity: Jeka.", link: "https://github.com/MufidJK", isEasterEgg: true },
+
+  // SMALL (Homepage Components)
+  { id: "stories", label: "Affan Stories", position: [3, 2, 7], color: "#eab308", size: 0.35, synopsis: "Highlights of notable tales from the homepage.", link: "/#affan-stories", hideOnMobile: true },
+  { id: "testimonials", label: "Testimonials", position: [-6, -2, -6], color: "#84cc16", size: 0.3, synopsis: "Records from those who survived the encounter.", link: "/#testimonials", hideOnMobile: true },
+  { id: "skill-tree", label: "Skill Tree", position: [7, 4, -4], color: "#06b6d4", size: 0.35, synopsis: "Visual representation of capabilities.", link: "/#skill-tree", hideOnMobile: true },
+  { id: "faq", label: "FAQ", position: [-2, 7, -5], color: "#d946ef", size: 0.3, synopsis: "Frequently Asked Questions. Knowledge base.", link: "/#faq", hideOnMobile: true },
+  { id: "gallery", label: "Gallery Dump", position: [-4, -7, -2], color: "#f97316", size: 0.35, synopsis: "A visual archive of memories and artifacts.", link: "/#gallery", hideOnMobile: true },
+  { id: "cursed-artifact", label: "Cursed Artifact", position: [2, 6, 4], color: "#dc2626", size: 0.25, synopsis: "Warning: Entity containment unstable.", link: "/#cursed-artifact", hideOnMobile: true },
+  { id: "guestbook", label: "Guestbook", position: [-9, -4, 3], color: "#0ea5e9", size: 0.3, synopsis: "Leave your mark in the multiverse.", link: "/#guestbook", hideOnMobile: true },
+  { id: "ai-chat", label: "AI Persona", position: [9, -2, -3], color: "#6366f1", size: 0.35, synopsis: "Interactive projection of the Architect's consciousness.", link: "/#affan-ai-chat", hideOnMobile: true },
+  { id: "memory-leak", label: "Memory Leak", position: [5, -7, 8], color: "#22c55e", size: 0.25, synopsis: "System Error. Entry to the Abyss Terminal.", link: "/abyss-term", hideOnMobile: true },
+  { id: "cookie", label: "Cookie Protocol", position: [-10, 2, 6], color: "#a8a29e", size: 0.2, synopsis: "Data consumption directives.", link: "/cookie-protocol", hideOnMobile: true },
+  { id: "privacy", label: "Privacy Policy", position: [11, 3, 2], color: "#78716c", size: 0.2, synopsis: "Observation limits and regulations.", link: "/privacy-policy", hideOnMobile: true },
+  { id: "terms", label: "Terms of Chaos", position: [-3, -10, 5], color: "#57534e", size: 0.2, synopsis: "The absolute laws governing interaction.", link: "/terms-of-chaos", hideOnMobile: true },
+  
+  // NEW MISSING NODES
+  { id: "system-briefing", label: "System Briefing", position: [1, 8, -7], color: "#ef4444", size: 0.35, synopsis: "System Demo and Lore Overview.", link: "/#system-briefing" },
+  { id: "abyss-term-doc", label: "Abyss Term Docs", position: [-15, -6, 12], color: "#b91c1c", size: 0.3, synopsis: "Classified protocol guidelines for the Abyss Layer.", link: "/nexus/abyss-term" },
+  { id: "card-protocol", label: "Card Protocol", position: [8, -4, 2], color: "#10b981", size: 0.3, synopsis: "Strategic card encounters.", link: "/minigame/affan-card-protocol" },
+  { id: "endless-runner", label: "Endless Runner", position: [10, -1, 3], color: "#f59e0b", size: 0.3, synopsis: "Survive the eternal chase.", link: "/minigame/affan-endless-runner" },
+  { id: "low-cortisol", label: "Low Cortisol", position: [9, -5, 5], color: "#3b82f6", size: 0.3, synopsis: "Calming mini-experience.", link: "/minigame/affan-low-cortisol" },
+  { id: "affan-strike", label: "Affan Strike", position: [7, -3, 8], color: "#ec4899", size: 0.3, synopsis: "Tactical strike operations.", link: "/minigame/affan-strike" },
+  { id: "ambasuke-protocol-game", label: "Ambasuke Protocol", position: [11, -2, 1], color: "#8b5cf6", size: 0.3, synopsis: "Classified protocol engagement.", link: "/minigame/ambasuke-protocol" },
+  { id: "flappy-affan", label: "Flappy Affan", position: [6, 1, 6], color: "#14b8a6", size: 0.3, synopsis: "Avoid the obstacles.", link: "/minigame/flappy-affan" }
 ];
 
 // Connection lines pairs
 const CONNECTIONS = [
+  // Core to large
+  ["core", "archives"],
+  ["core", "nexus"],
+  ["core", "projects"],
+  ["core", "blog"],
+  
+  // Original
   ["core", "books"],
   ["core", "games"],
   ["core", "music"],
-  ["core", "architect"]
+  ["core", "architect"],
+
+  // Mediums
+  ["archives", "about"],
+  ["nexus", "contact"],
+  ["projects", "behind-the-scenes"],
+  ["blog", "ambasuke"],
+
+  // Smalls
+  ["core", "stories"],
+  ["core", "testimonials"],
+  ["core", "skill-tree"],
+  ["core", "faq"],
+  ["core", "gallery"],
+  ["nexus", "cursed-artifact"],
+  ["contact", "guestbook"],
+  ["projects", "ai-chat"],
+  ["archives", "memory-leak"],
+  ["blog", "cookie"],
+  ["about", "privacy"],
+  ["behind-the-scenes", "terms"],
+  
+  // New Connections
+  ["core", "system-briefing"],
+  ["nexus", "abyss-term-doc"],
+  ["games", "card-protocol"],
+  ["games", "endless-runner"],
+  ["games", "low-cortisol"],
+  ["games", "affan-strike"],
+  ["games", "ambasuke-protocol-game"],
+  ["games", "flappy-affan"]
 ];
 
-export function IntercelestialScene() {
+export function IntercelestialScene({ isLowCores = false }: { isLowCores?: boolean }) {
   const { scene, camera, invalidate } = useThree();
   const router = useRouter();
+  const pathname = usePathname();
   const [activeNode, setActiveNode] = useState<NodeData | null>(null);
 
   const orbitGroupRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const coreMaterialRef = useRef<THREE.MeshStandardMaterial>(null);
   const coreAuraMaterialRef = useRef<THREE.MeshBasicMaterial>(null);
+  const frameCounterRef = useRef(0);
 
   // --- Strict Memory Disposal (Rule 3) ---
   useEffect(() => {
@@ -84,6 +163,7 @@ export function IntercelestialScene() {
 
   // --- Animation Loop ---
   useFrame((state) => {
+    frameCounterRef.current++;
     if (orbitGroupRef.current) {
       orbitGroupRef.current.rotation.y += 0.001;
     }
@@ -101,6 +181,14 @@ export function IntercelestialScene() {
       coreMaterialRef.current.emissiveIntensity = 0.5;
       coreAuraMaterialRef.current.color.copy(coreMaterialRef.current.color);
     }
+    
+    // Subtle star rotation, throttled on low-core devices
+    if (starMeshRef.current) {
+      if (!isLowCores || frameCounterRef.current % 2 === 0) {
+        starMeshRef.current.rotation.y += 0.0002;
+        starMeshRef.current.rotation.x += 0.0001;
+      }
+    }
   });
 
   // Handle zooming into a node
@@ -112,9 +200,37 @@ export function IntercelestialScene() {
   const handleActionClick = (node: NodeData) => {
     if (node.isEasterEgg) {
       window.open(node.link, "_blank", "noopener,noreferrer");
-    } else {
-      router.push(node.link);
+      return;
     }
+
+    if (node.link.startsWith("/#")) {
+      const sectionId = node.link.replace("/#", "");
+      if (pathname === "/") {
+        // Already on homepage, scroll directly
+        const el = document.getElementById(sectionId);
+        if (el) {
+          window.scrollTo({
+            top: el.getBoundingClientRect().top + window.scrollY,
+            behavior: "smooth"
+          });
+        }
+      } else {
+        // Navigate to home first, then scroll
+        router.push("/");
+        setTimeout(() => {
+          const el = document.getElementById(sectionId);
+          if (el) {
+            window.scrollTo({
+              top: el.getBoundingClientRect().top + window.scrollY,
+              behavior: "smooth"
+            });
+          }
+        }, 300);
+      }
+      return;
+    }
+
+    router.push(node.link);
   };
 
   return (
@@ -185,7 +301,7 @@ export function IntercelestialScene() {
                 zIndexRange={[100, 0]}
               >
                 {isActive && (
-                  <div className="bg-zinc-950/90 border border-zinc-800 p-4 rounded-lg shadow-xl backdrop-blur-md min-w-[250px] pointer-events-auto transform-gpu">
+                  <div className="bg-zinc-950 border border-zinc-800 p-4 rounded-lg min-w-[250px] pointer-events-auto transform-gpu will-change-transform">
                     <h3 className="text-lg font-bold text-zinc-100 flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full" style={{ backgroundColor: coreNode.color }} />
                       {coreNode.label}
@@ -222,8 +338,9 @@ export function IntercelestialScene() {
       <group ref={orbitGroupRef}>
         {/* Connections */}
         {CONNECTIONS.map(([startId, endId], idx) => {
-          const startNode = NODES.find(n => n.id === startId)!;
-          const endNode = NODES.find(n => n.id === endId)!;
+          const startNode = NODES.find(n => n.id === startId);
+          const endNode = NODES.find(n => n.id === endId);
+          if (!startNode || !endNode) return null;
           return (
             <Line
               key={`line-${idx}`}
@@ -289,7 +406,7 @@ export function IntercelestialScene() {
                 zIndexRange={[100, 0]}
               >
                 {isActive && (
-                  <div className="bg-zinc-950/90 border border-zinc-800 p-4 rounded-lg shadow-xl backdrop-blur-md min-w-[250px] pointer-events-auto transform-gpu">
+                  <div className="bg-zinc-950 border border-zinc-800 p-4 rounded-lg min-w-[250px] pointer-events-auto transform-gpu will-change-transform">
                     <h3 className="text-lg font-bold text-zinc-100 flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full" style={{ backgroundColor: node.color }} />
                       {node.label}

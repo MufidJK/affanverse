@@ -76,7 +76,9 @@ export default function Home() {
       </section>
 
       {/* System Briefing Video Section */}
-      <SystemBriefingVideo />
+      <section id="system-briefing">
+        <SystemBriefingVideo />
+      </section>
 
       {/* AI Persona Chat Section */}
       <section id="affan-ai-chat" className="mt-6 min-h-[700px] scroll-mt-24">
@@ -86,7 +88,7 @@ export default function Home() {
       </section>
 
       {/* Best Affan Stories Section */}
-      <section className="w-full py-24 relative mt-16 min-h-[500px]">
+      <section id="affan-stories" className="w-full py-24 relative mt-16 min-h-[500px]">
         {/* Solid Subtle Divider Edge-to-Edge */}
         <div className="absolute top-0 left-0 right-0 w-full h-px bg-black/10 dark:bg-white/10" />
         <ScrollReveal>
@@ -95,30 +97,32 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10 min-h-[400px]">
+      <section id="testimonials" className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10 min-h-[400px]">
         <ScrollReveal>
           <AffanTestimonials />
         </ScrollReveal>
       </section>
 
       {/* Cursed Artifact Section */}
-      <section className="mt-40 overflow-hidden relative border-t border-black/10 dark:border-white/10 min-h-[400px]">
+      <section id="cursed-artifact" className="mt-40 overflow-hidden relative border-t border-black/10 dark:border-white/10 min-h-[400px]">
         <ScrollReveal>
           <CursedArtifactLoader />
         </ScrollReveal>
       </section>
 
       {/* Skill Tree Section */}
-      <section className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10 min-h-[500px]">
+      <section id="skill-tree" className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10 min-h-[500px]">
         <ScrollReveal>
           <AffanSkillTree />
         </ScrollReveal>
       </section>
 
       {/* Gallery Dump Section */}
-      <ScrollReveal>
-        <AffanGalleryDump />
-      </ScrollReveal>
+      <section id="gallery">
+        <ScrollReveal>
+          <AffanGalleryDump />
+        </ScrollReveal>
+      </section>
 
       {/* FAQ Section */}
       <section id="faq" className="py-24 overflow-hidden relative border-t border-black/10 dark:border-white/10 min-h-[400px]">
@@ -133,7 +137,9 @@ export default function Home() {
       </ScrollReveal>
 
       <MemoryLeakTrigger />
-      <Guestbook variant="floating" pageId="home" />
+      <section id="guestbook">
+        <Guestbook variant="floating" pageId="home" />
+      </section>
     </>
   );
 }
