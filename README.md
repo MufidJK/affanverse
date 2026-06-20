@@ -59,6 +59,7 @@ affanverse/
 │   ├── (terminal)/
 │   ├── about/
 │   ├── abyss-term/
+│   ├── aki/
 │   ├── ambasuke/
 │   ├── archives/
 │   ├── behind-the-scenes/
