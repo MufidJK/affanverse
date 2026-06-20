@@ -65,6 +65,7 @@ affanverse/
 │   ├── blog/
 │   ├── contact/
 │   ├── cookie-protocol/
+│   ├── intercelestial/
 │   ├── minigame/
 │   │   ├── affan-card-protocol/
 │   │   ├── affan-endless-runner/
@@ -79,6 +80,7 @@ affanverse/
 │   ├── projects/
 │   └── terms-of-chaos/
 ├── components/
+│   ├── intercelestial/
 │   ├── projects/
 │   ├── terminal/
 │   ├── ui/

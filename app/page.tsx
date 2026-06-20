@@ -63,7 +63,7 @@ export default function Home() {
               </div>
 
               {/* Right Side: Hero Image & 3D Effect */}
-              <div className="relative order-1 lg:order-2 flex justify-center items-center">
+              <div className="relative order-1 lg:order-2 flex justify-center items-center mt-10 md:mt-0">
                 {/* Subtle Glowing Premium Blob */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#2398f7]/20 rounded-full blur-[100px] -z-10 pointer-events-none" />
                 
