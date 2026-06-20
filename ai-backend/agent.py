@@ -122,7 +122,8 @@ SYSTEM_INSTRUCTIONS = (
     "• Minigame: Affan Endless Runner (/minigame/affan-endless-runner)\n"
     "• Nexus Dashboard (/nexus) — ecosystem status, metrics ledger, and performance tracker\n"
     "• Abyss Term Documentation (/nexus/abyss-term) — classified policy and warning page for the Abyss Layer\n"
-    "• Intercelestial (/intercelestial) — interactive 3D ecosystem map\n\n"
+    "• Intercelestial (/intercelestial) — interactive 3D ecosystem map\n"
+    "• Affanverse Knowledge Index (/aki) — interactive 20-question trial to test synchronization with the core matrix\n\n"
 
     # ── LORE: AFFAN THE APEX PREDATOR ────────────────────────────────
     "=== LORE: AFFAN THE APEX PREDATOR ===\n"
@@ -357,6 +358,16 @@ SYSTEM_INSTRUCTIONS = (
     "and a hidden easter egg node 'The Architect' (Jeka). The map operates with strict performance "
     "SOPs (0% idle CPU) and features a dynamic HTML HUD.\n\n"
 
+    # ── FEATURE: AFFANVERSE KNOWLEDGE INDEX (AKI) ─────────────────────
+    "=== FEATURE: AFFANVERSE KNOWLEDGE INDEX (AKI) ===\n"
+    "A standalone client-side interactive quiz page located at /aki. "
+    "It acts as an immersive trial evaluating a user's synchronization with the core matrix. "
+    "The 20-question test covers Affan's personal lore, ecosystem utilities (like the Nexus Coordinator), "
+    "architectural rules (such as AGENTS.md performance strictness), and reading platform mechanics (Zen Mode). "
+    "It features a sleek Framer Motion interface with three phases: Initiation, Active Quiz Engine, and Result Matrix. "
+    "Upon completion, users receive a synchronization percentage and a rank: 'Apex Predator' (100%), 'Nexus Navigator' (50-95%), "
+    "or 'Mere Anomaly: Protocol Failed' (< 50%). High-scores are securely stored in the browser's localStorage under 'affanverse_best_sync'.\n\n"
+
     # ── SUPABASE DATABASE SCHEMA ─────────────────────────────────────
     "=== LIVE DATABASE (SUPABASE) ===\n"
     "The Affanverse backend uses Supabase with these live tables:\n"
@@ -431,6 +442,7 @@ SYSTEM_INSTRUCTIONS = (
     "• [Kelola Dashboard Nexus](/nexus)\n"
     "• [Baca Kebijakan Abyss Term](/nexus/abyss-term)\n"
     "• [Buka Peta Intercelestial](/intercelestial)\n"
+    "• [Mulai Trial AKI](/aki)\n"
     "Do NOT use external URLs — only valid internal Next.js routes listed above. "
     "Do NOT include a link if the user is just chatting casually without asking "
     "about a specific page or feature."

@@ -33,6 +33,7 @@ export function Navbar() {
       { name: "Affan: The Apex Predator", href: "/novel" },
       { name: "Ambasuke (Spin off)", href: "/ambasuke" }
     ] },
+    { name: "AKI", href: "/aki" },
     { name: "Contact", href: "/contact" },
     { name: "About", href: "/about" },
   ]
