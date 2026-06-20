@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { MessageSquare, X, Send, Loader2 } from "lucide-react"
 import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
@@ -157,7 +158,7 @@ export function Guestbook({ pageId, variant, title = "Tinggalkan Jejak", descrip
   // RENDER UI: VARIANT FLOATING (Buat Homepage)
   // ==========================================
   if (variant === "floating") {
-    return (
+    const floatingUI = (
       <>
         {floatStyle}
         {glitchOverlay} {/* Panggil lapisan gaibnya di sini */}
@@ -165,13 +166,19 @@ export function Guestbook({ pageId, variant, title = "Tinggalkan Jejak", descrip
         <Button
           onClick={() => setIsOpen(!isOpen)}
           size="icon"
-          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-2xl z-50 transition-transform hover:scale-110 active:scale-95 bg-[#2398f7] hover:bg-[#1e82d4] text-white"
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '16px',
+            zIndex: 9998
+          } as React.CSSProperties}
+          className="h-14 w-14 rounded-full shadow-2xl transition-transform hover:scale-110 active:scale-95 bg-[#2398f7] hover:bg-[#1e82d4] text-white"
         >
           {isOpen ? <X className="h-6 w-6" /> : <MessageSquare className="h-6 w-6" />}
         </Button>
 
         {isOpen && (
-          <div className="fixed bottom-24 right-6 w-[340px] max-h-[600px] flex flex-col bg-white dark:bg-zinc-950 border border-zinc-200/50 dark:border-zinc-800/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-50 overflow-hidden animate-in slide-in-from-bottom-5 md:right-8 md:bottom-28">
+          <div className="fixed bottom-24 right-4 w-[340px] max-h-[600px] flex flex-col bg-white dark:bg-zinc-950 border border-zinc-200/50 dark:border-zinc-800/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-[9997] overflow-hidden animate-in slide-in-from-bottom-5">
             <div className="p-5 border-b border-zinc-100 dark:border-zinc-800/50">
               <h3 className="font-bold text-lg text-[#2398f7]">Home Shoutbox</h3>
             </div>
@@ -234,7 +241,9 @@ export function Guestbook({ pageId, variant, title = "Tinggalkan Jejak", descrip
           </div>
         )}
       </>
-    )
+    );
+
+    return mounted ? createPortal(floatingUI, document.body) : null;
   }
 
   // ==========================================

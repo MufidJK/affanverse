@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { useThree, useFrame } from "@react-three/fiber";
 import { OrbitControls, Html, Line, Box } from "@react-three/drei";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 // --- Types & Data ---
 type NodeData = {
   id: string;
@@ -20,7 +20,7 @@ type NodeData = {
 
 const NODES: NodeData[] = [
   // CORE (0)
-  { id: "core", label: "Affan", position: [0, 0, 0], color: "#2398f7", size: 1.5, synopsis: "The Apex Predator. The central gravity of the Affanverse.", link: "/" },
+  { id: "core", label: "Affan", position: [0, 0, 0], color: "#2398f7", size: 2, synopsis: "The Apex Predator. The central gravity of the Affanverse.", link: "/" },
 
   // LARGE (Major Routes)
   { id: "archives", label: "Archives", position: [10, 6, -8], color: "#f59e0b", size: 0.9, synopsis: "The Vault of ancient records and sealed files.", link: "/archives" },
@@ -47,16 +47,16 @@ const NODES: NodeData[] = [
   { id: "faq", label: "FAQ", position: [-2, 7, -5], color: "#d946ef", size: 0.3, synopsis: "Frequently Asked Questions. Knowledge base.", link: "/#faq", hideOnMobile: true },
   { id: "gallery", label: "Gallery Dump", position: [-4, -7, -2], color: "#f97316", size: 0.35, synopsis: "A visual archive of memories and artifacts.", link: "/#gallery", hideOnMobile: true },
   { id: "cursed-artifact", label: "Cursed Artifact", position: [2, 6, 4], color: "#dc2626", size: 0.25, synopsis: "Warning: Entity containment unstable.", link: "/#cursed-artifact", hideOnMobile: true },
-  { id: "guestbook", label: "Guestbook", position: [-9, -4, 3], color: "#0ea5e9", size: 0.3, synopsis: "Leave your mark in the multiverse.", link: "/#guestbook", hideOnMobile: true },
-  { id: "ai-chat", label: "AI Persona", position: [9, -2, -3], color: "#6366f1", size: 0.35, synopsis: "Interactive projection of the Architect's consciousness.", link: "/#affan-ai-chat", hideOnMobile: true },
-  { id: "memory-leak", label: "Memory Leak", position: [5, -7, 8], color: "#22c55e", size: 0.25, synopsis: "System Error. Entry to the Abyss Terminal.", link: "/abyss-term", hideOnMobile: true },
+  // { id: "guestbook", label: "Guestbook", position: [-9, -4, 3], color: "#0ea5e9", size: 0.3, synopsis: "Leave your mark in the multiverse.", link: "/#guestbook", hideOnMobile: true },
+  { id: "ai-chat", label: "Affan AI", position: [9, -2, -3], color: "#6366f1", size: 0.35, synopsis: "Interactive projection of the Architect's consciousness.", link: "/#affan-ai-chat", hideOnMobile: true },
+  { id: "memory-leak", label: "Memory Leak", position: [5, -7, 8], color: "#22c55e", size: 0.4, synopsis: "System Error. Entry to the Abyss Terminal.", link: "/memory-leak", hideOnMobile: true },
   { id: "cookie", label: "Cookie Protocol", position: [-10, 2, 6], color: "#a8a29e", size: 0.2, synopsis: "Data consumption directives.", link: "/cookie-protocol", hideOnMobile: true },
   { id: "privacy", label: "Privacy Policy", position: [11, 3, 2], color: "#78716c", size: 0.2, synopsis: "Observation limits and regulations.", link: "/privacy-policy", hideOnMobile: true },
   { id: "terms", label: "Terms of Chaos", position: [-3, -10, 5], color: "#57534e", size: 0.2, synopsis: "The absolute laws governing interaction.", link: "/terms-of-chaos", hideOnMobile: true },
   
   // NEW MISSING NODES
   { id: "system-briefing", label: "System Briefing", position: [1, 8, -7], color: "#ef4444", size: 0.35, synopsis: "System Demo and Lore Overview.", link: "/#system-briefing" },
-  { id: "abyss-term-doc", label: "Abyss Term Docs", position: [-15, -6, 12], color: "#b91c1c", size: 0.3, synopsis: "Classified protocol guidelines for the Abyss Layer.", link: "/nexus/abyss-term" },
+  { id: "abyss-term-doc", label: "Abyss Term Docs", position: [-15, -6, 12], color: "#b91c1c", size: 0.3, synopsis: "Classified protocol guidelines for the Abyss Layer.", link: "/abyss-term" },
   { id: "card-protocol", label: "Card Protocol", position: [8, -4, 2], color: "#10b981", size: 0.3, synopsis: "Strategic card encounters.", link: "/minigame/affan-card-protocol" },
   { id: "endless-runner", label: "Endless Runner", position: [10, -1, 3], color: "#f59e0b", size: 0.3, synopsis: "Survive the eternal chase.", link: "/minigame/affan-endless-runner" },
   { id: "low-cortisol", label: "Low Cortisol", position: [9, -5, 5], color: "#3b82f6", size: 0.3, synopsis: "Calming mini-experience.", link: "/minigame/affan-low-cortisol" },
@@ -113,7 +113,6 @@ const CONNECTIONS = [
 export function IntercelestialScene({ isLowCores = false }: { isLowCores?: boolean }) {
   const { scene, camera, invalidate } = useThree();
   const router = useRouter();
-  const pathname = usePathname();
   const [activeNode, setActiveNode] = useState<NodeData | null>(null);
 
   const orbitGroupRef = useRef<THREE.Group>(null);
@@ -204,29 +203,7 @@ export function IntercelestialScene({ isLowCores = false }: { isLowCores?: boole
     }
 
     if (node.link.startsWith("/#")) {
-      const sectionId = node.link.replace("/#", "");
-      if (pathname === "/") {
-        // Already on homepage, scroll directly
-        const el = document.getElementById(sectionId);
-        if (el) {
-          window.scrollTo({
-            top: el.getBoundingClientRect().top + window.scrollY,
-            behavior: "smooth"
-          });
-        }
-      } else {
-        // Navigate to home first, then scroll
-        router.push("/");
-        setTimeout(() => {
-          const el = document.getElementById(sectionId);
-          if (el) {
-            window.scrollTo({
-              top: el.getBoundingClientRect().top + window.scrollY,
-              behavior: "smooth"
-            });
-          }
-        }, 300);
-      }
+      window.location.href = node.link;
       return;
     }
 

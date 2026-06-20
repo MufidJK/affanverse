@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <>
       {/* Hero Section — Pure CSS fade-in (no Framer Motion) to avoid blocking hydration */}
-      <section className="relative flex items-center justify-center min-h-[calc(100vh-80px)] w-full">
+      <section className="relative flex items-center justify-center min-h-[calc(100vh-80px)] w-full overflow-x-hidden">
         <div className="w-full animate-[heroFadeIn_0.7s_ease-out_both]">
           <div className="container mx-auto px-4 sm:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center w-full max-w-6xl mx-auto">
