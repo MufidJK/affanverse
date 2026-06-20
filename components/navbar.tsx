@@ -70,7 +70,7 @@ export function Navbar() {
                         isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                       )} />
                     </Button>
-                    <div className="absolute top-full left-0 mt-2 w-64 opacity-0 invisible scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100 transition duration-200 ease-in-out will-change-transform transform-gpu bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-lg z-50 before:absolute before:-top-2 before:left-0 before:w-full before:h-2 before:bg-transparent">
+                    <div className="absolute top-full left-0 mt-1 w-64 opacity-0 invisible scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100 transition duration-200 ease-in-out will-change-transform transform-gpu bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-lg z-50 before:absolute before:-top-4 before:left-0 before:w-full before:h-4 before:bg-transparent">
                       {link.subLinks.map(sub => {
                         const isSubActive = pathname.startsWith(sub.href) && sub.href !== '/' || pathname === sub.href
                         return (
