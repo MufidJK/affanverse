@@ -25,20 +25,20 @@ const NODES: NodeData[] = [
   // LARGE (Major Routes)
   { id: "archives", label: "Archives", position: [10, 6, -8], color: "#f59e0b", size: 0.9, synopsis: "The Vault of ancient records and sealed files.", link: "/archives" },
   { id: "nexus", label: "Nexus", position: [-12, -5, 10], color: "#ec4899", size: 0.9, synopsis: "The interconnecting hub for dimensions.", link: "/nexus" },
-  { id: "projects", label: "Projects", position: [8, -10, 6], color: "#14b8a6", size: 0.85, synopsis: "Showcase of architectural endeavors and experiments.", link: "/projects" },
+  { id: "projects", label: "Projects", position: [8, -10, 6], color: "#14b8a6", size: 1.1, synopsis: "Showcase of architectural endeavors and experiments.", link: "/projects" },
   { id: "blog", label: "Chronicle", position: [-8, 8, 8], color: "#3b82f6", size: 0.8, synopsis: "Written thoughts, engineering logs, and updates.", link: "/blog" },
 
   // MEDIUM (Sub-pages)
-  { id: "about", label: "About Affan", position: [6, 12, 4], color: "#8b5cf6", size: 0.6, synopsis: "The entity behind the universe. Lore and biography.", link: "/about" },
+  { id: "about", label: "About Us", position: [6, 12, 4], color: "#8b5cf6", size: 0.6, synopsis: "The entity behind the universe. Lore and biography.", link: "/about" },
   { id: "contact", label: "Contact", position: [-14, 2, -5], color: "#10b981", size: 0.55, synopsis: "Establish a direct communication link.", link: "/contact" },
   { id: "behind-the-scenes", label: "Behind The Scenes", position: [14, 0, 5], color: "#64748b", size: 0.5, synopsis: "Unveil the backstage mechanics.", link: "/behind-the-scenes" },
   { id: "ambasuke", label: "Ambasuke", position: [4, -14, -6], color: "#f43f5e", size: 0.5, synopsis: "A unique sector with classified origins.", link: "/ambasuke" },
   
   // ORIGINAL NODES
-  { id: "books", label: "The Books", position: [-5, 3, -2], color: "#a855f7", size: 0.4, synopsis: "Chronicles and tales from the multiverse. Includes the main light novel.", link: "/novel" },
-  { id: "games", label: "Minigames", position: [5, -2, 3], color: "#ef4444", size: 0.5, synopsis: "The Void Portal. Survive the anomalies and secure your sanity.", link: "/minigame" },
+  { id: "books", label: "The Books", position: [-5, 3, -2], color: "#a855f7", size: 1, synopsis: "Chronicles and tales from the multiverse. Includes the main light novel.", link: "/novel" },
+  { id: "games", label: "Minigames", position: [5, -2, 3], color: "#ef4444", size: 0.85, synopsis: "The Void Portal. Survive the anomalies and secure your sanity.", link: "/minigame" },
   { id: "music", label: "Music", position: [-3, -4, 4], color: "#10b981", size: 0.45, synopsis: "Immersive soundscapes and curated playlists.", link: "/music" },
-  { id: "architect", label: "The Architect", position: [1, -8, -6], color: "#ff003c", size: 0.2, synopsis: "System Initialized. Identity: Jeka.", link: "https://github.com/MufidJK", isEasterEgg: true },
+  { id: "architect", label: "The Architect", position: [1, -8, -6], color: "#ff003c", size: 0.25, synopsis: "System Initialized. Identity: Jeka.", link: "https://github.com/MufidJK", isEasterEgg: true },
 
   // SMALL (Homepage Components)
   { id: "stories", label: "Affan Stories", position: [3, 2, 7], color: "#eab308", size: 0.35, synopsis: "Highlights of notable tales from the homepage.", link: "/#affan-stories", hideOnMobile: true },
@@ -49,7 +49,7 @@ const NODES: NodeData[] = [
   { id: "cursed-artifact", label: "Cursed Artifact", position: [2, 6, 4], color: "#dc2626", size: 0.25, synopsis: "Warning: Entity containment unstable.", link: "/#cursed-artifact", hideOnMobile: true },
   // { id: "guestbook", label: "Guestbook", position: [-9, -4, 3], color: "#0ea5e9", size: 0.3, synopsis: "Leave your mark in the multiverse.", link: "/#guestbook", hideOnMobile: true },
   { id: "ai-chat", label: "Affan AI", position: [9, -2, -3], color: "#6366f1", size: 0.35, synopsis: "Interactive projection of the Architect's consciousness.", link: "/#affan-ai-chat", hideOnMobile: true },
-  { id: "memory-leak", label: "Memory Leak", position: [5, -7, 8], color: "#22c55e", size: 0.4, synopsis: "System Error. Entry to the Abyss Terminal.", link: "/memory-leak", hideOnMobile: true },
+  { id: "memory-leak", label: "Memory Leak", position: [5, -7, 8], color: "#22c55e", size: 0.4, synopsis: "System Error. Entry to the Memory Leak Terminal.", link: "/memory-leak", hideOnMobile: true },
   { id: "cookie", label: "Cookie Protocol", position: [-10, 2, 6], color: "#a8a29e", size: 0.2, synopsis: "Data consumption directives.", link: "/cookie-protocol", hideOnMobile: true },
   { id: "privacy", label: "Privacy Policy", position: [11, 3, 2], color: "#78716c", size: 0.2, synopsis: "Observation limits and regulations.", link: "/privacy-policy", hideOnMobile: true },
   { id: "terms", label: "Terms of Chaos", position: [-3, -10, 5], color: "#57534e", size: 0.2, synopsis: "The absolute laws governing interaction.", link: "/terms-of-chaos", hideOnMobile: true },
