@@ -101,9 +101,10 @@ When you (the AI Agent) build a new feature, page, minigame, or database table f
 
 The `IntercelestialScene` (Three.js/Fiber interactive map) is a highly optimized, memory-managed masterpiece.
 
-- **APPEND ONLY:** When adding new realms, you are ONLY permitted to add new objects to the `NODES` array and new link pairs to the `CONNECTIONS` array.
-- **NO LOGIC MODIFICATION:** You are STRICTLY FORBIDDEN from altering the `useFrame` animation loop, the `useEffect` memory disposal logic, HTML overlays, or the `<OrbitControls>` configuration (e.g., panning must remain enabled).
-- **VISUAL HIERARCHY:** Any new standalone application or major feature MUST be sized as at least a "Medium" node (`size: 0.6` or higher) or "Large" node (`size: 1.0` or higher). Match the thematic hex colors of the Affanverse without overlapping positions.
+- **VALID ROUTES ONLY:** You are ONLY permitted to add new nodes for fully developed, routable pages or minigames (e.g., `/new-realm`). **DO NOT** add nodes for minor features, components, or modals to prevent 404 routing errors.
+- **APPEND ONLY:** When adding a valid new realm, ONLY append new objects to the `NODES` array and new link pairs to the `CONNECTIONS` array.
+- **NO LOGIC MODIFICATION:** You are STRICTLY FORBIDDEN from altering the `useFrame` animation loop, the `useEffect` memory disposal logic, HTML overlays, or the `<OrbitControls>` configuration.
+- **VISUAL HIERARCHY:** Any new major feature MUST be sized appropriately (`size: 0.6` to `1.0`). Match the thematic hex colors of the Affanverse without overlapping positions.
 
 ## 📜 RULE 13: BEHIND THE SCENES APPEND-ONLY PROTOCOL
 
