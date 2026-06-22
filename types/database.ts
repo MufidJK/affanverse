@@ -145,6 +145,53 @@ export interface Database {
           system_note?: string | null;
         };
       };
+      apex_market_assets: {
+        Row: {
+          id: string;
+          rank: number;
+          name: string;
+          ticker: string;
+          image_url: string;
+          base_price: string;
+          circulating_supply: string;
+          base_volume_24h: string;
+          base_1h_change: string;
+          base_24h_change: string;
+          base_7d_change: string;
+          volatility_index: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          rank: number;
+          name: string;
+          ticker: string;
+          image_url: string;
+          base_price: string;
+          circulating_supply: string;
+          base_volume_24h: string;
+          base_1h_change: string;
+          base_24h_change: string;
+          base_7d_change: string;
+          volatility_index: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          rank?: number;
+          name?: string;
+          ticker?: string;
+          image_url?: string;
+          base_price?: string;
+          circulating_supply?: string;
+          base_volume_24h?: string;
+          base_1h_change?: string;
+          base_24h_change?: string;
+          base_7d_change?: string;
+          volatility_index?: string;
+          created_at?: string;
+        };
+      };
     };
     minigame_scores: {
       Row: {

@@ -29,6 +29,7 @@ export function Navbar() {
     { name: "Chronicle", href: "/blog" },
     { name: "Memory Leak", href: "/memory-leak" },
     { name: "Nexus", href: "/nexus" },
+    { name: "Exchange", href: "/apex-exchange" },
     { name: "The Books", subLinks: [
       { name: "Affan: The Apex Predator", href: "/novel" },
       { name: "Ambasuke (Spin off)", href: "/ambasuke" }

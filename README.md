@@ -61,6 +61,8 @@ affanverse/
 │   ├── abyss-term/
 │   ├── aki/
 │   ├── ambasuke/
+│   ├── apex-exchange/
+│   │   ├── [ticker]/
 │   ├── archives/
 │   ├── behind-the-scenes/
 │   ├── blog/
@@ -81,6 +83,8 @@ affanverse/
 │   ├── projects/
 │   └── terms-of-chaos/
 ├── components/
+│   ├── apex-exchange/
+│   │   ├── modals/
 │   ├── intercelestial/
 │   ├── projects/
 │   ├── terminal/
@@ -105,11 +109,14 @@ affanverse/
 │   ├── hero-3d.tsx
 │   ├── Hero3DWrapper.tsx
 │   ├── jumpscare-overlay.tsx
+│   ├── MarketTable.tsx
+│   ├── MarketWidgets.tsx
 │   ├── minigame-portal.tsx
 │   ├── navbar.tsx
 │   ├── project-list.tsx
 │   ├── smart-media.tsx
 │   ├── soundscape-overlay.tsx
+│   ├── Sparkline.tsx
 │   ├── SystemBriefingVideo.tsx
 │   ├── testimonials-marquee.tsx
 │   ├── theme-provider.tsx

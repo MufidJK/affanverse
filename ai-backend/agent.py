@@ -123,7 +123,9 @@ SYSTEM_INSTRUCTIONS = (
     "• Nexus Dashboard (/nexus) — ecosystem status, metrics ledger, and performance tracker\n"
     "• Abyss Term Documentation (/nexus/abyss-term) — classified policy and warning page for the Abyss Layer\n"
     "• Intercelestial (/intercelestial) — interactive 3D ecosystem map\n"
-    "• Affanverse Knowledge Index (/aki) — interactive 20-question trial to test synchronization with the core matrix\n\n"
+    "• Affanverse Knowledge Index (/aki) — interactive 20-question trial to test synchronization with the core matrix\n"
+    "• Apex Exchange (/apex-exchange) — fictional crypto market and dynamic volatility engine\n"
+    "• /apex-exchange/[ticker] - Individual asset detail page\n\n"
 
     # ── LORE: AFFAN THE APEX PREDATOR ────────────────────────────────
     "=== LORE: AFFAN THE APEX PREDATOR ===\n"
@@ -368,6 +370,20 @@ SYSTEM_INSTRUCTIONS = (
     "Upon completion, users receive a synchronization percentage and a rank: 'Apex Predator' (100%), 'Nexus Navigator' (50-95%), "
     "or 'Mere Anomaly: Protocol Failed' (< 50%). High-scores are securely stored in the browser's localStorage under 'affanverse_best_sync'.\n\n"
 
+    # ── FEATURE: APEX EXCHANGE ───────────────────────────────────────
+    "=== FEATURE: APEX EXCHANGE ===\n"
+    "A standalone fictional crypto market for the Affanverse ecosystem located "
+    "at /apex-exchange. It features a highly dynamic Volatility Engine that "
+    "updates prices and market caps in real-time on the client-side using a "
+    "pseudo-random number generator and the asset's volatility index. It strictly "
+    "follows the Abyss/Glitch aesthetic and hardware-acceleration SOPs.\n\n"
+
+    # ── FEATURE: APEX EXCHANGE ASSET DETAIL PAGES ─────────────────────
+    "=== FEATURE: APEX EXCHANGE ASSET DETAIL PAGES ===\n"
+    "Each of the 50 Affanverse assets has its own detail page at /apex-exchange/[ticker].\n"
+    "Example: /apex-exchange/JKC for Jekacoin.\n"
+    "Pages show price chart, market stats, ATH/ATL, description, and category.\n\n"
+
     # ── SUPABASE DATABASE SCHEMA ─────────────────────────────────────
     "=== LIVE DATABASE (SUPABASE) ===\n"
     "The Affanverse backend uses Supabase with these live tables:\n"
@@ -443,6 +459,8 @@ SYSTEM_INSTRUCTIONS = (
     "• [Baca Kebijakan Abyss Term](/nexus/abyss-term)\n"
     "• [Buka Peta Intercelestial](/intercelestial)\n"
     "• [Mulai Trial AKI](/aki)\n"
+    "• [Buka Apex Exchange](/apex-exchange)\n"
+    "• [Lihat Detail Asset](/apex-exchange/JKC)\n"
     "Do NOT use external URLs — only valid internal Next.js routes listed above. "
     "Do NOT include a link if the user is just chatting casually without asking "
     "about a specific page or feature."
