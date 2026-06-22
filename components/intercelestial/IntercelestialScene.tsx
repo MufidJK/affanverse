@@ -23,12 +23,14 @@ const NODES: NodeData[] = [
   { id: "core", label: "Affan", position: [0, 0, 0], color: "#2398f7", size: 2, synopsis: "The Apex Predator. The central gravity of the Affanverse.", link: "/" },
 
   // LARGE (Major Routes)
+  { id: "apex-exchange", label: "Apex Exchange", position: [0, 10, -12], color: "#2398f7", size: 1.0, synopsis: "Live market capitalization and dynamic volatility engine.", link: "/apex-exchange" },
   { id: "archives", label: "Archives", position: [10, 6, -8], color: "#f59e0b", size: 0.9, synopsis: "The Vault of ancient records and sealed files.", link: "/archives" },
   { id: "nexus", label: "Nexus", position: [-12, -5, 10], color: "#ec4899", size: 0.9, synopsis: "The interconnecting hub for dimensions.", link: "/nexus" },
   { id: "projects", label: "Projects", position: [8, -10, 6], color: "#14b8a6", size: 1.1, synopsis: "Showcase of architectural endeavors and experiments.", link: "/projects" },
   { id: "blog", label: "Chronicle", position: [-8, 8, 8], color: "#3b82f6", size: 0.8, synopsis: "Written thoughts, engineering logs, and updates.", link: "/blog" },
 
   // MEDIUM (Sub-pages)
+  { id: "aki", label: "AKI", position: [-10, -8, -6], color: "#eab308", size: 0.6, synopsis: "Affanverse Knowledge Interface and core integrations.", link: "/aki" },
   { id: "about", label: "About Us", position: [6, 12, 4], color: "#8b5cf6", size: 0.6, synopsis: "The entity behind the universe. Lore and biography.", link: "/about" },
   { id: "contact", label: "Contact", position: [-14, 2, -5], color: "#10b981", size: 0.55, synopsis: "Establish a direct communication link.", link: "/contact" },
   { id: "behind-the-scenes", label: "Behind The Scenes", position: [14, 0, 5], color: "#64748b", size: 0.5, synopsis: "Unveil the backstage mechanics.", link: "/behind-the-scenes" },
@@ -107,7 +109,9 @@ const CONNECTIONS = [
   ["games", "low-cortisol"],
   ["games", "affan-strike"],
   ["games", "ambasuke-protocol-game"],
-  ["games", "flappy-affan"]
+  ["games", "flappy-affan"],
+  ["core", "apex-exchange"],
+  ["core", "aki"]
 ];
 
 export function IntercelestialScene({ isLowCores = false }: { isLowCores?: boolean }) {
@@ -418,7 +422,7 @@ export function IntercelestialScene({ isLowCores = false }: { isLowCores?: boole
 
       <OrbitControls
         makeDefault
-        enablePan={false}
+        enablePan={true}
         minDistance={5}
         maxDistance={80}
         autoRotate={false}
