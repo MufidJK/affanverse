@@ -75,7 +75,8 @@ export function Footer() {
         { label: "Memory Leak", href: "/memory-leak" },
         { label: "Projects", href: "/projects" },
         { label: "Chronicle", href: "/chronicle" },
-        { label: "Contact", href: "/contact" },
+        { label: "Nexus", href: "/nexus" },
+        { label: "Apex Exchange", href: "/apex-exchange" },
       ],
     },
     {
@@ -87,6 +88,7 @@ export function Footer() {
         { label: "Apex Predator", href: "/novel" },
         { label: "Ambasuke Spin-off", href: "/ambasuke" },
         { label: "Behind the Code", href: "/behind-the-scenes" },
+        { label: "Affanverse Knowledge Index", href: "/aki" },
       ],
     },
     {
@@ -96,7 +98,8 @@ export function Footer() {
         { label: "Creator Messages", href: "#", action: () => setCreatorMessagesOpen(true) },
         { label: "Sanity Check", href: "#", action: handleSanityCheck },
         { label: "Saweria", href: "https://saweria.co/MufidJK", external: true },
-        { label: "Trakteer", href: "https://trakteer.id/mufidjk", external: true }
+        { label: "Trakteer", href: "https://trakteer.id/mufidjk", external: true },
+        { label: "Contact", href: "/contact" },
       ],
     },
     {
