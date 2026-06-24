@@ -48,7 +48,8 @@ const TIMELINE = [
       "Pengembangan minigame ke-5 'Affan Card Protocol' — Rogue-lite Deckbuilder yang ditenagai oleh useReducer state machine kompleks, sekuens animasi multi-step Framer Motion, dan sistem Leaderboard Supabase dengan optimasi zero-leak.",
       "Pengembangan minigame ke-6 'Affan Low Cortisol' — EDM Rhythm Game WebGL mutakhir. Menggunakan Web Audio API untuk sinkronisasi beat presisi, procedural falling notes engine via HTML5 Canvas, dan hardware-accelerated 77-frame CSS sprite sheet dengan time-gated UI (Framer Motion).",
       "Pengembangan 'Apex Exchange' — Bursa Apex ekosistem skala penuh dengan 67% CoinMarketCap UI parity, simulasi volatilitas dinamis (useMarketTicker), dan dashboard modal analitik interaktif (Recharts) yang ditenagai oleh 50 aset tersinkronisasi dari Supabase.",
-      "Integrasi 'AKI' (Affanverse Knowledge Interface) — Arsitektur pusat pengetahuan dan interaksi AI dinamis yang berfungsi sebagai *core intelligence* dan sistem navigasi kognitif ekosistem."
+      "Integrasi 'AKI' (Affanverse Knowledge Interface) — Arsitektur pusat pengetahuan dan interaksi AI dinamis yang berfungsi sebagai *core intelligence* dan sistem navigasi kognitif ekosistem.",
+      "Implementasi Chaos Event Engine & Sinkronisasi Global State — Overhaul arsitektur state management menggunakan pola Singleton untuk mencegah amnesia state antar komponen. Implementasi sistem volatilitas dinamis (Chaos Engine) secara real-time pada ekosistem Apex Exchange dengan linear interpolation, mempertahankan kestabilan render framer-motion dan WebGL."
     ],
   },
 ];

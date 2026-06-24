@@ -1,8 +1,7 @@
 import React from "react";
 import { supabase } from "@/lib/supabase";
-import { MarketTable } from "@/components/MarketTable";
-import { MarketWidgets } from "@/components/MarketWidgets";
 import { ApexMarketAsset } from "@/types/apex";
+import ApexExchangeClient from "./ApexExchangeClient";
 
 export const revalidate = 0; // Ensures it skips Next.js aggressive cache
 
@@ -75,18 +74,13 @@ export default async function ApexExchangePage() {
           </p>
         </div>
 
-        {/* Dashboard Widgets */}
-        <MarketWidgets 
+        {/* Client-Side Dashboard (Chaos Engine lives here) */}
+        <ApexExchangeClient
+          initialAssets={initialAssets}
           totalMarketCap={totalMarketCap}
           apex20Value={apex20Value}
           apex20Change={apex20Change}
-          assets={initialAssets}
         />
-
-        {/* Market Table Wrapper */}
-        <div className="bg-white dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-2xl p-6 shadow-xl dark:shadow-2xl">
-          <MarketTable initialAssets={initialAssets} />
-        </div>
       </div>
     </main>
   );

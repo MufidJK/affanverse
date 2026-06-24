@@ -28,3 +28,18 @@ export interface DynamicMarketAsset extends ApexMarketAsset {
   price_direction: "up" | "down" | "neutral";
   sparkline_data: number[];
 }
+
+// ── Chaos Event Engine Types ──
+export interface ChaosEvent {
+  id: string;
+  title: string;
+  duration: number;
+  multiplier: number;
+  affectedAssets: string[];
+}
+
+export interface ChaosEventState {
+  event: ChaosEvent;
+  startTime: number;
+  phase: "active" | "recovering";
+}

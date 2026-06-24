@@ -296,3 +296,27 @@ body.sanity-glitch {
 @keyframes shimmer {
   100% { transform: translateX(100%); }
 }
+
+/* ========================================= */
+/* CHAOS EVENT ENGINE — Glitch Price Effect  */
+/* Only animates transform (RULE 5)          */
+/* text-shadow is static per frame, not blur */
+/* ========================================= */
+@keyframes chaos-jitter {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-1px); }
+  50% { transform: translateX(0.5px); }
+  75% { transform: translateX(1px); }
+}
+
+.chaos-glitch {
+  animation: chaos-jitter 0.1s steps(2) infinite;
+  text-shadow: -1px 0 #2398f7, 1px 0 #ef4444;
+  will-change: transform;
+}
+
+/* Chaos Marquee container — hardware accelerated */
+.chaos-marquee-container {
+  overflow: hidden;
+  will-change: transform;
+}

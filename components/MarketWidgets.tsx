@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
-import { ApexMarketAsset } from "@/types/apex";
+import { ApexMarketAsset, ChaosEventState } from "@/types/apex";
 import { WidgetModal } from "./apex-exchange/WidgetModal";
 
 // === RULE 8: Lazy Loading — all modals dynamically imported with ssr: false ===
@@ -40,11 +40,12 @@ interface MarketWidgetsProps {
   apex20Value: number;
   apex20Change: number;
   assets: ApexMarketAsset[];
+  chaosState?: ChaosEventState | null;
 }
 
 type ModalType = 1 | 2 | 3 | 4 | 5 | null;
 
-export function MarketWidgets({ totalMarketCap, apex20Value, apex20Change, assets }: MarketWidgetsProps) {
+export function MarketWidgets({ totalMarketCap, apex20Value, apex20Change, assets, chaosState }: MarketWidgetsProps) {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
 
   const formatCompactCurrency = (val: number) => {
@@ -64,9 +65,17 @@ export function MarketWidgets({ totalMarketCap, apex20Value, apex20Change, asset
 
   const isApex20Up = apex20Change >= 0;
   
-  // Dynamic Fear & Greed Math
-  const fearGreedValue = 87;
+  // Dynamic Fear & Greed Math — Chaos Override
+  const isChaosActive = chaosState?.phase === "active";
+  const baseFearGreedValue = 87;
+  // During chaos, force extreme fear or greed based on event id hash
+  const chaosDirection = chaosState?.event.id.charCodeAt(0) ?? 0;
+  const fearGreedValue = isChaosActive
+    ? (chaosDirection % 2 === 0 ? 8 + Math.floor(chaosDirection % 7) : 92 + Math.floor(chaosDirection % 6))
+    : baseFearGreedValue;
   const fearGreedRotation = (fearGreedValue / 100) * 180;
+  const fearGreedLabel = fearGreedValue < 25 ? "Extreme Fear" : fearGreedValue > 75 ? "Greed" : "Neutral";
+  const fearGreedLabelColor = fearGreedValue < 25 ? "text-red-500" : "text-emerald-500";
 
   const widgetBaseClass =
     "p-4 rounded-xl bg-white dark:bg-[#111] border border-gray-200 dark:border-[#2398f7]/20 shadow-sm flex flex-col justify-center transition-all duration-300 cursor-pointer hover:opacity-80 hover:border-[#2398f7]/40 will-change-transform";
@@ -105,7 +114,7 @@ export function MarketWidgets({ totalMarketCap, apex20Value, apex20Change, asset
 
         {/* 3. Widget: Fear & Greed Gauge */}
         <button
-          className={`${widgetBaseClass} items-center relative overflow-hidden`}
+          className={`${widgetBaseClass} items-center relative overflow-hidden ${isChaosActive ? (fearGreedValue < 25 ? "border-red-500/60 dark:border-[#ef4444]/60" : "border-emerald-500/60 dark:border-emerald-400/60") : ""}`}
           onClick={() => setActiveModal(3)}
           aria-label="Open Fear and Greed Index details"
         >
@@ -138,8 +147,8 @@ export function MarketWidgets({ totalMarketCap, apex20Value, apex20Change, asset
             
             {/* Inner Text Placement inside empty arc bottom center */}
             <div className="absolute inset-0 flex flex-col items-center justify-end pb-1">
-              <span className="text-xl font-bold text-zinc-900 dark:text-white leading-none">87</span>
-              <span className="text-[10px] uppercase font-bold text-emerald-500">Greed</span>
+              <span className="text-xl font-bold text-zinc-900 dark:text-white leading-none">{fearGreedValue}</span>
+              <span className={`text-[10px] uppercase font-bold ${fearGreedLabelColor}`}>{fearGreedLabel}</span>
             </div>
           </div>
         </button>

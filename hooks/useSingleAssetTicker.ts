@@ -1,45 +1,42 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ApexMarketAsset, DynamicMarketAsset } from "@/types/apex";
+import { useKeyboardShortcut } from "./useKeyboardShortcut";
+import { useChaosStore } from "@/store/useChaosStore";
 
 export function useSingleAssetTicker(initialAsset: ApexMarketAsset) {
   const [isMounted, setIsMounted] = useState(false);
-  const [asset, setAsset] = useState<DynamicMarketAsset>(() => {
-    const basePriceNum = parseFloat(initialAsset.base_price);
-    const supplyNum = parseFloat(initialAsset.circulating_supply);
-    return {
-      ...initialAsset,
-      current_price: basePriceNum,
-      dynamic_market_cap: basePriceNum * supplyNum,
-      price_direction: "neutral" as const,
-      sparkline_data: [],
-    };
-  });
 
+  // Subscribe to global store
+  const chaosState = useChaosStore((s) => s.chaosState);
+  const marketData = useChaosStore((s) => s.marketData);
+  const triggerChaos = useChaosStore((s) => s.triggerChaos);
+  const initEngine = useChaosStore((s) => s.initEngine);
+
+  // Initialize engine with this single asset if it's not already running
   useEffect(() => {
     setIsMounted(true);
+    initEngine([initialAsset]);
+  }, [initialAsset, initEngine]);
 
-    const interval = setInterval(() => {
-      setAsset((prev) => {
-        const volatility = parseFloat(prev.volatility_index);
-        const changePercent = (Math.random() * 2 - 1) * volatility;
-        const newPrice = prev.current_price * (1 + changePercent);
-        const supply = parseFloat(prev.circulating_supply);
-        return {
-          ...prev,
-          current_price: newPrice,
-          dynamic_market_cap: newPrice * supply,
-          price_direction: newPrice > prev.current_price 
-            ? "up" as const 
-            : "down" as const,
-        };
-      });
-    }, 3000);
+  // Keyboard Shortcut: Ctrl+Shift+C → global store trigger
+  useKeyboardShortcut(
+    { key: "c", ctrlKey: true, shiftKey: true },
+    triggerChaos
+  );
 
-    // AGENTS.md Rule 2 — strict cleanup
-    return () => clearInterval(interval);
-  }, []);
+  // Find the specific asset in the global market data
+  const liveAsset = marketData?.find((a) => a.ticker === initialAsset.ticker) as DynamicMarketAsset | undefined;
 
-  return { liveAsset: asset, isMounted };
+  // Fallback to initialAsset shape while initializing to prevent layout shift
+  const asset = liveAsset || {
+    ...initialAsset,
+    current_price: parseFloat(initialAsset.base_price),
+    dynamic_market_cap: parseFloat(initialAsset.base_price) * parseFloat(initialAsset.circulating_supply),
+    price_direction: "neutral" as const,
+    sparkline_data: [],
+  };
+
+  return { liveAsset: asset, isMounted, chaosState, triggerChaos };
 }

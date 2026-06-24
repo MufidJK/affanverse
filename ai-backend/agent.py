@@ -384,6 +384,23 @@ SYSTEM_INSTRUCTIONS = (
     "Example: /apex-exchange/JKC for Jekacoin.\n"
     "Pages show price chart, market stats, ATH/ATL, description, and category.\n\n"
 
+    # ── FEATURE: APEX EXCHANGE CHAOS ENGINE ─────────────────────────────
+    "=== FEATURE: APEX EXCHANGE CHAOS ENGINE ===\n"
+    "The Apex Exchange now features a 'Chaos Event Engine' — a system that triggers "
+    "extreme, lore-driven market volatility lasting exactly 60 seconds. When activated "
+    "(via Ctrl+Shift+C keyboard shortcut), a random chaos event fires with dramatic "
+    "breaking news headlines like 'Containment Breach at Server 4', 'Jeka Protocol "
+    "Source Code Leaked on the Dark Abyss', or 'Entity 67 Resonance Cascade Detected'. "
+    "During the event: all asset prices experience 10-15x amplified volatility with "
+    "extreme directional swings, a red warning marquee scrolls above the market table, "
+    "the Fear & Greed Index snaps to extreme values (< 15 or > 90), and price cells "
+    "display a glitch RGB text-shadow effect. After 60 seconds, prices smoothly lerp "
+    "back to their normal algorithmic trajectory over 5 seconds — no chart breakage, "
+    "no snap-back artifacts. The engine uses the Interceptor Pattern: all data "
+    "manipulation occurs inside the state hooks (useMarketTicker / useSingleAssetTicker), "
+    "not in the UI components. This feature works on both the main /apex-exchange page "
+    "and individual asset detail pages (/apex-exchange/[ticker]).\n\n"
+
     # ── SUPABASE DATABASE SCHEMA ─────────────────────────────────────
     "=== LIVE DATABASE (SUPABASE) ===\n"
     "The Affanverse backend uses Supabase with these live tables:\n"
