@@ -237,17 +237,17 @@ export default function FlappyAffanPage() {
       localStorage.setItem(LS_HIGH_KEY, String(s.score));
       setHighScore(s.score);
 
-      // Upsert: single atomic call leveraging UNIQUE(player_name, game_slug)
+      // Upsert via secure API route — bypasses RLS
       const name = localStorage.getItem(LS_NAME_KEY) || "Anon";
       const finalScore = s.score;
 
       (async () => {
         try {
-          await (supabase.from("minigame_scores") as any)
-            .upsert(
-              { player_name: name, game_slug: "flappy-affan", score: finalScore },
-              { onConflict: "player_name,game_slug" }
-            );
+          await fetch("/api/submit-score", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ player_name: name, game_slug: "flappy-affan", score: finalScore }),
+          });
 
           fetchLeaderboard();
         } catch {

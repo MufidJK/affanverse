@@ -66,19 +66,25 @@ export function Guestbook({ pageId, variant, title = "Tinggalkan Jejak", descrip
     }
 
     setIsSubmitting(true)
-    const { error } = await (supabase as any)
-      .from("guestbook")
-      .insert([{ name: name.trim(), message: message.trim(), page_id: pageId }])
+    try {
+      const res = await fetch("/api/submit-guestbook", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name.trim(), message: message.trim(), page_id: pageId }),
+      })
+      const result = await res.json()
 
-    setIsSubmitting(false)
-
-    if (!error) {
-      localStorage.setItem(storageKey, Date.now().toString())
-      setMessage("")
-      fetchMessages()
-    } else {
+      if (res.ok && result.success) {
+        localStorage.setItem(storageKey, Date.now().toString())
+        setMessage("")
+        fetchMessages()
+      } else {
+        alert(result.error || "Gagal ngirim jejak, server lagi tantrum.")
+      }
+    } catch {
       alert("Gagal ngirim jejak, server lagi tantrum.")
     }
+    setIsSubmitting(false)
   }
 
   // ==========================================

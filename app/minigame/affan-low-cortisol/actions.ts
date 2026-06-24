@@ -1,6 +1,6 @@
 'use server'
 
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 
 /* ═══════════════════════════════════════════════
    TYPES
@@ -50,7 +50,7 @@ export async function submitLowCortisolScore(
 
   try {
     // Check existing score to prevent overwriting with a lower score
-    const { data: existing } = await (supabase.from('minigame_scores') as any)
+    const { data: existing } = await (supabaseAdmin.from('minigame_scores') as any)
       .select('score')
       .eq('player_name', name)
       .eq('game_slug', 'affan_low_cortisol')
@@ -61,7 +61,7 @@ export async function submitLowCortisolScore(
       return { success: true }
     }
 
-    const { error } = await (supabase.from('minigame_scores') as any).upsert(
+    const { error } = await (supabaseAdmin.from('minigame_scores') as any).upsert(
       {
         player_name: name,
         game_slug: 'affan_low_cortisol' as const,

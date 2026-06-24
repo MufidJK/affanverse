@@ -1,6 +1,6 @@
 'use server'
 
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 
 /* ═══════════════════════════════════════════════
    TYPES
@@ -49,7 +49,7 @@ export async function submitEndlessRunnerScore(
   }
 
   try {
-    const { error } = await (supabase.from('minigame_scores') as any).upsert(
+    const { error } = await (supabaseAdmin.from('minigame_scores') as any).upsert(
       {
         player_name: name,
         game_slug: 'affan-endless-runner' as const,

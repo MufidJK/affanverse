@@ -127,7 +127,7 @@ export function useGameEngine(): EngineAPI {
     const prev = parseInt(localStorage.getItem(C.LS_HIGH) || "0", 10);
     if (s.score > prev) { localStorage.setItem(C.LS_HIGH, String(s.score)); setHighScore(s.score); }
     (async () => {
-      try { await (supabase.from("minigame_scores") as any).upsert({ player_name: localStorage.getItem(C.LS_NAME) || "Anon", game_slug: "affan-strike", score: s.score }, { onConflict: "player_name,game_slug" }); fetchLB(); } catch {}
+      try { await fetch("/api/submit-score", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ player_name: localStorage.getItem(C.LS_NAME) || "Anon", game_slug: "affan-strike", score: s.score }) }); fetchLB(); } catch {}
     })();
   }, [play, stopAll, fetchLB]);
 

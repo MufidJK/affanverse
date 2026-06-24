@@ -62,7 +62,10 @@ affanverse/
 │   ├── aki/
 │   ├── ambasuke/
 │   ├── apex-exchange/
-│   │   ├── [ticker]/
+│   │   └── [ticker]/
+│   ├── api/
+│   │   ├── submit-guestbook/
+│   │   └── submit-score/
 │   ├── archives/
 │   ├── behind-the-scenes/
 │   ├── blog/
@@ -84,7 +87,7 @@ affanverse/
 │   └── terms-of-chaos/
 ├── components/
 │   ├── apex-exchange/
-│   │   ├── modals/
+│   │   └── modals/
 │   ├── intercelestial/
 │   ├── projects/
 │   ├── terminal/
