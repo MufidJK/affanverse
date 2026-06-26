@@ -15,7 +15,7 @@ export default function AffanStrikeEngine() {
   const e = useGameEngine();
 
   return (
-    <div className="w-screen h-[100dvh] overflow-hidden flex flex-col bg-[#0a0a0f] selection:bg-cyan-400/30">
+    <div className="fixed inset-0 z-[100] w-[100dvw] h-[100dvh] max-w-none overflow-hidden flex flex-col bg-[#0a0a0f] selection:bg-cyan-400/30">
       {/* PORTRAIT MODE BLOCKER */}
       <div className="fixed inset-0 z-[99999] bg-zinc-950/95 backdrop-blur-md text-white flex-col items-center justify-center portrait:flex landscape:hidden">
         <div className="relative w-20 h-20 mb-6">
@@ -76,7 +76,7 @@ export default function AffanStrikeEngine() {
           </h1>
         </div>
 
-        <canvas ref={e.canvasRef} className="w-full h-full object-contain" style={{ imageRendering: "auto", touchAction: "none" }} />
+        <canvas ref={e.canvasRef} className="w-full h-full max-w-none object-contain" style={{ imageRendering: "auto", touchAction: "none" }} />
 
         {/* DIO BUBBLE */}
         <div ref={e.dioBubbleRef} className="absolute z-40 -translate-x-1/2 -translate-y-[calc(100%+16px)] pointer-events-none" style={{ display: 'none' }}>
@@ -190,7 +190,7 @@ export default function AffanStrikeEngine() {
 
         {/* MOBILE TOUCH CONTROLS */}
         {e.isTouchDevice && (e.uiPhase === "ready" || e.uiPhase === "runner" || e.uiPhase === "boss_fight" || e.uiPhase === "boss_intro") && (
-          <div className="absolute inset-x-0 bottom-0 z-30 pointer-events-none p-4 pb-6 flex justify-between items-end">
+          <div className="absolute inset-x-0 bottom-0 z-30 pointer-events-none p-4 pb-2 flex justify-between items-end">
             
             {/* LEFT SIDE (Movement / Jump/Crouch) */}
             <div className="pointer-events-auto flex gap-2">

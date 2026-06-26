@@ -504,7 +504,7 @@ export default function FlappyAffanPage() {
      ═══════════════════════════════════════════ */
 
   return (
-    <div className="w-screen h-[100dvh] overflow-hidden flex flex-col bg-[#0a0a0f] selection:bg-cyan-400/30">
+    <div className="fixed inset-0 z-[100] w-[100dvw] h-[100dvh] max-w-none overflow-hidden flex flex-col bg-[#0a0a0f] selection:bg-cyan-400/30">
       {/* Back button */}
       <Link
         href="/minigame"
@@ -520,7 +520,7 @@ export default function FlappyAffanPage() {
       <div ref={containerRef} className="flex-1 w-full h-full relative z-10">
         <canvas
           ref={canvasRef}
-          className="w-full h-full cursor-pointer object-contain"
+          className="w-full h-full max-w-none cursor-pointer object-contain"
           style={{ imageRendering: "auto", touchAction: "none" }}
         />
 

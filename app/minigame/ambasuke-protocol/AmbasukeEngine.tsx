@@ -989,7 +989,7 @@ export default function AmbasukeEngine() {
      ═══════════════════════════════════════════ */
 
   return (
-    <div className="w-screen h-[100dvh] overflow-hidden flex flex-col bg-[#0a0a0f] selection:bg-[#2398f7]/30">
+    <div className="fixed inset-0 z-[100] w-[100dvw] h-[100dvh] max-w-none overflow-hidden flex flex-col bg-[#0a0a0f] selection:bg-[#2398f7]/30">
       {/* PORTRAIT MODE BLOCKER */}
       <div className="fixed inset-0 z-[99999] bg-black text-[#2398f7] flex-col items-center justify-center portrait:flex landscape:hidden px-8">
         <div className="relative w-20 h-20 mb-6">
@@ -1041,7 +1041,7 @@ export default function AmbasukeEngine() {
       <div ref={containerRef} className="flex-1 w-full h-full relative z-10">
         <canvas
           ref={canvasRef}
-          className="w-full h-full object-contain"
+          className="w-full h-full max-w-none object-contain"
           style={{ imageRendering: "auto", touchAction: "none" }}
         />
 

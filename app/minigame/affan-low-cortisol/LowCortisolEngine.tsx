@@ -1071,7 +1071,7 @@ export default function LowCortisolEngine() {
   const isActive = phase === "PLAYING";
 
   return (
-    <div className="w-screen h-[100dvh] overflow-hidden flex flex-col bg-zinc-950 selection:bg-[#2398f7]/30 font-mono touch-none select-none">
+    <div className="fixed inset-0 z-[100] w-[100dvw] h-[100dvh] max-w-none overflow-hidden flex flex-col bg-zinc-950 selection:bg-[#2398f7]/30 font-mono touch-none select-none">
       {/* ═══ KEYFRAMES ═══ */}
       <style jsx global>{`
         @keyframes playSprite {
@@ -1237,7 +1237,7 @@ export default function LowCortisolEngine() {
           >
             <canvas
               ref={canvasRef}
-              className="absolute inset-0 w-full h-full object-contain"
+              className="absolute inset-0 w-full h-full max-w-none object-contain"
               style={{ touchAction: "none", imageRendering: "auto" }}
             />
             {/* Mobile touch zones */}

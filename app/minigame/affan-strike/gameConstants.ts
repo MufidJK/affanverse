@@ -22,7 +22,7 @@ export const GROUND_H = 60;
 
 export const PW = 90;
 export const PH = 140;
-export const PLAYER_START_X = 80;
+export const PLAYER_START_X = 140;
 export const MOVE_SPEED = 350;
 export const P_MAX_HP = 150;
 
