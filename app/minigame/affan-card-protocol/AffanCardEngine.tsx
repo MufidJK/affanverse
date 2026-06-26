@@ -785,7 +785,7 @@ export default function AffanCardEngine() {
      ═══════════════════════════════════════════ */
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#0a0a0f] selection:bg-[#2398f7]/30 overflow-hidden font-mono">
+    <div className="fixed inset-0 z-[9999] h-[100dvh] bg-[#0a0a0f] selection:bg-[#2398f7]/30 overflow-hidden font-mono">
       {/* ══ PORTRAIT MODE BLOCKER ══ */}
       {isPortrait && (
         <div className="fixed inset-0 z-[99999] bg-black text-[#2398f7] flex flex-col items-center justify-center px-8">

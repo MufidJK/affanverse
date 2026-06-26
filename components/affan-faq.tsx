@@ -43,7 +43,7 @@ export function AffanFAQ() {
             <AccordionItem 
               key={index} 
               value={`item-${index}`}
-              className="bg-card/50 backdrop-blur-sm border border-black/5 dark:border-white/5 shadow-sm rounded-2xl px-6 border-b-0 overflow-hidden"
+              className="bg-card/50 md:backdrop-blur-sm backdrop-blur-none border border-black/5 dark:border-white/5 shadow-sm rounded-2xl px-6 border-b-0 overflow-hidden"
             >
               <AccordionTrigger className="hover:no-underline py-5 font-medium text-left text-foreground text-lg md:text-xl">
                 {faq.question}

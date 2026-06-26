@@ -1304,7 +1304,7 @@ export default function EndlessRunnerEngine() {
       {/* CANVAS — fills container */}
       <div
         ref={containerRef}
-        className="relative w-full h-screen overflow-hidden bg-black"
+        className="relative w-full h-[100dvh] overflow-hidden bg-black"
       >
         {/* PARALLAX HANDWRITTEN BACKGROUND */}
         <HandwrittenParallaxLayer isVisible={gameState !== "REGISTER"} />

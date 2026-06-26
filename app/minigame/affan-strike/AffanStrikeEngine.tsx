@@ -7,7 +7,7 @@ export default function AffanStrikeEngine() {
   const e = useGameEngine();
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#0a0a0f] selection:bg-cyan-400/30 overflow-hidden">
+    <div className="fixed inset-0 z-[9999] h-[100dvh] bg-[#0a0a0f] selection:bg-cyan-400/30 overflow-hidden">
       {/* PORTRAIT MODE BLOCKER */}
       <div className="fixed inset-0 z-[99999] bg-zinc-950/95 backdrop-blur-md text-white flex-col items-center justify-center portrait:flex landscape:hidden">
         <div className="relative w-20 h-20 mb-6">

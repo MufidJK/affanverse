@@ -57,7 +57,7 @@ export async function AffanTestimonials() {
   const renderCard = (item: any, index: number) => (
     <div
       key={index}
-      className="w-[280px] md:w-[450px] shrink-0 rounded-3xl border border-[#2398f7]/30 bg-background/50 backdrop-blur-md p-5 md:p-8 shadow-sm flex flex-col gap-4 relative overflow-hidden"
+      className="w-[280px] md:w-[450px] shrink-0 rounded-3xl border border-[#2398f7]/30 bg-background/50 md:backdrop-blur-md backdrop-blur-none p-5 md:p-8 shadow-sm flex flex-col gap-4 relative overflow-hidden"
     >
       {/* Subtle Glow Effect */}
       <div className="absolute -inset-10 bg-[#2398f7]/10 blur-2xl rounded-full z-0 pointer-events-none" />

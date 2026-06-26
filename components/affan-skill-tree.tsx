@@ -97,8 +97,8 @@ export function AffanSkillTree() {
               <div 
                 key={skill.name} 
                 className={skill.isSpecial 
-                  ? "md:col-span-2 mt-4 flex flex-col p-5 gap-4 rounded-2xl bg-card/50 backdrop-blur-sm border border-purple-500/20 dark:border-pink-500/30 shadow-[0_0_20px_rgba(168,85,247,0.15)] dark:shadow-[0_0_30px_rgba(236,72,153,0.25)] transition-all duration-300 hover:scale-[101%] hover:-translate-y-1 glitch-effect cursor-pointer"
-                  : "flex flex-col p-5 gap-4 rounded-2xl bg-card/50 backdrop-blur-sm border border-black/5 dark:border-white/5 shadow-sm transition-all duration-300 hover:scale-[102%] hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10 dark:hover:shadow-white/5"
+                  ? "md:col-span-2 mt-4 flex flex-col p-5 gap-4 rounded-2xl bg-card/50 md:backdrop-blur-sm backdrop-blur-none border border-purple-500/20 dark:border-pink-500/30 shadow-[0_0_20px_rgba(168,85,247,0.15)] dark:shadow-[0_0_30px_rgba(236,72,153,0.25)] transition-all duration-300 hover:scale-[101%] hover:-translate-y-1 glitch-effect cursor-pointer"
+                  : "flex flex-col p-5 gap-4 rounded-2xl bg-card/50 md:backdrop-blur-sm backdrop-blur-none border border-black/5 dark:border-white/5 shadow-sm transition-all duration-300 hover:scale-[102%] hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10 dark:hover:shadow-white/5"
                 }
               >
                 <div className="flex justify-between items-center gap-4">

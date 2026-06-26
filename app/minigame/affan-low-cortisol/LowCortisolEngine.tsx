@@ -1063,7 +1063,7 @@ export default function LowCortisolEngine() {
   const isActive = phase === "PLAYING";
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-zinc-950 selection:bg-[#2398f7]/30 overflow-hidden font-mono">
+    <div className="fixed inset-0 z-[9999] h-[100dvh] bg-zinc-950 selection:bg-[#2398f7]/30 overflow-hidden font-mono touch-none select-none">
       {/* ═══ KEYFRAMES ═══ */}
       <style jsx global>{`
         @keyframes playSprite {
@@ -1220,7 +1220,7 @@ export default function LowCortisolEngine() {
             ref={containerRef}
             className={`relative ${isMobile ? "w-full" : "w-[400px]"} overflow-hidden pointer-events-auto`}
             style={{
-              height: isMobile ? "calc(100dvh - 240px)" : "calc(100vh - 280px)",
+              height: isMobile ? "calc(100dvh - 240px)" : "calc(100dvh - 280px)",
               borderLeft: `1px solid rgba(${NEON_BLUE_RGB}, 0.12)`,
               borderRight: `1px solid rgba(${NEON_BLUE_RGB}, 0.12)`,
               borderTop: `1px solid rgba(${NEON_BLUE_RGB}, 0.08)`,
@@ -1234,11 +1234,11 @@ export default function LowCortisolEngine() {
             />
             {/* Mobile touch zones */}
             {isMobile && (
-              <div className="absolute bottom-0 left-0 right-0 h-[100px] z-30 flex">
+              <div className="absolute bottom-6 left-0 right-0 h-[140px] z-30 flex">
                 {LANE_KEYS.map((key, i) => (
                   <button
                     key={key}
-                    className="flex-1 relative active:bg-[#2398f7]/20 transition-colors will-change-transform transform-gpu"
+                    className="flex-1 w-full py-6 relative active:bg-[#2398f7]/20 transition-colors will-change-transform transform-gpu"
                     style={{
                       borderLeft: i > 0 ? `1px solid rgba(${NEON_BLUE_RGB}, 0.12)` : "none",
                     }}

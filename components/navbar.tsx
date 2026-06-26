@@ -52,7 +52,7 @@ export function Navbar() {
 
         {/* Kanan: Desktop Navigation */}
         <div className="hidden md:flex flex-1 items-center justify-end space-x-2">
-          <nav className="flex items-center space-x-1 sm:space-x-2 font-medium">
+          <nav className="flex items-center space-x-1 sm:space-x-2 font-medium overflow-x-auto whitespace-nowrap scrollbar-hide px-2">
             {navLinks.map((link) => {
               if (link.subLinks) {
                 const isActive = link.subLinks.some(sub => pathname.startsWith(sub.href))
