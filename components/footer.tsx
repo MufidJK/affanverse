@@ -62,7 +62,7 @@ export function Footer() {
   }, []);
 
   // Logika ngilangin footer di page terminal
-  if (pathname === "/memory-leak" || pathname === "/terminal") {
+  if (pathname === "/memory-leak" || pathname === "/terminal" || pathname.startsWith("/minigame/")) {
     return null;
   }
 

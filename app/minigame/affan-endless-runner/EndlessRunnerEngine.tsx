@@ -1279,7 +1279,7 @@ export default function EndlessRunnerEngine() {
      ═══════════════════════════════════════════ */
 
   return (
-    <div className="fixed inset-0 z-[100] w-full h-[100dvh] bg-black overflow-hidden flex flex-col selection:bg-[#2398f7]/30">
+    <div className="w-screen h-[100dvh] overflow-hidden flex flex-col bg-black selection:bg-[#2398f7]/30">
       {/* PORTRAIT MODE BLOCKER */}
       <div className="fixed inset-0 z-[99999] bg-black text-[#2398f7] flex-col items-center justify-center portrait:flex landscape:hidden px-8">
         <div className="relative w-20 h-20 mb-6">
@@ -1338,7 +1338,7 @@ export default function EndlessRunnerEngine() {
 
         <canvas
           ref={canvasRef}
-          className="w-full h-full block relative z-20 bg-transparent"
+          className="w-full h-full block relative z-20 bg-transparent object-contain"
           style={{ imageRendering: "pixelated" }}
         />
 

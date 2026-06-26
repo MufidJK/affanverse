@@ -15,7 +15,7 @@ export default function AffanStrikeEngine() {
   const e = useGameEngine();
 
   return (
-    <div className="fixed inset-0 z-[100] w-full h-[100dvh] bg-[#0a0a0f] overflow-hidden flex flex-col selection:bg-cyan-400/30">
+    <div className="w-screen h-[100dvh] overflow-hidden flex flex-col bg-[#0a0a0f] selection:bg-cyan-400/30">
       {/* PORTRAIT MODE BLOCKER */}
       <div className="fixed inset-0 z-[99999] bg-zinc-950/95 backdrop-blur-md text-white flex-col items-center justify-center portrait:flex landscape:hidden">
         <div className="relative w-20 h-20 mb-6">
@@ -68,7 +68,7 @@ export default function AffanStrikeEngine() {
       )}
 
       {/* Canvas */}
-      <div ref={e.containerRef} className="relative w-full h-[100dvh] z-10">
+      <div ref={e.containerRef} className="relative flex-1 w-full overflow-hidden z-10">
         {/* DIO APPROACHES DOM OVERLAY */}
         <div ref={e.dioApproachesRef} className="absolute top-[15%] left-1/2 -translate-x-1/2 z-[9999] pointer-events-none w-full text-center" style={{ display: 'none' }}>
           <h1 className="text-4xl md:text-6xl font-black text-yellow-400 drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] [text-shadow:_0_4px_8px_rgb(0_0_0_/_100%)] tracking-wider" style={{ WebkitTextStroke: '2px #b45309' }}>
@@ -76,7 +76,7 @@ export default function AffanStrikeEngine() {
           </h1>
         </div>
 
-        <canvas ref={e.canvasRef} className="w-full h-full" style={{ imageRendering: "auto", touchAction: "none" }} />
+        <canvas ref={e.canvasRef} className="w-full h-full object-contain" style={{ imageRendering: "auto", touchAction: "none" }} />
 
         {/* DIO BUBBLE */}
         <div ref={e.dioBubbleRef} className="absolute z-40 -translate-x-1/2 -translate-y-[calc(100%+16px)] pointer-events-none" style={{ display: 'none' }}>

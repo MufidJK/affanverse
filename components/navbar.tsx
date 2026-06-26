@@ -19,7 +19,7 @@ export function Navbar() {
     setIsBooksOpen(false)
   }
 
-  if (pathname === "/memory-leak" || pathname === "/terminal" || pathname.startsWith("/minigame/flappy-affan")) {
+  if (pathname === "/memory-leak" || pathname === "/terminal" || pathname.startsWith("/minigame/")) {
     return null
   }
 
