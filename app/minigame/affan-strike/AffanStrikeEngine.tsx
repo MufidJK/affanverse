@@ -4,10 +4,18 @@ import Link from "next/link";
 import { useGameEngine } from "./useGameEngine";
 
 export default function AffanStrikeEngine() {
+  // Lock body scroll on mount
+  if (typeof window !== "undefined") {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    React.useEffect(() => {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = ""; };
+    }, []);
+  }
   const e = useGameEngine();
 
   return (
-    <div className="fixed inset-0 z-[9999] h-[100dvh] bg-[#0a0a0f] selection:bg-cyan-400/30 overflow-hidden">
+    <div className="fixed inset-0 z-[100] w-full h-[100dvh] bg-[#0a0a0f] overflow-hidden flex flex-col selection:bg-cyan-400/30">
       {/* PORTRAIT MODE BLOCKER */}
       <div className="fixed inset-0 z-[99999] bg-zinc-950/95 backdrop-blur-md text-white flex-col items-center justify-center portrait:flex landscape:hidden">
         <div className="relative w-20 h-20 mb-6">

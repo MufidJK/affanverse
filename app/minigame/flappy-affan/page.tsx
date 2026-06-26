@@ -44,6 +44,14 @@ const LS_HIGH_KEY = "flappy_affan_high_score";
    ═══════════════════════════════════════════════ */
 
 export default function FlappyAffanPage() {
+  // Lock body scroll on mount
+  if (typeof window !== "undefined") {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    require("react").useEffect(() => {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = ""; };
+    }, []);
+  }
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef(0);
@@ -496,7 +504,7 @@ export default function FlappyAffanPage() {
      ═══════════════════════════════════════════ */
 
   return (
-    <div className="fixed inset-0 bg-[#0a0a0f] selection:bg-cyan-400/30 overflow-hidden">
+    <div className="fixed inset-0 z-[100] w-full h-[100dvh] bg-[#0a0a0f] overflow-hidden flex flex-col selection:bg-cyan-400/30">
       {/* Back button */}
       <Link
         href="/minigame"
@@ -509,7 +517,7 @@ export default function FlappyAffanPage() {
       </Link>
 
       {/* Fullscreen game container */}
-      <div ref={containerRef} className="relative w-full h-[100dvh] z-10">
+      <div ref={containerRef} className="flex-1 w-full h-full relative z-10">
         <canvas
           ref={canvasRef}
           className="w-full h-full cursor-pointer"

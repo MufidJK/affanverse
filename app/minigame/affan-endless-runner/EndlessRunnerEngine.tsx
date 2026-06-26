@@ -155,6 +155,14 @@ const HandwrittenParallaxLayer = ({ isVisible }: { isVisible: boolean }) => {
 };
 
 export default function EndlessRunnerEngine() {
+  // Lock body scroll on mount
+  if (typeof window !== "undefined") {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    require("react").useEffect(() => {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = ""; };
+    }, []);
+  }
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef(0);
@@ -1271,7 +1279,7 @@ export default function EndlessRunnerEngine() {
      ═══════════════════════════════════════════ */
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-black selection:bg-[#2398f7]/30 overflow-hidden">
+    <div className="fixed inset-0 z-[100] w-full h-[100dvh] bg-black overflow-hidden flex flex-col selection:bg-[#2398f7]/30">
       {/* PORTRAIT MODE BLOCKER */}
       <div className="fixed inset-0 z-[99999] bg-black text-[#2398f7] flex-col items-center justify-center portrait:flex landscape:hidden px-8">
         <div className="relative w-20 h-20 mb-6">
@@ -1304,7 +1312,7 @@ export default function EndlessRunnerEngine() {
       {/* CANVAS — fills container */}
       <div
         ref={containerRef}
-        className="relative w-full h-[100dvh] overflow-hidden bg-black"
+        className="flex-1 w-full h-full relative overflow-hidden bg-black"
       >
         {/* PARALLAX HANDWRITTEN BACKGROUND */}
         <HandwrittenParallaxLayer isVisible={gameState !== "REGISTER"} />

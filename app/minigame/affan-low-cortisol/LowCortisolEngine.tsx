@@ -548,6 +548,14 @@ function drawScanlines(ctx: CanvasRenderingContext2D, w: number, h: number) {
    ═══════════════════════════════════════════════ */
 
 export default function LowCortisolEngine() {
+  // Lock body scroll on mount
+  if (typeof window !== "undefined") {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    require("react").useEffect(() => {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = ""; };
+    }, []);
+  }
   /* ── React State: ONLY for UI overlays that need re-render ── */
   const [phase, setPhase] = useState<GamePhase>("REGISTER");
   const [playerName, setPlayerName] = useState("");
@@ -1063,7 +1071,7 @@ export default function LowCortisolEngine() {
   const isActive = phase === "PLAYING";
 
   return (
-    <div className="fixed inset-0 z-[9999] h-[100dvh] bg-zinc-950 selection:bg-[#2398f7]/30 overflow-hidden font-mono touch-none select-none">
+    <div className="fixed inset-0 z-[100] w-full h-[100dvh] bg-zinc-950 overflow-hidden flex flex-col selection:bg-[#2398f7]/30 font-mono touch-none select-none">
       {/* ═══ KEYFRAMES ═══ */}
       <style jsx global>{`
         @keyframes playSprite {
