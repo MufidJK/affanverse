@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/chat",
-        destination: "http://localhost:8000/api/chat",
+        destination: "https://affanverse-ai-backend.vercel.app/api/chat",
       },
     ];
   },
