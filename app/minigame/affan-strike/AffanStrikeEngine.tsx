@@ -15,14 +15,25 @@ export default function AffanStrikeEngine() {
   const e = useGameEngine();
 
   React.useEffect(() => {
-    const BOSS_ASSET_URLS: string[] = [
+    // Eagerly preload boss assets into browser cache so they are guaranteed
+    // ready before boss_intro phase triggers. Uses link rel=preload for
+    // highest-priority fetching, with Image() fallback.
+    const BOSS_ASSET_URLS = [
       "/minigame/affan-strike/eoh_DIO.png",
       "/minigame/affan-strike/dioAttackFrame.png",
       "/minigame/affan-strike/roadRollerDio.png",
     ];
     BOSS_ASSET_URLS.forEach(src => {
+      // Method 1: <link rel="preload"> — highest browser fetch priority
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = src;
+      document.head.appendChild(link);
+      // Method 2: Image() decode — forces browser to fully decode into memory
       const img = new window.Image();
       img.src = src;
+      img.decode?.().catch(() => {});
     });
   }, []);
 

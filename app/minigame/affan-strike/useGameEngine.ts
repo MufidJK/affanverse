@@ -39,6 +39,7 @@ export function useGameEngine(): EngineAPI {
   const skillCdRef = useRef<HTMLDivElement>(null); const ultiCdRef = useRef<HTMLDivElement>(null);
   const skillBtnRef = useRef<any>(null); const ultiBtnRef = useRef<any>(null);
   const rafRef = useRef(0);
+  const cloudCache = useRef<Map<string, HTMLCanvasElement>>(new Map());
   const g = useRef<GameState>(createState());
   const imgs = useRef<Record<string, HTMLImageElement>>({}); const imgsOk = useRef<Record<string, boolean>>({});
   const audios = useRef<HTMLAudioElement[]>([]); const sfx = useRef<Record<string, HTMLAudioElement>>({});
@@ -133,7 +134,24 @@ export function useGameEngine(): EngineAPI {
 
   const drawFrame = useCallback((ctx: CanvasRenderingContext2D, s: GameState) => {
     const isBoss = s.phase === "boss_fight" || s.phase === "boss_intro";
-    drawSky(ctx, C.LW, isBoss); for (const c of s.clouds) drawCloud(ctx, c); drawGround(ctx, C.LW, s.scrollX);
+    drawSky(ctx, C.LW, isBoss);
+    for (const c of s.clouds) {
+      const key = `${Math.round(c.w)}_${Math.round(c.h)}_${c.opacity.toFixed(2)}`;
+      if (!cloudCache.current.has(key)) {
+        const off = document.createElement("canvas");
+        off.width = Math.ceil(c.w) + 20;
+        off.height = Math.ceil(c.h * 1.5) + 20;
+        const offCtx = off.getContext("2d");
+        if (offCtx) {
+          offCtx.translate(off.width / 2, off.height * 0.7);
+          drawCloud(offCtx, { ...c, x: 0, y: 0 });
+        }
+        cloudCache.current.set(key, off);
+      }
+      const cached = cloudCache.current.get(key)!;
+      ctx.drawImage(cached, c.x - cached.width / 2, c.y - cached.height * 0.7);
+    }
+    drawGround(ctx, C.LW, s.scrollX);
     if (s.phase === "runner") for (const o of s.obstacles) { o.type === "cactus" ? drawCactus(ctx, o.x, o.variant) : (imgsOk.current["airEnemy"] && ctx.drawImage(imgs.current["airEnemy"], o.x, o.y, o.w, o.h)); }
     
     const ph = s.crouching ? C.PH * 0.5 : C.PH; const py = s.crouching ? s.groundY - ph : s.playerY;
@@ -241,7 +259,10 @@ export function useGameEngine(): EngineAPI {
     const s = g.current; if (s.lastTime === 0) s.lastTime = ts;
     const dt = Math.min((ts - s.lastTime) / 1000, 0.05); s.lastTime = ts;
     const rect = ct.getBoundingClientRect(); if (rect.width > 0 && rect.height > 0) C.setLW(Math.round(C.LH * (rect.width / rect.height)));
-    cv.width = C.LW; cv.height = C.LH;
+    if (cv.width !== C.LW || cv.height !== C.LH) {
+      cv.width = C.LW;
+      cv.height = C.LH;
+    }
 
     for (const c of s.clouds) { c.x -= c.speed * dt; if (c.x + c.w < 0) { c.x = C.LW + c.w; c.y = 30 + Math.random() * C.LH * 0.35; } }
     if (s.phase === "ready") s.playerY = s.groundY - C.PH + Math.sin(Date.now() / 300) * 6;
