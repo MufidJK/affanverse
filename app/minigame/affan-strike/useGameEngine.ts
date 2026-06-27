@@ -39,6 +39,7 @@ export function useGameEngine(): EngineAPI {
   const skillCdRef = useRef<HTMLDivElement>(null); const ultiCdRef = useRef<HTMLDivElement>(null);
   const skillBtnRef = useRef<any>(null); const ultiBtnRef = useRef<any>(null);
   const rafRef = useRef(0);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const cloudCache = useRef<Map<string, HTMLCanvasElement>>(new Map());
   const g = useRef<GameState>(createState());
   const imgs = useRef<Record<string, HTMLImageElement>>({}); const imgsOk = useRef<Record<string, boolean>>({});
@@ -255,7 +256,10 @@ export function useGameEngine(): EngineAPI {
 
   const loop = useCallback((ts: number) => {
     const cv = canvasRef.current, ct = containerRef.current; if (!cv || !ct) return;
-    const ctx = cv.getContext("2d"); if (!ctx) return;
+    if (!ctxRef.current) {
+      ctxRef.current = cv.getContext("2d", { alpha: false }) ?? null;
+    }
+    const ctx = ctxRef.current; if (!ctx) return;
     const s = g.current; if (s.lastTime === 0) s.lastTime = ts;
     const dt = Math.min((ts - s.lastTime) / 1000, 0.05); s.lastTime = ts;
     const rect = ct.getBoundingClientRect(); if (rect.width > 0 && rect.height > 0) C.setLW(Math.round(C.LH * (rect.width / rect.height)));
@@ -279,11 +283,24 @@ export function useGameEngine(): EngineAPI {
     if (s.phase === "runner") {
       const res = updateRunner(s, dt);
       if (res === "hit_cactus") doDeath(); else if (res === "hit_air") { play("death"); setDisplayScore(s.score); }
-      else if (res === "boss") { 
-        s.phase = "boss_intro"; s.bossIntroT = 0; 
+      else if (res === "boss") {
         s.fireballs = [];
-        setUiPhase("boss_intro");
         play("dioBgm", true);
+        const startIntro = () => {
+          s.phase = "boss_intro";
+          s.bossIntroT = 0;
+          setUiPhase("boss_intro");
+        };
+        if (imgsOk.current["dioIntro"]) {
+          startIntro();
+        } else {
+          const checkLoaded = setInterval(() => {
+            if (imgsOk.current["dioIntro"]) {
+              clearInterval(checkLoaded);
+              startIntro();
+            }
+          }, 50);
+        }
       }
     }
     

@@ -219,12 +219,12 @@ export default function AffanStrikeEngine() {
             <div className="pointer-events-auto flex gap-2">
               {(e.uiPhase === "runner" || e.uiPhase === "ready") ? (
                 <div className="flex gap-2">
-                  <button onTouchStart={ev => { ev.preventDefault(); e.doJump(); }} className="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-2xl font-bold active:bg-white/30 will-change-transform transform-gpu select-none backdrop-blur-sm">▲</button>
+                  <button onTouchStart={ev => { ev.preventDefault(); e.doJump(); }} className="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-2xl font-bold active:bg-white/30 will-change-transform transform-gpu select-none">▲</button>
                 </div>
               ) : (
                 <div className="flex gap-2 items-end">
-                  <button onTouchStart={ev => { ev.preventDefault(); e.doMove("left"); }} onTouchEnd={ev => { ev.preventDefault(); e.doMove("none"); }} className="w-16 h-16 rounded-2xl bg-cyan-500/30 border border-cyan-400/40 flex items-center justify-center text-cyan-300 font-black active:bg-cyan-500/50 will-change-transform transform-gpu select-none backdrop-blur-sm">◄</button>
-                  <button onTouchStart={ev => { ev.preventDefault(); e.doMove("right"); }} onTouchEnd={ev => { ev.preventDefault(); e.doMove("none"); }} className="w-16 h-16 rounded-2xl bg-cyan-500/30 border border-cyan-400/40 flex items-center justify-center text-cyan-300 font-black active:bg-cyan-500/50 will-change-transform transform-gpu select-none backdrop-blur-sm">►</button>
+                  <button onTouchStart={ev => { ev.preventDefault(); e.doMove("left"); }} onTouchEnd={ev => { ev.preventDefault(); e.doMove("none"); }} className="w-16 h-16 rounded-2xl bg-cyan-500/30 border border-cyan-400/40 flex items-center justify-center text-cyan-300 font-black active:bg-cyan-500/50 will-change-transform transform-gpu select-none">◄</button>
+                  <button onTouchStart={ev => { ev.preventDefault(); e.doMove("right"); }} onTouchEnd={ev => { ev.preventDefault(); e.doMove("none"); }} className="w-16 h-16 rounded-2xl bg-cyan-500/30 border border-cyan-400/40 flex items-center justify-center text-cyan-300 font-black active:bg-cyan-500/50 will-change-transform transform-gpu select-none">►</button>
                 </div>
               )}
             </div>
@@ -236,14 +236,14 @@ export default function AffanStrikeEngine() {
                   <button
                     onTouchStart={ev => { ev.preventDefault(); e.doCrouch(true); }}
                     onTouchEnd={ev => { ev.preventDefault(); e.doCrouch(false); }}
-                    className="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-2xl font-bold active:bg-white/30 will-change-transform transform-gpu select-none backdrop-blur-sm"
+                    className="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-2xl font-bold active:bg-white/30 will-change-transform transform-gpu select-none"
                   >▼</button>
-                  <button ref={e.skillBtnRef} onTouchStart={ev => { ev.preventDefault(); e.doAttack(); }} className="w-16 h-16 rounded-full border-2 border-yellow-300/80 bg-zinc-900/90 shadow-[0_0_15px_rgba(234,179,8,0.4)] flex items-center justify-center relative backdrop-blur-md active:scale-90 transition-transform">
+                  <button ref={e.skillBtnRef} onTouchStart={ev => { ev.preventDefault(); e.doAttack(); }} className="w-16 h-16 rounded-full border-2 border-yellow-300/80 bg-zinc-900/90 shadow-[0_0_15px_rgba(234,179,8,0.4)] flex items-center justify-center relative active:scale-90 transition-transform">
                     <span className="text-yellow-100 font-bold text-2xl drop-shadow-md pointer-events-none">E</span>
                     <div className="absolute inset-0 rounded-full border border-yellow-100/30 pointer-events-none"></div>
                     <div ref={e.skillCdRef} className="absolute inset-0 flex items-center justify-center text-white font-mono text-xl font-black drop-shadow-[0_2px_2px_rgba(0,0,0,1)] bg-black/60 rounded-full empty:hidden pointer-events-none"></div>
                   </button>
-                  <button ref={e.ultiBtnRef} onTouchStart={ev => { ev.preventDefault(); e.doUlti(); }} className="w-20 h-20 rounded-full border-2 border-orange-400/80 bg-zinc-900/90 shadow-[0_0_20px_rgba(249,115,22,0.5)] flex items-center justify-center relative backdrop-blur-md active:scale-90 transition-transform">
+                  <button ref={e.ultiBtnRef} onTouchStart={ev => { ev.preventDefault(); e.doUlti(); }} className="w-20 h-20 rounded-full border-2 border-orange-400/80 bg-zinc-900/90 shadow-[0_0_20px_rgba(249,115,22,0.5)] flex items-center justify-center relative active:scale-90 transition-transform">
                     <span className="text-orange-100 font-black text-3xl drop-shadow-md pointer-events-none">Q</span>
                     <div className="absolute inset-0 rounded-full border border-orange-100/30 pointer-events-none"></div>
                     <div ref={e.ultiCdRef} className="absolute inset-0 flex items-center justify-center text-white font-mono text-2xl font-black drop-shadow-[0_2px_2px_rgba(0,0,0,1)] bg-black/70 rounded-full empty:hidden pointer-events-none"></div>
@@ -253,12 +253,12 @@ export default function AffanStrikeEngine() {
                 <>
                   {/* Boss Phase: Skill & Burst Cluster (Shifted Left) */}
                   <div className="absolute bottom-6 right-28 flex gap-4 items-end z-20">
-                    <button ref={e.skillBtnRef} onTouchStart={ev => { ev.preventDefault(); e.doAttack(); }} className="w-14 h-14 rounded-full border-2 border-yellow-300/80 bg-zinc-900/90 shadow-[0_0_15px_rgba(234,179,8,0.4)] flex items-center justify-center relative backdrop-blur-md active:scale-90 transition-transform">
+                    <button ref={e.skillBtnRef} onTouchStart={ev => { ev.preventDefault(); e.doAttack(); }} className="w-14 h-14 rounded-full border-2 border-yellow-300/80 bg-zinc-900/90 shadow-[0_0_15px_rgba(234,179,8,0.4)] flex items-center justify-center relative active:scale-90 transition-transform">
                       <span className="text-yellow-100 font-bold text-xl drop-shadow-md pointer-events-none">E</span>
                       <div className="absolute inset-0 rounded-full border border-yellow-100/30 pointer-events-none"></div>
                       <div ref={e.skillCdRef} className="absolute inset-0 flex items-center justify-center text-white font-mono text-lg font-black drop-shadow-[0_2px_2px_rgba(0,0,0,1)] bg-black/60 rounded-full empty:hidden pointer-events-none"></div>
                     </button>
-                    <button ref={e.ultiBtnRef} onTouchStart={ev => { ev.preventDefault(); e.doUlti(); }} className="w-16 h-16 rounded-full border-2 border-orange-400/80 bg-zinc-900/90 shadow-[0_0_20px_rgba(249,115,22,0.5)] flex items-center justify-center relative backdrop-blur-md active:scale-90 transition-transform">
+                    <button ref={e.ultiBtnRef} onTouchStart={ev => { ev.preventDefault(); e.doUlti(); }} className="w-16 h-16 rounded-full border-2 border-orange-400/80 bg-zinc-900/90 shadow-[0_0_20px_rgba(249,115,22,0.5)] flex items-center justify-center relative active:scale-90 transition-transform">
                       <span className="text-orange-100 font-black text-2xl drop-shadow-md pointer-events-none">Q</span>
                       <div className="absolute inset-0 rounded-full border border-orange-100/30 pointer-events-none"></div>
                       <div ref={e.ultiCdRef} className="absolute inset-0 flex items-center justify-center text-white font-mono text-xl font-black drop-shadow-[0_2px_2px_rgba(0,0,0,1)] bg-black/70 rounded-full empty:hidden pointer-events-none"></div>
@@ -267,8 +267,8 @@ export default function AffanStrikeEngine() {
                   
                   {/* Boss Phase: Jump & Crouch (Pinned Far Right) */}
                   <div className="absolute bottom-6 right-4 flex flex-col gap-2 z-10">
-                    <button onTouchStart={ev => { ev.preventDefault(); e.doJump(); }} className="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-2xl font-bold active:bg-white/30 will-change-transform transform-gpu select-none backdrop-blur-sm">▲</button>
-                    <button onTouchStart={ev => { ev.preventDefault(); e.doCrouch(true); }} onTouchEnd={ev => { ev.preventDefault(); e.doCrouch(false); }} className="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-2xl font-bold active:bg-white/30 will-change-transform transform-gpu select-none backdrop-blur-sm">▼</button>
+                    <button onTouchStart={ev => { ev.preventDefault(); e.doJump(); }} className="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-2xl font-bold active:bg-white/30 will-change-transform transform-gpu select-none">▲</button>
+                    <button onTouchStart={ev => { ev.preventDefault(); e.doCrouch(true); }} onTouchEnd={ev => { ev.preventDefault(); e.doCrouch(false); }} className="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-2xl font-bold active:bg-white/30 will-change-transform transform-gpu select-none">▼</button>
                   </div>
                 </>
               )}
