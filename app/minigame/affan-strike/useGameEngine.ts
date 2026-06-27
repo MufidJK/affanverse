@@ -139,12 +139,13 @@ export function useGameEngine(): EngineAPI {
     for (const c of s.clouds) {
       const key = `${Math.round(c.w)}_${Math.round(c.h)}_${c.opacity.toFixed(2)}`;
       if (!cloudCache.current.has(key)) {
+        const offW = Math.ceil(c.w + c.h) + 20;
+        const offH = Math.ceil(c.h * 1.8) + 20;
         const off = document.createElement("canvas");
-        off.width = Math.ceil(c.w) + 20;
-        off.height = Math.ceil(c.h * 1.5) + 20;
+        off.width = offW; off.height = offH;
         const offCtx = off.getContext("2d");
         if (offCtx) {
-          offCtx.translate(off.width / 2, off.height * 0.7);
+          offCtx.translate(offW / 2, offH * 0.7);
           drawCloud(offCtx, { ...c, x: 0, y: 0 });
         }
         cloudCache.current.set(key, off);
@@ -283,24 +284,11 @@ export function useGameEngine(): EngineAPI {
     if (s.phase === "runner") {
       const res = updateRunner(s, dt);
       if (res === "hit_cactus") doDeath(); else if (res === "hit_air") { play("death"); setDisplayScore(s.score); }
-      else if (res === "boss") {
+      else if (res === "boss") { 
+        s.phase = "boss_intro"; s.bossIntroT = 0; 
         s.fireballs = [];
+        setUiPhase("boss_intro");
         play("dioBgm", true);
-        const startIntro = () => {
-          s.phase = "boss_intro";
-          s.bossIntroT = 0;
-          setUiPhase("boss_intro");
-        };
-        if (imgsOk.current["dioIntro"]) {
-          startIntro();
-        } else {
-          const checkLoaded = setInterval(() => {
-            if (imgsOk.current["dioIntro"]) {
-              clearInterval(checkLoaded);
-              startIntro();
-            }
-          }, 50);
-        }
       }
     }
     
