@@ -14,6 +14,18 @@ export default function AffanStrikeEngine() {
   }
   const e = useGameEngine();
 
+  React.useEffect(() => {
+    const BOSS_ASSET_URLS: string[] = [
+      "/minigame/affan-strike/eoh_DIO.png",
+      "/minigame/affan-strike/dioAttackFrame.png",
+      "/minigame/affan-strike/roadRollerDio.png",
+    ];
+    BOSS_ASSET_URLS.forEach(src => {
+      const img = new window.Image();
+      img.src = src;
+    });
+  }, []);
+
   return (
     <div className="fixed inset-0 z-[100] w-[100dvw] h-[100dvh] max-w-none overflow-hidden flex flex-col bg-[#0a0a0f] selection:bg-cyan-400/30">
       {/* PORTRAIT MODE BLOCKER */}
@@ -197,7 +209,6 @@ export default function AffanStrikeEngine() {
               {(e.uiPhase === "runner" || e.uiPhase === "ready") ? (
                 <div className="flex gap-2">
                   <button onTouchStart={ev => { ev.preventDefault(); e.doJump(); }} className="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-2xl font-bold active:bg-white/30 will-change-transform transform-gpu select-none backdrop-blur-sm">▲</button>
-                  <button onTouchStart={ev => { ev.preventDefault(); e.doCrouch(true); }} onTouchEnd={ev => { ev.preventDefault(); e.doCrouch(false); }} className="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-2xl font-bold active:bg-white/30 will-change-transform transform-gpu select-none backdrop-blur-sm">▼</button>
                 </div>
               ) : (
                 <div className="flex gap-2 items-end">
@@ -210,7 +221,12 @@ export default function AffanStrikeEngine() {
             {/* RIGHT SIDE (Actions Cluster) */}
             <div className="pointer-events-auto">
               {(e.uiPhase === "runner" || e.uiPhase === "ready") ? (
-                <div className="flex gap-4 items-end">
+                <div className="flex gap-3 items-end">
+                  <button
+                    onTouchStart={ev => { ev.preventDefault(); e.doCrouch(true); }}
+                    onTouchEnd={ev => { ev.preventDefault(); e.doCrouch(false); }}
+                    className="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-2xl font-bold active:bg-white/30 will-change-transform transform-gpu select-none backdrop-blur-sm"
+                  >▼</button>
                   <button ref={e.skillBtnRef} onTouchStart={ev => { ev.preventDefault(); e.doAttack(); }} className="w-16 h-16 rounded-full border-2 border-yellow-300/80 bg-zinc-900/90 shadow-[0_0_15px_rgba(234,179,8,0.4)] flex items-center justify-center relative backdrop-blur-md active:scale-90 transition-transform">
                     <span className="text-yellow-100 font-bold text-2xl drop-shadow-md pointer-events-none">E</span>
                     <div className="absolute inset-0 rounded-full border border-yellow-100/30 pointer-events-none"></div>
