@@ -1093,13 +1093,13 @@ export default function AffanCardEngine() {
                 transition={enemyLunging ? { duration: 0.5, ease: "easeInOut" } : { duration: 0.3 }}
                 className="relative"
               >
-                <div className={`relative h-[40vh] w-auto flex justify-center items-center rounded-xl overflow-hidden border-2 bg-[#0a0a0f] transition-colors duration-200 ${
+                <div className={`relative w-28 h-40 md:w-56 md:h-80 aspect-[2/3] flex justify-center items-center rounded-xl overflow-hidden border-2 bg-[#0a0a0f] transition-colors duration-200 ${
                   enemyLunging ? "border-red-500" : "border-red-500/40"
                 }`}>
                   <img
                     src={state.enemyImage}
                     alt={state.enemyName}
-                    className="h-full w-auto object-contain"
+                    className="h-full w-full object-cover"
                   />
                   {/* Red flash overlay during lunge */}
                   <AnimatePresence>
@@ -1208,7 +1208,7 @@ export default function AffanCardEngine() {
                     : {}
                 }
                 transition={{ duration: 0.3 }}
-                className="relative h-[40vh] w-[30vh] rounded-xl overflow-hidden border-2 border-[#2398f7]/40 bg-[#0a0a0f] flex flex-col items-center justify-center"
+                className="relative w-28 h-40 md:w-56 md:h-80 aspect-[2/3] rounded-xl overflow-hidden border-2 border-[#2398f7]/40 bg-[#0a0a0f] flex flex-col items-center justify-center"
               >
                 {/* Red flash overlay when player gets hit */}
                 <AnimatePresence>
@@ -1233,7 +1233,7 @@ export default function AffanCardEngine() {
           </div>
 
           {/* ── BOTTOM: HAND + END TURN ── */}
-          <div className="pb-0 md:pb-4 px-4 shrink-0">
+          <div className="mt-4 md:mt-8 pb-0 md:pb-4 px-4 shrink-0">
             {/* Phase status */}
             <div className="flex items-center justify-center mb-0 md:mb-3">
               {state.phase === "DRAW" && (
@@ -1248,7 +1248,7 @@ export default function AffanCardEngine() {
             </div>
 
             {/* Card Hand — SOP Rule 9: Only render cards in hand, nothing hidden */}
-            <div className="h-[30vh] w-full flex justify-center items-center gap-2">
+            <div className="w-full flex justify-center items-center gap-2">
               <AnimatePresence mode="popLayout">
                 {state.hand.map((card) => {
                   const canPlay = state.phase === "PLAYER_TURN" && card.cost <= state.playerAp && !activePlayCard;
@@ -1262,7 +1262,7 @@ export default function AffanCardEngine() {
                       whileHover={canPlay ? { y: -15, scale: 1.05 } : {}}
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
                       onClick={() => canPlay && handlePlayCard(card.id)}
-                      className={`relative h-full w-auto object-contain rounded-lg overflow-hidden border-2 cursor-pointer will-change-transform transform-gpu flex-shrink-0 ${
+                      className={`relative w-20 h-28 md:w-36 md:h-52 aspect-[2/3] rounded-lg overflow-hidden border-2 cursor-pointer will-change-transform transform-gpu flex-shrink-0 ${
                         canPlay
                           ? card.type === "ATTACK"
                             ? "border-red-500/50 hover:border-red-400"
@@ -1276,7 +1276,7 @@ export default function AffanCardEngine() {
                       <img
                         src={card.image}
                         alt={card.name}
-                        className="h-full w-auto object-contain"
+                        className="h-full w-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
