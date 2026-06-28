@@ -1152,9 +1152,9 @@ export default function AmbasukeEngine() {
         {uiPhase === "gameover" && (
           <div
             data-ui-overlay
-            className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 z-20"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 z-20 max-h-[90dvh] overflow-y-auto custom-scrollbar py-4"
           >
-            <h2 className="text-2xl md:text-4xl font-black text-white mb-2 tracking-tight font-mono">
+            <h2 className="text-2xl md:text-5xl font-black text-white mb-2 tracking-tight font-mono">
               <span className="text-red-500">PROTOCOL</span> TERMINATED
             </h2>
 
@@ -1162,7 +1162,7 @@ export default function AmbasukeEngine() {
               <p className="text-white/60 text-[10px] md:text-xs uppercase tracking-widest mb-1 text-center font-mono">
                 Entities Eliminated
               </p>
-              <p className="text-3xl md:text-4xl font-black text-[#2398f7] text-center tabular-nums font-mono">
+              <p className="text-4xl md:text-7xl font-black text-[#2398f7] text-center tabular-nums font-mono">
                 {displayScore}
               </p>
             </div>

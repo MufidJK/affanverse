@@ -1430,18 +1430,18 @@ export default function EndlessRunnerEngine() {
           data-ui-overlay
           className="fixed inset-0 z-[100000] bg-black/85 flex items-center justify-center px-4"
         >
-          <div className="bg-[#0a0a0f] border border-red-500/30 rounded-2xl p-4 md:p-8 max-w-md w-full text-center space-y-4 md:space-y-6">
+          <div className="bg-[#0a0a0f] border border-red-500/30 rounded-2xl p-4 md:p-8 max-w-md w-full text-center space-y-3 md:space-y-6 max-h-[90dvh] overflow-y-auto custom-scrollbar">
             <div>
-              <h2 className="text-3xl md:text-4xl font-black text-red-500 tracking-tight">
+              <h2 className="text-2xl md:text-5xl font-black text-red-500 tracking-tight">
                 SYSTEM CRASH
               </h2>
-              <p className="text-white/40 text-xs md:text-sm mt-2 font-mono">
+              <p className="text-white/40 text-[10px] md:text-sm mt-1 md:mt-2 font-mono">
                 // MEMORY LEAK DETECTED — PROCESS TERMINATED
               </p>
             </div>
 
-            <div className="space-y-2">
-              <div className="text-3xl md:text-5xl font-black text-white">
+            <div className="space-y-1 md:space-y-2">
+              <div className="text-4xl md:text-7xl font-black text-white">
                 {displayScore.toLocaleString()}
               </div>
               <div className="text-xs md:text-sm text-[#2398f7]/60 font-mono">
