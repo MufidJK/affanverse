@@ -793,7 +793,7 @@ export default function AffanCardEngine() {
      ═══════════════════════════════════════════ */
 
   return (
-    <div className="fixed inset-0 z-[100] w-[100dvw] h-[100dvh] max-w-none overflow-hidden flex flex-col bg-[#0a0a0f] selection:bg-[#2398f7]/30 font-mono">
+    <div className="fixed inset-0 z-50 w-screen h-[100dvh] overflow-hidden flex flex-col bg-[#0a0a0f] selection:bg-[#2398f7]/30 font-mono">
       {/* ══ PORTRAIT MODE BLOCKER ══ */}
       {isPortrait && (
         <div className="fixed inset-0 z-[99999] bg-black text-[#2398f7] flex flex-col items-center justify-center px-8">
@@ -1080,7 +1080,7 @@ export default function AffanCardEngine() {
 
           {/* ── CENTER ARENA ── */}
           <div className="flex-1 min-h-0 flex items-center justify-center px-4">
-            <div className="flex items-center gap-2 md:gap-10 relative">
+            <div className="flex items-center gap-4 md:gap-16 relative">
               {/* Enemy Card — with lunge animation during ENEMY_TURN */}
               <motion.div
                 animate={
@@ -1093,7 +1093,7 @@ export default function AffanCardEngine() {
                 transition={enemyLunging ? { duration: 0.5, ease: "easeInOut" } : { duration: 0.3 }}
                 className="relative"
               >
-                <div className={`relative w-20 h-28 md:w-44 md:h-60 rounded-xl overflow-hidden border-2 bg-[#0a0a0f] transition-colors duration-200 ${
+                <div className={`relative w-24 h-36 md:w-64 md:h-[22rem] rounded-xl overflow-hidden border-2 bg-[#0a0a0f] transition-colors duration-200 ${
                   enemyLunging ? "border-red-500" : "border-red-500/40"
                 }`}>
                   <Image
@@ -1210,7 +1210,7 @@ export default function AffanCardEngine() {
                     : {}
                 }
                 transition={{ duration: 0.3 }}
-                className="relative w-20 h-28 md:w-44 md:h-60 rounded-xl overflow-hidden border-2 border-[#2398f7]/40 bg-[#0a0a0f] flex flex-col items-center justify-center"
+                className="relative w-24 h-36 md:w-56 md:h-80 rounded-xl overflow-hidden border-2 border-[#2398f7]/40 bg-[#0a0a0f] flex flex-col items-center justify-center"
               >
                 {/* Red flash overlay when player gets hit */}
                 <AnimatePresence>
@@ -1239,13 +1239,13 @@ export default function AffanCardEngine() {
             {/* Phase status */}
             <div className="flex items-center justify-center mb-0 md:mb-3">
               {state.phase === "DRAW" && (
-                <p className="text-[#2398f7]/60 text-xs animate-pulse">{">"} DRAWING CARDS...</p>
+                <p className="text-[#2398f7]/60 text-[8px] md:text-xs animate-pulse">{">"} DRAWING CARDS...</p>
               )}
               {state.phase === "PLAYER_TURN" && (
-                <p className="text-[#2398f7] text-xs">{">"} YOUR TURN — Select cards or END TURN</p>
+                <p className="text-[#2398f7] text-[8px] md:text-xs">{">"} YOUR TURN — Select cards or END TURN</p>
               )}
               {state.phase === "ENEMY_TURN" && (
-                <p className="text-red-400 text-xs animate-pulse">{">"} ENEMY EXECUTING INTENT...</p>
+                <p className="text-red-400 text-[8px] md:text-xs animate-pulse">{">"} ENEMY EXECUTING INTENT...</p>
               )}
             </div>
 
@@ -1264,7 +1264,7 @@ export default function AffanCardEngine() {
                       whileHover={canPlay ? { y: -15, scale: 1.05 } : {}}
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
                       onClick={() => canPlay && handlePlayCard(card.id)}
-                      className={`relative w-20 md:w-28 rounded-lg overflow-hidden border-2 cursor-pointer will-change-transform transform-gpu flex-shrink-0 ${
+                      className={`relative w-16 h-24 md:w-32 md:h-48 rounded-lg overflow-hidden border-2 cursor-pointer will-change-transform transform-gpu flex-shrink-0 ${
                         canPlay
                           ? card.type === "ATTACK"
                             ? "border-red-500/50 hover:border-red-400"
@@ -1325,7 +1325,7 @@ export default function AffanCardEngine() {
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   onClick={handleEndTurn}
-                  className="px-6 py-1 md:py-2 bg-red-500/20 hover:bg-red-500/40 border border-red-500/30 text-red-400 hover:text-red-300 rounded-lg text-[10px] md:text-xs font-bold tracking-wider transition-colors will-change-transform transform-gpu"
+                  className="px-3 py-1 md:px-6 md:py-2 bg-red-500/20 hover:bg-red-500/40 border border-red-500/30 text-red-400 hover:text-red-300 rounded-lg text-[8px] md:text-xs font-bold tracking-wider transition-colors will-change-transform transform-gpu"
                 >
                   END TURN
                 </motion.button>
