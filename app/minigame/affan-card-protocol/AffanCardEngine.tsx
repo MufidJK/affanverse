@@ -1235,7 +1235,7 @@ export default function AffanCardEngine() {
           {/* ── BOTTOM: HAND + END TURN ── */}
           <div className="mt-4 lg:mt-8 pb-0 lg:pb-4 px-4 shrink-0">
             {/* Phase status */}
-            <div className="flex items-center justify-center mb-0 lg:mb-3">
+            <div className="flex items-center justify-center mb-2 lg:mb-3">
               {state.phase === "DRAW" && (
                 <p className="text-[#2398f7]/60 text-[8px] lg:text-xs animate-pulse">{">"} DRAWING CARDS...</p>
               )}
