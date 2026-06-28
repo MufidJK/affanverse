@@ -1154,21 +1154,21 @@ export default function AmbasukeEngine() {
             data-ui-overlay
             className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 z-20"
           >
-            <h2 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight font-mono">
+            <h2 className="text-2xl md:text-4xl font-black text-white mb-2 tracking-tight font-mono">
               <span className="text-red-500">PROTOCOL</span> TERMINATED
             </h2>
 
-            <div className="bg-white/10 rounded-xl px-8 py-4 mb-3 border border-white/10 min-w-[200px]">
-              <p className="text-white/60 text-xs uppercase tracking-widest mb-1 text-center font-mono">
+            <div className="bg-white/10 rounded-xl px-6 py-2 md:px-8 md:py-4 mb-2 md:mb-3 border border-white/10 min-w-[200px]">
+              <p className="text-white/60 text-[10px] md:text-xs uppercase tracking-widest mb-1 text-center font-mono">
                 Entities Eliminated
               </p>
-              <p className="text-4xl font-black text-[#2398f7] text-center tabular-nums font-mono">
+              <p className="text-3xl md:text-4xl font-black text-[#2398f7] text-center tabular-nums font-mono">
                 {displayScore}
               </p>
             </div>
 
-            <div className="bg-white/5 rounded-lg px-6 py-2 mb-4 border border-white/5">
-              <p className="text-white/40 text-xs uppercase text-center font-mono">
+            <div className="bg-white/5 rounded-lg px-4 py-1.5 md:px-6 md:py-2 mb-2 md:mb-4 border border-white/5">
+              <p className="text-white/40 text-[10px] md:text-xs uppercase text-center font-mono">
                 Best:{" "}
                 <span className="text-amber-400 font-bold tabular-nums">
                   {highScore}
@@ -1177,23 +1177,24 @@ export default function AmbasukeEngine() {
             </div>
 
             {scoreSaved ? (
-              <div className="flex items-center gap-2 text-emerald-400/70 text-xs font-medium mb-4 font-mono">
+              <div className="flex items-center gap-1.5 text-emerald-400/70 text-[10px] md:text-xs font-medium mb-2 md:mb-4 font-mono">
                 <svg
-                  width="14"
-                  height="14"
+                  width="12"
+                  height="12"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
+                  className="md:w-[14px] md:h-[14px]"
                 >
                   <path d="M20 6L9 17l-5-5" />
                 </svg>
                 New Record! Saved for {playerName}
               </div>
             ) : (
-              <p className="text-white/30 text-xs mb-4 font-mono">
+              <p className="text-white/30 text-[10px] md:text-xs mb-2 md:mb-4 font-mono">
                 {displayScore === 0
                   ? "> Score too low to upload"
                   : "> Not a new record"}
@@ -1202,32 +1203,32 @@ export default function AmbasukeEngine() {
 
             <button
               onClick={handleRestart}
-              className="px-10 py-3 bg-[#2398f7] hover:bg-[#1e82d4] text-white font-bold text-sm rounded-lg transition-colors will-change-transform transform-gpu active:scale-95 mb-4 font-mono"
+              className="px-6 py-2 md:px-10 md:py-3 bg-[#2398f7] hover:bg-[#1e82d4] text-white font-bold text-xs md:text-sm rounded-lg transition-colors will-change-transform transform-gpu active:scale-95 mb-2 md:mb-4 font-mono"
             >
               REINITIALIZE PROTOCOL
             </button>
 
             {/* Leaderboard */}
-            <div className="bg-black/40 border border-white/10 rounded-xl p-3 w-56">
-              <h3 className="text-white/80 text-[10px] font-bold uppercase tracking-widest mb-2 flex items-center justify-between font-mono">
+            <div className="bg-black/40 border border-white/10 rounded-xl p-2 md:p-3 w-48 md:w-56">
+              <h3 className="text-white/80 text-[10px] font-bold uppercase tracking-widest mb-1.5 md:mb-2 flex items-center justify-between font-mono">
                 <span>Top Operatives</span>
                 <svg
-                  className="w-3 h-3 text-[#2398f7]"
+                  className="w-2.5 h-2.5 md:w-3 md:h-3 text-[#2398f7]"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
                   <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
                 </svg>
               </h3>
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 max-h-24 md:max-h-32 overflow-y-auto pr-1">
                 {leaderboard.length > 0 ? (
                   leaderboard.map((en, i) => (
                     <div
                       key={i}
-                      className="flex justify-between items-center text-xs font-mono"
+                      className="flex justify-between items-center text-[10px] md:text-xs font-mono"
                     >
-                      <span className="text-white/60 truncate mr-2">
-                        <span className="text-white/30 mr-1.5">
+                      <span className="text-white/60 truncate mr-1 md:mr-2">
+                        <span className="text-white/30 mr-1 md:mr-1.5">
                           {i + 1}.
                         </span>
                         {en.player_name}
@@ -1238,7 +1239,7 @@ export default function AmbasukeEngine() {
                     </div>
                   ))
                 ) : (
-                  <div className="text-white/30 text-xs text-center py-1 font-mono">
+                  <div className="text-white/30 text-[10px] md:text-xs text-center py-1 font-mono">
                     Loading...
                   </div>
                 )}

@@ -1430,40 +1430,40 @@ export default function EndlessRunnerEngine() {
           data-ui-overlay
           className="fixed inset-0 z-[100000] bg-black/85 flex items-center justify-center px-4"
         >
-          <div className="bg-[#0a0a0f] border border-red-500/30 rounded-2xl p-8 max-w-md w-full text-center space-y-6">
+          <div className="bg-[#0a0a0f] border border-red-500/30 rounded-2xl p-4 md:p-8 max-w-md w-full text-center space-y-4 md:space-y-6">
             <div>
-              <h2 className="text-4xl font-black text-red-500 tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-black text-red-500 tracking-tight">
                 SYSTEM CRASH
               </h2>
-              <p className="text-white/40 text-sm mt-2 font-mono">
+              <p className="text-white/40 text-xs md:text-sm mt-2 font-mono">
                 // MEMORY LEAK DETECTED — PROCESS TERMINATED
               </p>
             </div>
 
             <div className="space-y-2">
-              <div className="text-5xl font-black text-white">
+              <div className="text-3xl md:text-5xl font-black text-white">
                 {displayScore.toLocaleString()}
               </div>
-              <div className="text-sm text-[#2398f7]/60 font-mono">
+              <div className="text-xs md:text-sm text-[#2398f7]/60 font-mono">
                 {Math.floor(g.current.distance)}m traveled · {g.current.fragments} data fragments
               </div>
               {scoreSaved && (
-                <div className="text-xs text-green-400/80 font-mono mt-1">
+                <div className="text-[10px] md:text-xs text-green-400/80 font-mono mt-1">
                   ★ NEW HIGH SCORE — SAVED TO LEADERBOARD
                 </div>
               )}
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2 md:space-y-3">
               <button
                 onClick={handleRestart}
-                className="w-full bg-[#2398f7] hover:bg-[#1e82d4] text-white font-bold py-3 rounded-lg transition-colors text-lg will-change-transform transform-gpu active:scale-95"
+                className="w-full bg-[#2398f7] hover:bg-[#1e82d4] text-white font-bold py-2 md:py-3 rounded-lg transition-colors text-base md:text-lg will-change-transform transform-gpu active:scale-95"
               >
                 RE-INITIALIZE
               </button>
               <Link
                 href="/minigame"
-                className="block w-full bg-white/5 hover:bg-white/10 text-white/60 font-medium py-3 rounded-lg transition-colors text-sm"
+                className="block w-full bg-white/5 hover:bg-white/10 text-white/60 font-medium py-2 md:py-3 rounded-lg transition-colors text-xs md:text-sm"
               >
                 EXIT TO VOID
               </Link>
@@ -1472,14 +1472,14 @@ export default function EndlessRunnerEngine() {
             {/* Leaderboard */}
             {leaderboard.length > 0 && (
               <div className="border-t border-[#2398f7]/10 pt-4">
-                <h3 className="text-xs font-bold text-[#2398f7]/50 uppercase tracking-wider mb-3">
+                <h3 className="text-xs font-bold text-[#2398f7]/50 uppercase tracking-wider mb-2 md:mb-3">
                   Top Runners
                 </h3>
-                <div className="space-y-1">
+                <div className="space-y-1 max-h-32 overflow-y-auto pr-2">
                   {leaderboard.map((entry, i) => (
                     <div
                       key={`${entry.player_name}-${i}`}
-                      className="flex justify-between text-sm font-mono"
+                      className="flex justify-between text-xs md:text-sm font-mono"
                     >
                       <span className="text-white/50 truncate max-w-[60%]">
                         {i + 1}. {entry.player_name}
