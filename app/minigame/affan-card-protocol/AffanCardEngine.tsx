@@ -1027,15 +1027,15 @@ export default function AffanCardEngine() {
       {state.phase !== "REGISTER" && state.phase !== "GAME_OVER" && (
         <div className="fixed inset-0 z-[10] flex flex-col">
           {/* ── FLOOR BADGE (absolute, centered top) ── */}
-          <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-50">
-            <div className="bg-zinc-950/90 border border-[#2398f7]/50 px-8 py-2 rounded-full shadow-[0_0_15px_rgba(35,152,247,0.2)]">
-              <p className="text-xl font-bold tracking-widest text-[#2398f7] uppercase">
+          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 z-50 lg:top-6">
+            <div className="bg-zinc-950/90 border border-[#2398f7]/50 px-4 py-1 lg:px-8 lg:py-2 rounded-full shadow-[0_0_15px_rgba(35,152,247,0.2)]">
+              <p className="text-sm lg:text-xl font-bold tracking-widest text-[#2398f7] uppercase">
                 FLOOR {state.floor}
               </p>
             </div>
           </div>
           {/* ── TOP BAR ── */}
-          <div className="flex items-center justify-between px-4 pt-14 pb-2">
+          <div className="flex items-center justify-between px-4 pt-8 pb-1 lg:pt-14 lg:pb-2">
             {/* Player Stats - Left */}
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
@@ -1093,7 +1093,7 @@ export default function AffanCardEngine() {
                 transition={enemyLunging ? { duration: 0.5, ease: "easeInOut" } : { duration: 0.3 }}
                 className="relative"
               >
-                <div className={`relative w-28 h-40 lg:w-56 lg:h-80 aspect-[2/3] flex justify-center items-center rounded-xl overflow-hidden border-2 bg-[#0a0a0f] transition-colors duration-200 ${
+                <div className={`relative w-24 h-32 lg:w-56 lg:h-80 aspect-[2/3] flex justify-center items-center rounded-xl overflow-hidden border-2 bg-[#0a0a0f] transition-colors duration-200 ${
                   enemyLunging ? "border-red-500" : "border-red-500/40"
                 }`}>
                   <img
@@ -1208,7 +1208,7 @@ export default function AffanCardEngine() {
                     : {}
                 }
                 transition={{ duration: 0.3 }}
-                className="relative w-28 h-40 lg:w-56 lg:h-80 aspect-[2/3] rounded-xl overflow-hidden border-2 border-[#2398f7]/40 bg-[#0a0a0f] flex flex-col items-center justify-center"
+                className="relative w-24 h-32 lg:w-56 lg:h-80 aspect-[2/3] rounded-xl overflow-hidden border-2 border-[#2398f7]/40 bg-[#0a0a0f] flex flex-col items-center justify-center"
               >
                 {/* Red flash overlay when player gets hit */}
                 <AnimatePresence>
