@@ -1079,8 +1079,8 @@ export default function AffanCardEngine() {
           </div>
 
           {/* ── CENTER ARENA ── */}
-          <div className="flex-1 flex items-center justify-center px-4">
-            <div className="flex items-center gap-8 md:gap-16 relative">
+          <div className="flex-1 min-h-0 flex items-center justify-center px-4">
+            <div className="flex items-center gap-4 md:gap-16 relative">
               {/* Enemy Card — with lunge animation during ENEMY_TURN */}
               <motion.div
                 animate={
@@ -1093,7 +1093,7 @@ export default function AffanCardEngine() {
                 transition={enemyLunging ? { duration: 0.5, ease: "easeInOut" } : { duration: 0.3 }}
                 className="relative"
               >
-                <div className={`relative w-36 h-48 md:w-44 md:h-60 rounded-xl overflow-hidden border-2 bg-[#0a0a0f] transition-colors duration-200 ${
+                <div className={`relative w-28 h-36 md:w-44 md:h-60 rounded-xl overflow-hidden border-2 bg-[#0a0a0f] transition-colors duration-200 ${
                   enemyLunging ? "border-red-500" : "border-red-500/40"
                 }`}>
                   <Image
@@ -1210,7 +1210,7 @@ export default function AffanCardEngine() {
                     : {}
                 }
                 transition={{ duration: 0.3 }}
-                className="relative w-36 h-48 md:w-44 md:h-60 rounded-xl overflow-hidden border-2 border-[#2398f7]/40 bg-[#0a0a0f] flex flex-col items-center justify-center"
+                className="relative w-28 h-36 md:w-44 md:h-60 rounded-xl overflow-hidden border-2 border-[#2398f7]/40 bg-[#0a0a0f] flex flex-col items-center justify-center"
               >
                 {/* Red flash overlay when player gets hit */}
                 <AnimatePresence>
@@ -1235,9 +1235,9 @@ export default function AffanCardEngine() {
           </div>
 
           {/* ── BOTTOM: HAND + END TURN ── */}
-          <div className="pb-4 px-4">
+          <div className="pb-1 md:pb-4 px-4 shrink-0">
             {/* Phase status */}
-            <div className="flex items-center justify-center mb-3">
+            <div className="flex items-center justify-center mb-1 md:mb-3">
               {state.phase === "DRAW" && (
                 <p className="text-[#2398f7]/60 text-xs animate-pulse">{">"} DRAWING CARDS...</p>
               )}
@@ -1250,7 +1250,7 @@ export default function AffanCardEngine() {
             </div>
 
             {/* Card Hand — SOP Rule 9: Only render cards in hand, nothing hidden */}
-            <div className="flex items-end justify-center gap-2 md:gap-3 min-h-[140px]">
+            <div className="flex items-end justify-center gap-1.5 md:gap-3 min-h-[100px] md:min-h-[140px]">
               <AnimatePresence mode="popLayout">
                 {state.hand.map((card) => {
                   const canPlay = state.phase === "PLAYER_TURN" && card.cost <= state.playerAp && !activePlayCard;
@@ -1264,7 +1264,7 @@ export default function AffanCardEngine() {
                       whileHover={canPlay ? { y: -15, scale: 1.05 } : {}}
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
                       onClick={() => canPlay && handlePlayCard(card.id)}
-                      className={`relative w-24 md:w-28 rounded-lg overflow-hidden border-2 cursor-pointer will-change-transform transform-gpu flex-shrink-0 ${
+                      className={`relative w-20 md:w-28 rounded-lg overflow-hidden border-2 cursor-pointer will-change-transform transform-gpu flex-shrink-0 ${
                         canPlay
                           ? card.type === "ATTACK"
                             ? "border-red-500/50 hover:border-red-400"
@@ -1321,11 +1321,11 @@ export default function AffanCardEngine() {
 
             {/* End Turn Button */}
             {state.phase === "PLAYER_TURN" && (
-              <div className="flex justify-center mt-3">
+              <div className="flex justify-center mt-1 md:mt-3">
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   onClick={handleEndTurn}
-                  className="px-6 py-2 bg-red-500/20 hover:bg-red-500/40 border border-red-500/30 text-red-400 hover:text-red-300 rounded-lg text-xs font-bold tracking-wider transition-colors will-change-transform transform-gpu"
+                  className="px-6 py-1 md:py-2 bg-red-500/20 hover:bg-red-500/40 border border-red-500/30 text-red-400 hover:text-red-300 rounded-lg text-[10px] md:text-xs font-bold tracking-wider transition-colors will-change-transform transform-gpu"
                 >
                   END TURN
                 </motion.button>
