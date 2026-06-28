@@ -1041,7 +1041,7 @@ export default function AmbasukeEngine() {
       <div ref={containerRef} className="flex-1 w-full h-full relative z-10">
         <canvas
           ref={canvasRef}
-          className="w-full h-full max-w-none object-contain"
+          className="w-full h-full max-w-none"
           style={{ imageRendering: "auto", touchAction: "none" }}
         />
 
