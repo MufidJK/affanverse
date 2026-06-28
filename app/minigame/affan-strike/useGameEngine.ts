@@ -53,7 +53,11 @@ export function useGameEngine(): EngineAPI {
   const [isTouchDevice, setIsTouchDevice] = useState(false); const [ultiReady, setUltiReady] = useState(true);
 
   const loadImg = useCallback((key: string, src: string) => {
-    const im = new Image(); im.src = A + src; im.onload = () => { imgsOk.current[key] = true; }; imgs.current[key] = im;
+    const im = new Image();
+    im.onload = () => { imgsOk.current[key] = true; };
+    im.src = A + src;
+    if (im.complete && im.naturalWidth > 0) imgsOk.current[key] = true;
+    imgs.current[key] = im;
   }, []);
   const loadSfx = useCallback((key: string, src: string, vol = 0.5) => {
     const a = new Audio(A + src); a.volume = vol; sfx.current[key] = a; audios.current.push(a);
@@ -267,6 +271,7 @@ export function useGameEngine(): EngineAPI {
     if (cv.width !== C.LW || cv.height !== C.LH) {
       cv.width = C.LW;
       cv.height = C.LH;
+      ctxRef.current = null;
     }
 
     for (const c of s.clouds) { c.x -= c.speed * dt; if (c.x + c.w < 0) { c.x = C.LW + c.w; c.y = 30 + Math.random() * C.LH * 0.35; } }
