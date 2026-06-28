@@ -1312,7 +1312,7 @@ export default function EndlessRunnerEngine() {
       {/* CANVAS — fills container */}
       <div
         ref={containerRef}
-        className="flex-1 w-full h-full relative overflow-hidden bg-black"
+        className="w-[100dvw] h-[100dvh] overflow-hidden bg-[#0A0A0A]"
       >
         {/* PARALLAX HANDWRITTEN BACKGROUND */}
         <HandwrittenParallaxLayer isVisible={gameState !== "REGISTER"} />
@@ -1338,7 +1338,7 @@ export default function EndlessRunnerEngine() {
 
         <canvas
           ref={canvasRef}
-          className="w-full h-full max-w-none block relative z-20 bg-transparent object-contain"
+          className="w-full h-full object-cover"
           style={{ imageRendering: "pixelated" }}
         />
 
