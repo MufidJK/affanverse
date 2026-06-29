@@ -967,7 +967,7 @@ export default function AffanCardEngine() {
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="max-w-md w-full mx-4 border border-red-500/40 rounded-xl bg-[#0a0a0f]/95 p-6 md:p-8 text-center"
+              className="max-w-md w-full mx-4 border border-red-500/40 rounded-xl bg-[#0a0a0f]/95 p-6 md:p-8 text-center overflow-y-auto max-h-[88dvh]"
             >
               <Skull className="w-12 h-12 text-red-500 mx-auto mb-3" />
               <h3 className="text-2xl font-black text-red-500 mb-1">SYSTEM FAILURE</h3>
