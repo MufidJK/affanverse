@@ -95,8 +95,10 @@ export function AffanGalleryDump() {
                   />
                   {/* 3. Modified Overlay Tailwind className for hybrid Desktop/Mobile hover logic */}
                   <div 
-                    className={`absolute inset-0 h-full w-full bg-black/70 flex flex-col justify-end p-4 md:p-6 pointer-events-none transition-all duration-300 opacity-0 md:group-hover:opacity-100 translate-y-4 md:group-hover:translate-y-0 ${
-                      activeCard === photo.id ? 'opacity-100 translate-y-0' : ''
+                    className={`absolute inset-0 h-full w-full flex flex-col justify-end p-4 md:p-6 pointer-events-none transition-all duration-300 opacity-0 md:group-hover:opacity-100 translate-y-4 md:group-hover:translate-y-0 ${
+                      activeCard === photo.id 
+                        ? 'opacity-100 translate-y-0 bg-black/80' 
+                        : 'bg-black/70'
                     }`}
                   >
                     {photo.title && (
