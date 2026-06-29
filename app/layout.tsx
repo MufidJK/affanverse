@@ -15,13 +15,16 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://affanverse.vercel.app'),
   title: "Affanverse",
   description: "Welcome to the Affanverse, Ekosistem web interaktif yang menyajikan pengalaman membaca novel Affan: The Apex Predator, penjelajahan map kosmik, hingga mini-game dalam satu universe, Affanverse.",
   openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "Affanverse",
     title: "Affanverse",
     description: "Welcome to the Affanverse, Ekosistem web interaktif yang menyajikan pengalaman membaca novel Affan: The Apex Predator, penjelajahan map kosmik, hingga mini-game dalam satu universe, Affanverse.",
     locale: "id_ID",
-    type: "website",
     images: [
       {
         url: "https://res.cloudinary.com/dcsh47583/image/upload/v1782316260/previewAffanverse2_brdn5e.png",
