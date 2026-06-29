@@ -84,7 +84,11 @@ affanverse/
 │   ├── novel/
 │   ├── privacy-policy/
 │   ├── projects/
-│   └── terms-of-chaos/
+│   ├── terms-of-chaos/
+│   ├── global.css
+│   ├── icon.png
+│   ├── layout.tsx
+│   └── page.tsx
 ├── components/
 │   ├── apex-exchange/
 │   │   └── modals/
