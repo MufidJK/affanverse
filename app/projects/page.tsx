@@ -1027,7 +1027,7 @@ export default function ProjectsPage() {
               className="max-w-6xl w-full bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden shadow-2xl relative grid grid-cols-1 lg:grid-cols-2 max-h-[90vh]"
             >
               <button 
-                onClick={() => setSelectedProject(null)}
+                onClick={() => React.startTransition(() => setSelectedProject(null))}
                 className="absolute top-4 right-4 z-50 p-2 bg-slate-100 hover:bg-slate-200 text-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-400 rounded-full transition-colors"
               >
                 <X className="w-5 h-5" />
@@ -1070,7 +1070,7 @@ export default function ProjectsPage() {
                   <span className="ml-4 text-xs font-mono text-slate-500 dark:text-slate-400">{selectedProject.category.toLowerCase()}_process.txt</span>
                 </div>
                 <div className="p-4 overflow-y-auto flex-1">
-                  <pre className="text-sm font-mono text-[#0077cc] dark:text-[#4db4ff] bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-700 p-4 rounded-lg m-0 overflow-visible">
+                  <pre className="text-sm font-mono text-[#0077cc] dark:text-[#4db4ff] bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-700 p-4 rounded-lg m-0 overflow-visible whitespace-pre-wrap break-words break-all md:whitespace-pre md:break-normal">
                     <code>{selectedProject.modalDetails.codeSnippet}</code>
                   </pre>
                 </div>
