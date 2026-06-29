@@ -93,24 +93,32 @@ export function AffanGalleryDump() {
                     className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[103%]"
                     loading="lazy"
                   />
-                  {/* 3. Modified Overlay Tailwind className for hybrid Desktop/Mobile hover logic */}
+                  {/* 3. Fixed Overlay: Separated Background and Text layers for flawless animation */}
                   <div 
-                    className={`absolute inset-0 h-full w-full flex flex-col justify-end p-4 md:p-6 pointer-events-none transition-all duration-300 opacity-0 md:group-hover:opacity-100 translate-y-4 md:group-hover:translate-y-0 ${
+                    className={`absolute inset-0 h-full w-full pointer-events-none transition-opacity duration-300 ${
                       activeCard === photo.id 
-                        ? 'opacity-100 translate-y-0 bg-black/80' 
-                        : 'bg-black/70'
+                        ? 'opacity-100 bg-black/80' 
+                        : 'opacity-0 md:group-hover:opacity-100 bg-black/80'
                     }`}
                   >
-                    {photo.title && (
-                      <h3 className="font-semibold text-base md:text-lg text-white line-clamp-1">
-                        {photo.title}
-                      </h3>
-                    )}
-                    {photo.description && (
-                      <p className="text-xs md:text-sm text-gray-200 mt-1 line-clamp-2 leading-relaxed">
-                        {photo.description}
-                      </p>
-                    )}
+                    <div 
+                      className={`flex flex-col justify-end h-full w-full p-4 md:p-6 transition-transform duration-300 ${
+                        activeCard === photo.id 
+                          ? 'translate-y-0' 
+                          : 'translate-y-4 md:group-hover:translate-y-0'
+                      }`}
+                    >
+                      {photo.title && (
+                        <h3 className="font-semibold text-base md:text-lg text-white line-clamp-1">
+                          {photo.title}
+                        </h3>
+                      )}
+                      {photo.description && (
+                        <p className="text-xs md:text-sm text-gray-200 mt-1 line-clamp-2 leading-relaxed">
+                          {photo.description}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </>
               ) : (
