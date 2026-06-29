@@ -335,7 +335,8 @@ function drawNotes(
   w: number,
   h: number,
   beatmap: BeatmapNote[],
-  currentTime: number
+  currentTime: number,
+  mobile: boolean
 ) {
   const laneW = w / 4;
   const judgementY = h - JUDGEMENT_Y_OFFSET;
@@ -355,8 +356,10 @@ function drawNotes(
     const r = 5;
 
     ctx.save();
-    ctx.shadowColor = NEON_BLUE;
-    ctx.shadowBlur = 10;
+    if (!mobile) {
+      ctx.shadowColor = NEON_BLUE;
+      ctx.shadowBlur = 10;
+    }
 
     // Outer glow
     ctx.fillStyle = `rgba(${NEON_BLUE_RGB}, 0.12)`;
@@ -593,6 +596,8 @@ export default function LowCortisolEngine() {
   const audioBufferRef = useRef<AudioBuffer | null>(null);
   const startTimeRef = useRef(0);
   const rafRef = useRef(0);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+  const canvasSizeRef = useRef({ w: 0, h: 0, dpr: 1 });
   const loseAudioRef = useRef<HTMLAudioElement | null>(null);
   const winAudioRef = useRef<HTMLAudioElement | null>(null);
   const phaseRef = useRef<GamePhase>("REGISTER");
@@ -814,7 +819,10 @@ export default function LowCortisolEngine() {
 
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    if (!ctxRef.current) {
+      ctxRef.current = canvas.getContext("2d") ?? null;
+    }
+    const ctx = ctxRef.current;
     if (!ctx) return;
 
     // Delta time
@@ -865,16 +873,22 @@ export default function LowCortisolEngine() {
     // Canvas sizing
     const container = containerRef.current;
     if (container) {
-      const rect = container.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      canvas.style.width = `${rect.width}px`;
-      canvas.style.height = `${rect.height}px`;
-      ctx.scale(dpr, dpr);
+      const rect = container.getBoundingClientRect();
+      const newW = Math.round(rect.width * dpr);
+      const newH = Math.round(rect.height * dpr);
+      const cached = canvasSizeRef.current;
+      if (newW !== cached.w || newH !== cached.h || dpr !== cached.dpr) {
+        canvas.width = newW;
+        canvas.height = newH;
+        canvas.style.width = `${rect.width}px`;
+        canvas.style.height = `${rect.height}px`;
+        canvasSizeRef.current = { w: newW, h: newH, dpr };
+        ctx.scale(dpr, dpr);
+      }
     }
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const dpr = canvasSizeRef.current.dpr || Math.min(window.devicePixelRatio || 1, 1.5);
     const w = canvas.width / dpr;
     const h = canvas.height / dpr;
 
@@ -899,14 +913,14 @@ export default function LowCortisolEngine() {
       ctx.fillText("SYNCING BEAT...", w / 2, h / 2);
       ctx.restore();
     } else {
-      drawNotes(ctx, w, h, s.beatmap, s.currentTime);
+      drawNotes(ctx, w, h, s.beatmap, s.currentTime, isMobile);
       drawHitEffects(ctx, w, h, s.hitEffects, dt);
       s.judgementFlash = drawJudgementText(ctx, w, h, s.judgementFlash, dt);
     }
     
     drawHUD(ctx, w, s.score, s.combo, s.currentTime);
     if (!isMobile) drawKeyLabels(ctx, w, h, s.activeLanes);
-    drawScanlines(ctx, w, h);
+
 
     rafRef.current = requestAnimationFrame(gameLoop);
   }, [doGameOver, doVictory, isMobile]);
@@ -1239,6 +1253,13 @@ export default function LowCortisolEngine() {
               ref={canvasRef}
               className="absolute inset-0 w-full h-full max-w-none object-contain"
               style={{ touchAction: "none", imageRendering: "auto" }}
+            />
+            <div
+              className="absolute inset-0 pointer-events-none z-10"
+              style={{
+                backgroundImage:
+                  "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.025) 2px, rgba(0,0,0,0.025) 4px)",
+              }}
             />
             {/* Mobile touch zones */}
             {isMobile && (
