@@ -25,11 +25,21 @@ export const metadata: Metadata = {
     title: "Affanverse",
     description: "Welcome to the Affanverse, Ekosistem web interaktif yang menyajikan pengalaman membaca novel Affan: The Apex Predator, penjelajahan map kosmik, hingga mini-game dalam satu universe, Affanverse.",
     locale: "id_ID",
+    images: [
+      {
+        url: "https://affanverse.vercel.app/og-banner.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Affanverse Preview",
+        type: "image/jpeg",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Affanverse",
-    description: "Ekosistem web interaktif yang menyajikan pengalaman membaca novel Affan: The Apex Predator, penjelajahan map kosmik, hingga mini-game dalam satu universe, Affanverse.",
+    description: "Welcome to the Affanverse, Ekosistem web interaktif yang menyajikan pengalaman membaca novel Affan: The Apex Predator, penjelajahan map kosmik, hingga mini-game dalam satu universe, Affanverse.",
+    images: ["https://affanverse.vercel.app/og-banner.jpg"],
   },
 };
 
