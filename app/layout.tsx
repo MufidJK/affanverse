@@ -27,10 +27,11 @@ export const metadata: Metadata = {
     locale: "id_ID",
     images: [
       {
-        url: "https://res.cloudinary.com/dcsh47583/image/upload/v1782316260/previewAffanverse2_brdn5e.png",
+        url: "https://res.cloudinary.com/dcsh47583/image/upload/q_auto,f_jpg,w_1200,h_630,c_fill/v1782316260/previewAffanverse2_brdn5e.jpg",
         width: 1200,
         height: 630,
         alt: "Affanverse Preview",
+        type: "image/jpeg",
       },
     ],
   },
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Affanverse",
     description: "Ekosistem web interaktif yang menyajikan pengalaman membaca novel Affan: The Apex Predator, penjelajahan map kosmik, hingga mini-game dalam satu universe, Affanverse.",
-    images: ["https://res.cloudinary.com/dcsh47583/image/upload/v1782316260/previewAffanverse2_brdn5e.png"],
+    images: ["https://res.cloudinary.com/dcsh47583/image/upload/q_auto,f_jpg,w_1200,h_630,c_fill/v1782316260/previewAffanverse2_brdn5e.jpg"],
   },
 };
 
