@@ -1,16 +1,41 @@
+"use client";
+
+import { useEffect, useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import type { Gallery } from "@/types/database";
 
-export async function AffanGalleryDump() {
+export function AffanGalleryDump() {
+  const [photos, setPhotos] = useState<Gallery[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  
+  // 1. Inject React State
+  const [activeCard, setActiveCard] = useState<string | number | null>(null);
+  
+  // Ref to handle the timeout cleanup (SOP Rule 2 Compliance)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const { data: photos, error } = await supabase
-    .from("gallery")
-    .select("*")
-    .contains("sections", ["gallery_dump"]) as unknown as { data: Gallery[] | null, error: any };
+  // Convert to client-side data fetch due to "use client" directive
+  useEffect(() => {
+    async function fetchPhotos() {
+      const { data, error } = await supabase
+        .from("gallery")
+        .select("*")
+        .contains("sections", ["gallery_dump"]) as unknown as { data: Gallery[] | null, error: any };
+        
+      if (error) {
+        console.error("Error fetching gallery photos:", error);
+      }
+      setPhotos(data);
+      setLoading(false);
+    }
     
-  if (error) {
-    console.error("Error fetching gallery photos:", error);
-  }
+    fetchPhotos();
+
+    // SOP RULE 2: strict cleanup for timeouts
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   return (
     <section className="w-full py-24 bg-gray-100 dark:bg-gray-900 px-4">
@@ -39,7 +64,11 @@ export async function AffanGalleryDump() {
         </p>
       </div>
 
-      {!photos || photos.length === 0 ? (
+      {loading ? (
+        <div className="flex justify-center items-center py-20 text-muted-foreground">
+          Memuat momen...
+        </div>
+      ) : !photos || photos.length === 0 ? (
         <div className="flex justify-center items-center py-20 text-muted-foreground">
           Belum ada momen yang terekam.
         </div>
@@ -48,6 +77,12 @@ export async function AffanGalleryDump() {
           {photos.map((photo) => (
             <div
               key={photo.id}
+              // 2. Click handler directly on the wrapper with cleanup check
+              onClick={() => {
+                if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                setActiveCard(photo.id);
+                timeoutRef.current = setTimeout(() => setActiveCard(null), 3000);
+              }}
               className="break-inside-avoid relative rounded-2xl overflow-hidden bg-card border border-black/5 dark:border-white/5 shadow-sm group cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-black/10 dark:hover:shadow-white/5 hover:-translate-y-1"
             >
               {photo.media_url ? (
@@ -58,7 +93,12 @@ export async function AffanGalleryDump() {
                     className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[103%]"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-black/70 flex flex-col justify-end p-4 md:p-6 opacity-0 group-hover:opacity-100 group-active:opacity-100 translate-y-4 group-hover:translate-y-0 group-active:translate-y-0 transition-all duration-300 pointer-events-none">
+                  {/* 3. Modified Overlay Tailwind className for hybrid Desktop/Mobile hover logic */}
+                  <div 
+                    className={`absolute inset-0 bg-black/70 flex flex-col justify-end p-4 md:p-6 pointer-events-none transition-all duration-300 opacity-0 md:group-hover:opacity-100 translate-y-4 md:group-hover:translate-y-0 ${
+                      activeCard === photo.id ? 'opacity-100 translate-y-0' : ''
+                    }`}
+                  >
                     {photo.title && (
                       <h3 className="font-semibold text-base md:text-lg text-white line-clamp-1">
                         {photo.title}
